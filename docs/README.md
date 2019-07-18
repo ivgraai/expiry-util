@@ -9,6 +9,7 @@
   - https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md#react-native-link
   - https://docs.expo.io/versions/v33.0.0/sdk/notifications/#localnotification
   - https://www.npmjs.com/package/react-native-push-notification
+  - https://github.com/expo/expo/pull/4787
 
 # Possible icon names
 

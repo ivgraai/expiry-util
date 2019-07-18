@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
 
 import * as Permissions from 'expo-permissions';
+import DbHelper from './DbHelper';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -32,6 +33,7 @@ export default function App(props) {
 
 Permissions.askAsync(Permissions.NOTIFICATIONS);
 // Notifications.getExpoPushTokenAsync().catch(reason => console.log(reason));
+DbHelper.initialize();
 Permissions.askAsync(Permissions.CAMERA_ROLL);
 
 async function loadResourcesAsync() {

@@ -44,9 +44,9 @@ const MainStack = createStackNavigator(
 );
 
 MainStack.navigationOptions = {
-  tabBarLabel: 'Main',
+  tabBarLabel: 'New',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-apps' : 'md-apps'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-add-circle-outline' : 'md-add-circle-outline'} />
   )
 };
 

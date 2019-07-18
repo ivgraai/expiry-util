@@ -3,24 +3,29 @@ import { Button, View, Text, TextInput, Image } from 'react-native';
 import { Notifications } from 'expo';
 import DatePicker from 'react-native-datepicker';
 import * as ImagePicker from 'expo-image-picker';
+import DbHelper from '../DbHelper';
 
 export default class MainScreen extends React.Component {
   static navigationOptions = {
-    title: 'Main'
+    title: 'New'
   };
 
   constructor(props) {
       super(props);
       this.state = {
           goods: "E.g. camembert or bread",
-          expiry: "31/12/2019",
+          expiry: "2020-01-01",
           photo: null
       };
   }
 
   buttonAdd(object) {
     // Notifications.scheduleLocalNotificationAsync({title: "Lorem Ipsum", body: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."}, {time: new Date().getTime() + 1000});
-    console.log(object);
+    DbHelper.insertGood({
+        name: object.goods,
+        expiry: new Date(object.expiry),
+        image: object.photo
+    });
   }
 
   buttonPick = async () => {
@@ -48,7 +53,7 @@ export default class MainScreen extends React.Component {
                 style={{flex: 2}}
                 date={this.state.expiry}
                 mode="date"
-                format="DD/MM/YYYY"
+                format="YYYY-MM-DD"
                 confirmBtnText="Choose"
                 cancelBtnText="Cancel"
                 showIcon={false}
