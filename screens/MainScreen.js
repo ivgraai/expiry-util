@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, View, Text, TextInput } from 'react-native';
+import { Button, View, Text, TextInput, Image } from 'react-native';
 import { Notifications } from 'expo';
 import DatePicker from 'react-native-datepicker';
+import * as ImagePicker from 'expo-image-picker';
 
 export default class MainScreen extends React.Component {
   static navigationOptions = {
@@ -12,7 +13,8 @@ export default class MainScreen extends React.Component {
       super(props);
       this.state = {
           goods: "E.g. camembert or bread",
-          expiry: "31/12/2019"
+          expiry: "31/12/2019",
+          photo: null
       };
   }
 
@@ -21,7 +23,20 @@ export default class MainScreen extends React.Component {
     console.log(object);
   }
 
+  buttonPick = async () => {
+    image = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3]
+    });
+
+    if (!image.cancelled) {
+      this.setState({ photo: image.uri });
+    }
+  }
+
   render() {
+    let { photo } = this.state;
     return <View style={{flex: 1, flexDirection: 'column'}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             <Text style={{flex: 1}}>{'Perishable Goods:'}</Text>
@@ -34,12 +49,16 @@ export default class MainScreen extends React.Component {
                 date={this.state.expiry}
                 mode="date"
                 format="DD/MM/YYYY"
-                confirmBtnText="Confirm"
+                confirmBtnText="Choose"
                 cancelBtnText="Cancel"
                 showIcon={false}
                 onDateChange={(date) => {this.setState({expiry: date})}} />
         </View>
-        <Button onPress={() => this.buttonAdd(this.state)} title="Add" />
+        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            <Button title="Pick an Image" onPress={this.buttonPick} />
+            {photo && <Image source={{ uri: photo }} style={{ width: 100, height: 100 }} />}
+        </View>
+        <Button onPress={() => this.buttonAdd(this.state)} title="ADD THE RECORD" />
     </View>;
   }
 }

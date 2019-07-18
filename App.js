@@ -32,6 +32,7 @@ export default function App(props) {
 
 Permissions.askAsync(Permissions.NOTIFICATIONS);
 // Notifications.getExpoPushTokenAsync().catch(reason => console.log(reason));
+Permissions.askAsync(Permissions.CAMERA_ROLL);
 
 async function loadResourcesAsync() {
   await Promise.all([
