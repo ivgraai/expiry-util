@@ -47,7 +47,7 @@ MainStack.navigationOptions = {
   tabBarLabel: 'Main',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-apps' : 'md-apps'} />
-  ),
+  )
 };
 
 MainStack.path = '';
@@ -63,7 +63,7 @@ LinksStack.navigationOptions = {
   tabBarLabel: 'Links',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  )
+  ),
 };
 
 LinksStack.path = '';

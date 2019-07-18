@@ -7,13 +7,13 @@ export default class MainScreen extends React.Component {
     title: 'Main'
   };
 
-  onPressLearnMore() {
-    Notifications.scheduleLocalNotificationAsync({title: "TESZT", body: "BLABLA"}, {time: new Date().getTime() + 3 * 1000});
+  onPress() {
+    // Notifications.scheduleLocalNotificationAsync({title: "Lorem Ipsum", body: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."}, {time: new Date().getTime() + 1000});
   }
 
   render() {
     return <View>
-          <Button onPress={this.onPressLearnMore} title="Learn More" color="#841584" accessibilityLabel="Learn more about this purple button" />
+          <Button onPress={this.onPress} title="TEST" />
         </View>;
   }
 }
