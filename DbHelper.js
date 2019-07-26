@@ -15,7 +15,11 @@ export default class DbHelper {
     }
 
     static selectGoods() {
-        db.transaction(tx => tx.executeSql("SELECT * FROM goods", [], (_, { rows }) => console.log(rows)));
+        return new Promise(function(resolve, reject) {
+            db.transaction(tx => tx.executeSql("SELECT * FROM goods", [], (_, { rows }) =>
+                resolve(rows)
+            ));
+        });
     }
 
     static deleteGoods() {
