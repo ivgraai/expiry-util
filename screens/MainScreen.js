@@ -6,7 +6,8 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Alert
 } from "react-native";
 import { Notifications } from "expo";
 import DatePicker from "react-native-datepicker";
@@ -19,39 +20,65 @@ export default class MainScreen extends React.Component {
   };
   dayOffset = 24 * 60 * 60 * 1000;
 
-// TODO:
-//  alert after a successful adding
-//  save the id of notifs
-//  button should be disabled after persisting
+  // TODO:
+  //  save the id of notifs
+  //  button should be disabled after persisting
 
   constructor(props) {
     super(props);
     this.state = {
       goods: "PERISHABLE GOODS",
-      expiry: new Date().toLocaleDateString("en-GB", options = { year: 'numeric', month: '2-digit', day: '2-digit' }),
+      expiry: new Date().toLocaleDateString(
+        "en-GB",
+        (options = { year: "numeric", month: "2-digit", day: "2-digit" })
+      ),
       photo: undefined
     };
   }
 
   buttonAdd(object) {
     var parts = object.expiry.split("/");
-    temp = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+    temp = new Date(
+      parseInt(parts[2], 10),
+      parseInt(parts[1], 10) - 1,
+      parseInt(parts[0], 10)
+    );
     temp.setTime(temp.getTime() - 3 * this.dayOffset);
 
-    Notifications.scheduleLocalNotificationAsync({title: object.goods, body: "Best before: " + object.expiry}, {time: temp.getTime()})
-    .then(id => {
+    Notifications.scheduleLocalNotificationAsync(
+      { title: object.goods, body: "Best before: " + object.expiry },
+      { time: temp.getTime() }
+    ).then(id => {
       // console.log(id);
     });
     temp.setTime(temp.getTime() + 2 * this.dayOffset);
-    Notifications.scheduleLocalNotificationAsync({title: object.goods, body: "Best before: " + object.expiry}, {time: temp.getTime()});
+    Notifications.scheduleLocalNotificationAsync(
+      { title: object.goods, body: "Best before: " + object.expiry },
+      { time: temp.getTime() }
+    );
     temp.setTime(temp.getTime() + 1 * this.dayOffset);
-    Notifications.scheduleLocalNotificationAsync({title: object.goods, body: "Best before: " + object.expiry}, {time: temp.getTime()});
+    Notifications.scheduleLocalNotificationAsync(
+      { title: object.goods, body: "Best before: " + object.expiry },
+      { time: temp.getTime() }
+    );
 
     DbHelper.insertGood({
-        name: object.goods,
-        expiry: temp,
-        image: object.photo
+      name: object.goods,
+      expiry: temp,
+      image: object.photo
     });
+    Alert.alert(
+      "Successfully added",
+      "Let's continue with other perishable good!",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => {} }
+      ],
+      { cancelable: false }
+    );
   }
 
   buttonPick = async () => {
