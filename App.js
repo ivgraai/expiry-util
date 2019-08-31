@@ -35,6 +35,7 @@ Permissions.askAsync(Permissions.NOTIFICATIONS);
 // Notifications.getExpoPushTokenAsync().catch(reason => console.log(reason));
 DbHelper.initialize();
 Permissions.askAsync(Permissions.CAMERA_ROLL);
+// console.disableYellowBox = true;
 
 async function loadResourcesAsync() {
   await Promise.all([
