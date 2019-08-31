@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Text, TextInput, Image } from 'react-native';
+import { Button, View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Notifications } from 'expo';
 import DatePicker from 'react-native-datepicker';
 import * as ImagePicker from 'expo-image-picker';
@@ -9,26 +9,40 @@ export default class MainScreen extends React.Component {
   static navigationOptions = {
     title: 'New'
   };
+  dayOffset = (24 * 60 * 60 * 1000);
 
   constructor(props) {
       super(props);
       this.state = {
-          goods: "E.g. camembert or bread",
+          goods: "PERISHABLE GOODS",
           expiry: "2020-01-01",
-          photo: null
+          photo: undefined
       };
   }
 
   buttonAdd(object) {
-    // Notifications.scheduleLocalNotificationAsync({title: "Lorem Ipsum", body: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."}, {time: new Date().getTime() + 1000});
+    console.log(object.photo);
+    /* temp = new Date(object.expiry);
+    temp.setTime(temp.getTime() - 3 * this.dayOffset);
+
+    Notifications.scheduleLocalNotificationAsync({title: object.goods, body: "Best before: " + object.expiry}, {time: temp.getTime()})
+    .then(id => {
+      console.log(id);
+    });
+    temp.setTime(temp.getTime() + 2 * this.dayOffset);
+    Notifications.scheduleLocalNotificationAsync({title: object.goods, body: "Best before: " + object.expiry}, {time: temp.getTime()});
+    temp.setTime(temp.getTime() + 1 * this.dayOffset);
+    Notifications.scheduleLocalNotificationAsync({title: object.goods, body: "Best before: " + object.expiry}, {time: temp.getTime()});
+
     DbHelper.insertGood({
         name: object.goods,
         expiry: new Date(object.expiry),
         image: object.photo
-    });
+    }); */
   }
 
   buttonPick = async () => {
+    console.log('almafa');
     image = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -42,28 +56,52 @@ export default class MainScreen extends React.Component {
 
   render() {
     let { photo } = this.state;
-    return <View style={{flex: 1, flexDirection: 'column'}}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Text style={{flex: 1}}>{'Perishable Goods:'}</Text>
-            <TextInput style={{flex: 2, borderColor: 'lightgray', borderWidth: 1, textAlign: 'center', margin: 1}} onChangeText={(goods) => this.setState({goods})} value={this.state.goods}/>
-        </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Text style={{flex: 1}}>{'Expiration Date:'}</Text>
-            <DatePicker
-                style={{flex: 2}}
+    return <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-around'}}>
+      <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <TouchableOpacity activeOpacity = { .5 } onPress={this.buttonPick} style={{borderColor: 'lightgray', borderWidth: 1, height: '75%', width: '75%'}}>
+        
+        {photo ? (
+        <Image source={{ uri: photo }} style={{ width: '100%', height: '100%' }} />
+      ) : (
+        <Text style={{ textAlign:'center' }}>(CHOOSE A PHOTO)</Text>
+      )}
+        </TouchableOpacity>
+      </View>
+      <View style={{flex: 1, alignItems: 'center'}}>
+        <TextInput selectTextOnFocus={true} style={{textAlign: 'center', height: '10%', borderColor: 'lightgray', borderWidth: 1, width: '75%'}} onChangeText={(goods) => this.setState({goods})} placeholder={this.state.goods}/>
+        <Text style={{textAlign: 'center', marginTop: 15, marginBottom: 5}}>{'EXPIRATION DATE:'}</Text>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}><DatePicker
+        style={{width: '75%'}}
+        customStyles={{dateInput:{borderColor: 'lightgray'}}}
                 date={this.state.expiry}
                 mode="date"
                 format="YYYY-MM-DD"
                 confirmBtnText="Choose"
                 cancelBtnText="Cancel"
                 showIcon={false}
-                onDateChange={(date) => {this.setState({expiry: date})}} />
-        </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Button title="Pick an Image" onPress={this.buttonPick} />
-            {photo && <Image source={{ uri: photo }} style={{ width: 100, height: 100 }} />}
-        </View>
-        <Button onPress={() => this.buttonAdd(this.state)} title="ADD THE RECORD" />
+                onDateChange={(date) => {this.setState({expiry: date})}} /></View>
+      <View style={{flex: 2, width: '75%', flexDirection: 'column', justifyContent: 'center'}}><TouchableOpacity
+          style={{
+            marginRight:40,
+            marginLeft:40,
+           marginTop:10,
+            paddingTop:10,
+            paddingBottom:10,
+            backgroundColor:'gray',
+            borderRadius:10,
+            borderWidth: 1,
+            borderColor: 'white'
+          }}
+          onPress={() => this.buttonAdd(this.state)}
+          underlayColor='white'>
+          <Text style={{
+        color:'white',
+        textAlign:'center',
+        paddingLeft : 10,
+        paddingRight : 10
+    }}>Add</Text>
+      </TouchableOpacity></View>
+    </View>
     </View>;
   }
 }
