@@ -14,7 +14,6 @@ export default class AllScreen extends React.Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     DbHelper.selectGoods().then(result => {
-      // console.log('Here: ' + JSON.stringify(result));
       this.setState({
         dataSource: this.state.ds.cloneWithRows(result._array)
       });
@@ -52,9 +51,9 @@ export default class AllScreen extends React.Component {
                 justifyContent: "center"
               }}
             >
-              <Text style={{ textAlign: "center" }}>{rowData.name}</Text>
+              <Text style={{ textAlign: "center" }}>{rowData.name.toUpperCase()}</Text>
               <Text style={{ textAlign: "center" }}>
-                {rowData.expiry.slice(0, 10)}
+                {new Date(rowData.expiry).toLocaleDateString()}
               </Text>
             </View>
           </View>
