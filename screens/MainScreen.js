@@ -19,6 +19,7 @@ export default class MainScreen extends React.Component {
     title: "New"
   };
   dayOffset = 24 * 60 * 60 * 1000;
+  multiplier = [-3, 2, 1];
 
   // TODO:
   //  save the id of notifs
@@ -43,24 +44,16 @@ export default class MainScreen extends React.Component {
       parseInt(parts[1], 10) - 1,
       parseInt(parts[0], 10)
     );
-    temp.setTime(temp.getTime() - 3 * this.dayOffset);
 
-    Notifications.scheduleLocalNotificationAsync(
-      { title: object.goods, body: "Best before: " + object.expiry },
-      { time: temp.getTime() }
-    ).then(id => {
-      // console.log(id);
-    });
-    temp.setTime(temp.getTime() + 2 * this.dayOffset);
-    Notifications.scheduleLocalNotificationAsync(
-      { title: object.goods, body: "Best before: " + object.expiry },
-      { time: temp.getTime() }
-    );
-    temp.setTime(temp.getTime() + 1 * this.dayOffset);
-    Notifications.scheduleLocalNotificationAsync(
-      { title: object.goods, body: "Best before: " + object.expiry },
-      { time: temp.getTime() }
-    );
+    for (i = 0; i < this.multiplier.length; i++) {
+      temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
+      Notifications.scheduleLocalNotificationAsync(
+        { title: object.goods, body: "Best before: " + object.expiry },
+        { time: temp.getTime() }
+      ).then(id => {
+        // console.log(id);
+      });
+    }
 
     DbHelper.insertGood({
       name: object.goods,
