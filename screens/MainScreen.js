@@ -19,23 +19,28 @@ export default class MainScreen extends React.Component {
   };
   dayOffset = 24 * 60 * 60 * 1000;
 
+// TODO:
+//  alert after a successful adding
+//  save the id of notifs
+//  button should be disabled after persisting
+
   constructor(props) {
     super(props);
     this.state = {
       goods: "PERISHABLE GOODS",
-      expiry: "2020-01-01",
+      expiry: new Date().toLocaleDateString("en-GB", options = { year: 'numeric', month: '2-digit', day: '2-digit' }),
       photo: undefined
     };
   }
 
   buttonAdd(object) {
-    console.log(object.photo);
-    /* temp = new Date(object.expiry);
+    var parts = object.expiry.split("/");
+    temp = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
     temp.setTime(temp.getTime() - 3 * this.dayOffset);
 
     Notifications.scheduleLocalNotificationAsync({title: object.goods, body: "Best before: " + object.expiry}, {time: temp.getTime()})
     .then(id => {
-      console.log(id);
+      // console.log(id);
     });
     temp.setTime(temp.getTime() + 2 * this.dayOffset);
     Notifications.scheduleLocalNotificationAsync({title: object.goods, body: "Best before: " + object.expiry}, {time: temp.getTime()});
@@ -44,13 +49,12 @@ export default class MainScreen extends React.Component {
 
     DbHelper.insertGood({
         name: object.goods,
-        expiry: new Date(object.expiry),
+        expiry: temp,
         image: object.photo
-    }); */
+    });
   }
 
   buttonPick = async () => {
-    console.log("almafa");
     image = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -122,7 +126,7 @@ export default class MainScreen extends React.Component {
               customStyles={{ dateInput: { borderColor: "lightgray" } }}
               date={this.state.expiry}
               mode="date"
-              format="YYYY-MM-DD"
+              format="DD/MM/YYYY"
               confirmBtnText="Choose"
               cancelBtnText="Cancel"
               showIcon={false}
