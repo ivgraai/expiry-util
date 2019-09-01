@@ -1,5 +1,12 @@
 import React from "react";
-import { ListView, Text, View, Image, PixelRatio } from "react-native";
+import {
+  ListView,
+  Text,
+  View,
+  Image,
+  PixelRatio,
+  ScrollView
+} from "react-native";
 import { NavigationEvents } from "react-navigation";
 import DbHelper from "../DbHelper";
 
@@ -32,7 +39,7 @@ export default class AllScreen extends React.Component {
     return (
       <View>
         <NavigationEvents
-          onWillFocus={payload =>
+          onWillFocus={payload => {
             DbHelper.selectGoods().then(result => {
               this.setState({
                 dataSource: this.state.ds.cloneWithRows(
@@ -43,36 +50,39 @@ export default class AllScreen extends React.Component {
                     .sort((a, b) => a.expiry.getTime() - b.expiry.getTime())
                 )
               });
-            })
-          }
+            });
+            this.refs._scrollView.scrollTo(0); // Should be in the callback.
+          }}
         />
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={rowData => (
-            <View style={{ flexDirection: "row", height: this.height }}>
-              <View style={{ flex: 3, alignItems: "center" }}>
-                <Image
-                  source={{ uri: rowData.image }}
-                  style={{ height: "90%", width: "90%", aspectRatio: 1 }}
-                />
+        <ScrollView ref="_scrollView">
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={rowData => (
+              <View style={{ flexDirection: "row", height: this.height }}>
+                <View style={{ flex: 3, alignItems: "center" }}>
+                  <Image
+                    source={{ uri: rowData.image }}
+                    style={{ height: "90%", width: "90%", aspectRatio: 1 }}
+                  />
+                </View>
+                <View
+                  style={{
+                    flex: 2,
+                    flexDirection: "column",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Text style={{ textAlign: "center" }}>
+                    {rowData.name.toUpperCase()}
+                  </Text>
+                  <Text style={{ textAlign: "center" }}>
+                    {rowData.expiry.toLocaleDateString()}
+                  </Text>
+                </View>
               </View>
-              <View
-                style={{
-                  flex: 2,
-                  flexDirection: "column",
-                  justifyContent: "center"
-                }}
-              >
-                <Text style={{ textAlign: "center" }}>
-                  {rowData.name.toUpperCase()}
-                </Text>
-                <Text style={{ textAlign: "center" }}>
-                  {rowData.expiry.toLocaleDateString()}
-                </Text>
-              </View>
-            </View>
-          )}
-        />
+            )}
+          />
+        </ScrollView>
       </View>
     );
   }

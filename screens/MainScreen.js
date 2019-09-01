@@ -40,13 +40,13 @@ export default class MainScreen extends React.Component {
   buttonAdd(object) {
     var parts = object.expiry.split("/");
     temp = new Date();
-    temp.setYear(parseInt(parts[2], 10));
-    temp.setDate(parseInt(parts[0], 10));
     temp.setHours(8);
     temp.setMinutes(30);
     temp.setSeconds(0);
     temp.setMilliseconds(0);
+    temp.setYear(parseInt(parts[2], 10));
     temp.setMonth(parseInt(parts[1], 10) - 1);
+    temp.setDate(parseInt(parts[0], 10));
 
     for (i = 0; i < this.multiplier.length; i++) {
       temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
