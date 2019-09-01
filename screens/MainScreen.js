@@ -42,12 +42,19 @@ export default class MainScreen extends React.Component {
     temp = new Date();
     temp.setYear(parseInt(parts[2], 10));
     temp.setDate(parseInt(parts[0], 10));
+    temp.setHours(8);
+    temp.setMinutes(30);
+    temp.setSeconds(0);
+    temp.setMilliseconds(0);
     temp.setMonth(parseInt(parts[1], 10) - 1);
 
     for (i = 0; i < this.multiplier.length; i++) {
       temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
       Notifications.scheduleLocalNotificationAsync(
-        { title: object.goods, body: "Best before: " + object.expiry },
+        {
+          title: object.goods.toUpperCase(),
+          body: "Best before: " + object.expiry
+        },
         { time: temp.getTime() }
       ).then(id => {
         // console.log(id);
