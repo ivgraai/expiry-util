@@ -1,0 +1,48 @@
+swagger: "2.0"
+info:
+  description: "First prototype of the API."
+  version: "1.0.0"
+  title: "Expiry Util"
+  contact:
+    email: "ivgraai@gmail.com"
+host: "ivgraai.ddns.net"
+basePath: "/v1"
+tags:
+- name: "good"
+  description: "Access to goods"
+- name: "user"
+  description: "Operations about user"
+schemes:
+- "https"
+- "http"
+paths:
+  /good:
+    post:
+      tags:
+      - "good"
+      summary: "Add a new good to the list"
+      description: ""
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "formData"
+        name: "image"
+        required: false
+        type: "file"
+      - in: "formData"
+        name: "name"
+        required: true
+        type: "string"
+      - in: "formData"
+        name: "expiry"
+        required: true
+        type: "string"
+        format: "date"
+      responses:
+        "405":
+          description: "Invalid input"
+externalDocs:
+  description: "Find out more about the project"
+  url: "https://github.com/ivgraai/expiry-util"

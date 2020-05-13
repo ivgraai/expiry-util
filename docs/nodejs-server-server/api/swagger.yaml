@@ -1,0 +1,55 @@
+---
+swagger: "2.0"
+info:
+  description: "First prototype of the API."
+  version: "1.0.0"
+  title: "Expiry Util"
+  contact:
+    email: "ivgraai@gmail.com"
+host: "localhost:8080"
+basePath: "/v1"
+tags:
+- name: "good"
+  description: "Access to goods"
+- name: "user"
+  description: "Operations about user"
+schemes:
+- "http"
+paths:
+  /good:
+    post:
+      tags:
+      - "good"
+      summary: "Add a new good to the list"
+      description: ""
+      operationId: "goodPOST"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "image"
+        in: "formData"
+        required: false
+        type: "file"
+      - name: "name"
+        in: "formData"
+        required: true
+        type: "string"
+      - name: "expiry"
+        in: "formData"
+        required: true
+        type: "string"
+        format: "date"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            type: "string"
+        "405":
+          description: "Invalid input"
+      x-swagger-router-controller: "Good"
+definitions: {}
+externalDocs:
+  description: "Find out more about the project"
+  url: "https://github.com/ivgraai/expiry-util"
