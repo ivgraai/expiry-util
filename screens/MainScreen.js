@@ -10,7 +10,7 @@ import {
   Alert
 } from "react-native";
 import { Notifications } from "expo";
-import DatePicker from "react-native-datepicker";
+import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from "expo-image-picker";
 import DbHelper from "../DbHelper";
 
@@ -29,24 +29,13 @@ export default class MainScreen extends React.Component {
     super(props);
     this.state = {
       goods: "PERISHABLE GOODS",
-      expiry: new Date().toLocaleDateString(
-        "en-GB",
-        (options = { year: "numeric", month: "2-digit", day: "2-digit" })
-      ),
+      expiry: new Date(),
       photo: undefined
     };
   }
 
   buttonAdd(object) {
-    var parts = object.expiry.split("/");
-    temp = new Date();
-    temp.setHours(8);
-    temp.setMinutes(30);
-    temp.setSeconds(0);
-    temp.setMilliseconds(0);
-    temp.setYear(parseInt(parts[2], 10));
-    temp.setMonth(parseInt(parts[1], 10) - 1);
-    temp.setDate(parseInt(parts[0], 10));
+    temp = object.expiry;
 
     for (i = 0; i < this.multiplier.length; i++) {
       temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
@@ -130,7 +119,7 @@ export default class MainScreen extends React.Component {
             )}
           </TouchableOpacity>
         </View>
-        <View style={{ flex: 1, alignItems: "center" }}>
+        <View style={{ flex: 2, alignItems: "center" }}>
           <TextInput
             selectTextOnFocus={true}
             style={{
@@ -147,16 +136,15 @@ export default class MainScreen extends React.Component {
             {"EXPIRATION DATE:"}
           </Text>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <DatePicker
+            <DateTimePicker
               style={{ width: "75%" }}
-              customStyles={{ dateInput: { borderColor: "lightgray" } }}
-              date={this.state.expiry}
-              mode="date"
-              format="DD/MM/YYYY"
-              confirmBtnText="Choose"
-              cancelBtnText="Cancel"
-              showIcon={false}
-              onDateChange={date => {
+              testID="dateTimePicker"
+              timeZoneOffsetInMinutes={0}
+              value={this.state.expiry}
+              mode={'date'}
+              is24Hour={true}
+              display="default"
+              onChange={(event, date) => {
                 this.setState({ expiry: date });
               }}
             />
