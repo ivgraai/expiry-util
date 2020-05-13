@@ -5,10 +5,8 @@
 
 # References
 
-  - https://facebook.github.io/react-native/docs/pushnotificationios.html#content
-  - https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md#react-native-link
+  - https://blog.expo.io/expo-sdk-37-is-now-available-dd5770f066a6
   - https://docs.expo.io/versions/v33.0.0/sdk/notifications/#localnotification
-  - https://www.npmjs.com/package/react-native-push-notification
   - https://github.com/expo/expo/pull/4787
 
 # Possible icon names
