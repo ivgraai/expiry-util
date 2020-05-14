@@ -13,6 +13,7 @@ import { Notifications } from "expo";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from "expo-image-picker";
 import DbHelper from "../DbHelper";
+import * as Location from 'expo-location';
 
 export default class MainScreen extends React.Component {
   static navigationOptions = {
@@ -39,7 +40,8 @@ export default class MainScreen extends React.Component {
       lat = this.props.navigation.getParam("latitude");
       lng = this.props.navigation.getParam("longitude");
       if (undefined != lat && undefined != lng) {
-        this.setState({label: lat + "," + lng});
+        Location.reverseGeocodeAsync({latitude: lat, longitude: lng}).then(addresses =>
+          this.setState({label: addresses[0].city}));
       }
     });
   }
