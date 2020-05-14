@@ -8,6 +8,7 @@ import MainScreen from '../screens/MainScreen';
 import AllScreen from '../screens/AllScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import MapScreen from '../screens/MapScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -39,9 +40,12 @@ HomeStack.path = '';
 
 const MainStack = createStackNavigator(
   {
-    Main: MainScreen
+    Main: { screen: MainScreen },
+    Map: { screen: MapScreen }
   },
-  config
+  {
+    initialRouteName: 'Main'
+  }
 );
 
 MainStack.navigationOptions = {
@@ -102,11 +106,8 @@ SettingsStack.navigationOptions = {
 SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
   MainStack,
-  AllStack,
-  LinksStack,
-  SettingsStack,
+  AllStack
 });
 
 tabNavigator.path = '';

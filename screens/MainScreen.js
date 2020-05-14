@@ -137,7 +137,7 @@ export default class MainScreen extends React.Component {
           </Text>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <DateTimePicker
-              style={{ width: "75%" }}
+              style={{ width: "75%", height: 175 }}
               testID="dateTimePicker"
               timeZoneOffsetInMinutes={0}
               value={this.state.expiry}
@@ -149,6 +149,7 @@ export default class MainScreen extends React.Component {
               }}
             />
           </View>
+          <Button title="SET LOCATION" onPress={() => this.props.navigation.navigate('Map')} />
           <View
             style={{
               flex: 2,
