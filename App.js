@@ -35,6 +35,7 @@ Permissions.askAsync(Permissions.NOTIFICATIONS);
 // Notifications.getExpoPushTokenAsync().catch(reason => console.log(reason));
 DbHelper.initialize();
 Permissions.askAsync(Permissions.CAMERA_ROLL);
+Permissions.askAsync(Permissions.LOCATION);
 
 if (!__DEV__) {
   console.disableYellowBox = true;
