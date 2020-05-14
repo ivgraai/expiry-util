@@ -22,7 +22,6 @@ export default class MainScreen extends React.Component {
   multiplier = [-3, 2, 1];
 
   // TODO:
-  //  save the id of notifs
   //  button should be disabled after persisting
 
   constructor(props) {
@@ -30,8 +29,23 @@ export default class MainScreen extends React.Component {
     this.state = {
       goods: "PERISHABLE GOODS",
       expiry: new Date(),
-      photo: undefined
+      photo: undefined,
+      label: "SET LOCATION"
     };
+  }
+
+  componentDidMount() {
+    this._unsubscribe = this.props.navigation.addListener('didFocus', () => {
+      lat = this.props.navigation.getParam("latitude");
+      lng = this.props.navigation.getParam("longitude");
+      if (undefined != lat && undefined != lng) {
+        this.setState({label: lat + "," + lng});
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   buttonAdd(object) {
@@ -149,7 +163,7 @@ export default class MainScreen extends React.Component {
               }}
             />
           </View>
-          <Button title="SET LOCATION" onPress={() => this.props.navigation.navigate('Map')} />
+          <Button title={this.state.label} onPress={() => this.props.navigation.navigate('Map')} />
           <View
             style={{
               flex: 2,
