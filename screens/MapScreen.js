@@ -4,7 +4,7 @@ import MapView from 'react-native-maps';
 
 class MapScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
-        headerLeft: <Button onPress={()=>navigation.goBack(this.location)} title="< Ok" />
+        headerLeft: <Button onPress={()=>this.goBack(navigation)} title="< Ok" />
       });
 
     constructor(props) {
@@ -17,10 +17,14 @@ class MapScreen extends React.Component {
         };
     }
 
-    location = undefined;
+    static goBack(nav) {
+        nav.navigate('Main', {"latitude": MapScreen.location.latitude, "longitude": MapScreen.location.longitude});
+    }
+
+    static location = undefined; // TODO
 
     onDragEnd(e) {
-        this.location = e.nativeEvent.coordinate;
+        MapScreen.location = e.nativeEvent.coordinate;
     }
 
     render() {
