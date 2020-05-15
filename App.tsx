@@ -10,6 +10,8 @@ import AppNavigator from './navigation/AppNavigator';
 import * as Permissions from 'expo-permissions';
 import DbHelper from './DbHelper';
 
+import Constants from 'expo-constants';
+
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 }
@@ -49,7 +51,7 @@ if (!__DEV__) {
   console.disableYellowBox = true;
 }
 
-if (Expo.Constants.manifest.extra.init) {
+if (Constants.manifest.extra.init) {
   Notifications.cancelAllScheduledNotificationsAsync();
   DbHelper.deleteGoods();
 }
