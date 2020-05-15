@@ -14,10 +14,11 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from "expo-image-picker";
 import DbHelper from "../DbHelper";
 import * as Location from 'expo-location';
+import { i18n } from '../constants/Dictionary';
 
 export default class MainScreen extends React.Component {
   static navigationOptions = {
-    title: "New"
+    title: i18n.new
   };
   dayOffset = 24 * 60 * 60 * 1000;
   multiplier = [-3, 2, 1];
@@ -28,10 +29,10 @@ export default class MainScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      goods: "PERISHABLE GOODS",
+      goods: i18n.perishableGoods.toUpperCase(),
       expiry: new Date(),
       photo: undefined,
-      label: "SET LOCATION"
+      label: i18n.setLocation.toUpperCase()
     };
   }
 
@@ -58,7 +59,7 @@ export default class MainScreen extends React.Component {
       Notifications.scheduleLocalNotificationAsync(
         {
           title: object.goods.toUpperCase(),
-          body: "Best before: " + object.expiry
+          body: i18n.bestBefore.capitalize() + ": " + object.expiry
         },
         { time: temp.getTime() }
       ).then(id => {
@@ -72,14 +73,14 @@ export default class MainScreen extends React.Component {
       image: object.photo
     });
     Alert.alert(
-      "Successfully added",
-      "Let's continue with other perishable good!",
+      i18n.successfullyAdded.capitalize(),
+      i18n.letsContinueWithOtherPerishableGood.capitalize() + "!",
       [
         {
-          text: "Cancel",
+          text: i18n.cancel.capitalize(),
           style: "cancel"
         },
-        { text: "OK", onPress: () => {} }
+        { text: i18n.okay, onPress: () => {} }
       ],
       { cancelable: false }
     );
@@ -131,7 +132,7 @@ export default class MainScreen extends React.Component {
                 style={{ width: "100%", height: "100%" }}
               />
             ) : (
-              <Text style={{ textAlign: "center" }}>(CHOOSE A PHOTO)</Text>
+              <Text style={{ textAlign: "center" }}>{(i18n.chooseAPhoto.toUpperCase())}</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -149,7 +150,7 @@ export default class MainScreen extends React.Component {
             placeholder={this.state.goods}
           />
           <Text style={{ textAlign: "center", marginTop: 15, marginBottom: 5 }}>
-            {"EXPIRATION DATE:"}
+            {i18n.expirationDate.toUpperCase() + ":"}
           </Text>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <DateTimePicker
@@ -197,7 +198,7 @@ export default class MainScreen extends React.Component {
                   paddingRight: 10
                 }}
               >
-                Add
+                {i18n.add.capitalize()}
               </Text>
             </TouchableOpacity>
           </View>

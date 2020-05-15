@@ -33,12 +33,14 @@
     "react-native-web": "^0.11.7",
     "react-navigation": "^3.11.0",
     "react-native-maps": "0.26.1",
-    "expo-location": "~8.1.0"
+    "expo-location": "~8.1.0",
+    "expo-localization": "~8.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.35",
     "@types/react-native": "^0.62.9",
     "babel-preset-expo": "^8.1.0",
+    "i18n-ts": "^1.0.5",
     "jest-expo": "^37.0.0",
     "typescript": "^3.9.2"
   },

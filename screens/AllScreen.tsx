@@ -8,10 +8,11 @@ import {
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import DbHelper from "../DbHelper";
+import { i18n } from "../constants/Dictionary";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
-    title: "All"
+    title: i18n.all
   };
   height = PixelRatio.getPixelSizeForLayoutSize(75);
 

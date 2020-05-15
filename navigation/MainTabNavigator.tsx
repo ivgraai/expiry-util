@@ -9,6 +9,7 @@ import AllScreen from '../screens/AllScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import MapScreen from '../screens/MapScreen';
+import { i18n } from '../constants/Dictionary';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -49,7 +50,7 @@ const MainStack = createStackNavigator(
 );
 
 MainStack.navigationOptions = {
-  tabBarLabel: 'New',
+  tabBarLabel: i18n.new,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-add-circle-outline' : 'md-add-circle-outline'} />
   )
@@ -65,7 +66,7 @@ const AllStack = createStackNavigator(
 );
 
 AllStack.navigationOptions = {
-  tabBarLabel: 'All',
+  tabBarLabel: i18n.all,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-grid' : 'md-grid'} />
   )

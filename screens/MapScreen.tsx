@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, View, Dimensions, Button } from "react-native";
 import MapView from 'react-native-maps';
+import { i18n } from "../constants/Dictionary";
 
 class MapScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
-        headerLeft: <Button onPress={()=>this.goBack(navigation)} title="< Ok" />
+        headerLeft: <Button onPress={()=>this.goBack(navigation)} title={"< " + i18n.okay} />
       });
 
     constructor(props) {
@@ -35,7 +36,7 @@ class MapScreen extends React.Component {
                   showsUserLocation={true}>
                     <MapView.Marker
                       coordinate={{ "latitude": this.state.region.latitude, "longitude": this.state.region.longitude }}
-                      title={"Picked Location"}
+                      title={i18n.pickedLocation.toCamelCase()}
                       onDragEnd={this.onDragEnd}
                       draggable />
                 </MapView>
