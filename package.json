@@ -36,8 +36,11 @@
     "expo-location": "~8.1.0"
   },
   "devDependencies": {
+    "@types/react": "^16.9.35",
+    "@types/react-native": "^0.62.9",
     "babel-preset-expo": "^8.1.0",
-    "jest-expo": "^37.0.0"
+    "jest-expo": "^37.0.0",
+    "typescript": "^3.9.2"
   },
   "private": true
 }
