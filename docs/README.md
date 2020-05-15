@@ -1,3 +1,5 @@
+![Test & Publish](https://github.com/ivgraai/expiry-util/workflows/Test%20&%20Publish/badge.svg)
+
 # Prerequisites
 
 `expo set permission`
