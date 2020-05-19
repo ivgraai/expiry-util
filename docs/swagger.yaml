@@ -5,7 +5,7 @@ info:
   title: "Expiry Util"
   contact:
     email: "ivgraai@gmail.com"
-host: "ivgraai.ddns.net"
+host: "localhost:8080"
 basePath: "/v1"
 tags:
 - name: "good"
@@ -13,36 +13,102 @@ tags:
 - name: "user"
   description: "Operations about user"
 schemes:
-- "https"
 - "http"
 paths:
+  /user/sign-up:
+    post:
+      tags:
+      - "user"
+      summary: "Register user"
+      description: ""
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "payload"
+        required: true
+        schema:
+          $ref: "#/definitions/UserSignUpRequest"
+      responses:
+        "200":
+          description: "User is successfully created"
+  /user/sign-in:
+    get:
+      tags:
+      - "user"
+      summary: "Login user"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Access token can now be used"
+          schema:
+            type: "string"
+            format: "uuid"
   /good:
     post:
       tags:
       - "good"
-      summary: "Add a new good to the list"
+      summary: "Add a new good"
       description: ""
       consumes:
       - "multipart/form-data"
-      produces:
-      - "application/json"
       parameters:
-      - in: "formData"
-        name: "image"
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "image"
+        in: "formData"
         required: false
         type: "file"
-      - in: "formData"
-        name: "name"
+      - name: "name"
+        in: "formData"
         required: true
         type: "string"
-      - in: "formData"
-        name: "expiry"
+      - name: "expiry"
+        in: "formData"
         required: true
         type: "string"
         format: "date"
+      - name: "location.latitude"
+        in: "formData"
+        required: false
+        type: "number"
+        format: "float"
+      - name: "location.longitude"
+        in: "formData"
+        required: false
+        type: "number"
+        format: "float"
+      - name: "available"
+        in: "formData"
+        required: false
+        type: "boolean"
       responses:
-        "405":
-          description: "Invalid input"
+        "200":
+          description: "Good is added"
+definitions:
+  UserSignUpRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
 externalDocs:
   description: "Find out more about the project"
   url: "https://github.com/ivgraai/expiry-util"
