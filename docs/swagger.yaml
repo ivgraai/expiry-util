@@ -56,26 +56,6 @@ paths:
       responses:
         "200":
           description: "User is successfully created"
-    put:
-      tags:
-      - "user"
-      summary: "Modify user details"
-      description: ""
-      consumes:
-      - "application/json"
-      parameters:
-      - name: "token"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "payload"
-        required: true
-        schema:
-          $ref: "#/definitions/UserChangeRequest"
-      responses:
-        "200":
-          description: "All data updated"
     delete:
       tags:
       - "user"
@@ -140,12 +120,19 @@ paths:
       description: ""
       produces:
       - "image/png"
-      parameters: # small or large?
+      parameters:
       - name: "id"
         in: "path"
         required: true
         type: "integer"
         format: "int64"
+      - name: "size"
+        in: "query"
+        required: true
+        type: "string"
+        enum:
+        - "small"
+        - "large"
       responses:
         "200":
           description: "Photo in PNG format"
@@ -192,9 +179,10 @@ paths:
         format: "float"
       - name: "radius"
         in: "query"
-        default: "3000"
+        required: false
         type: "integer"
-        format: "int64"
+        default: 3000
+        format: "int32"
       responses:
         "200":
           description: "Ordered result by distance"
@@ -244,7 +232,7 @@ paths:
           description: "Object"
           schema:
             $ref: "#/definitions/GoodResponse"
-  /request:
+  /request/all:
     get:
       tags:
       - "request"
@@ -259,13 +247,14 @@ paths:
         type: "string"
       - name: "goodId"
         in: "query"
+        required: false
         type: "integer"
         format: "int64"
       responses:
         "200":
           description: "Collection"
           schema:
-            $ref: "#/definitions/RequestResponse" # refactor
+            $ref: "#/definitions/RequestAllResponse"
   /request/{id}:
     put:
       tags:
@@ -284,7 +273,7 @@ paths:
         format: "int64"
       responses:
         "200":
-          description: "Request is modified"
+          description: "Need is updated"
 definitions:
   UserSignUpRequest:
     type: "object"
@@ -296,20 +285,10 @@ definitions:
         format: "email"
       password:
         type: "string"
-  UserChangeRequest:
-    type: "object"
-    properties:
-      email:
-        type: "string"
-        format: "email"
-      oldPassword:
-        type: "string"
-      newPassword:
-        type: "string"
   GoodAllResponse:
     type: "array"
     items:
-      properties: # needs counter
+      properties:
         imageId:
           type: "integer"
           format: "int64"
@@ -318,6 +297,8 @@ definitions:
         expiry:
           type: "string"
           format: "date"
+        isRequestedByOther: # counter
+          type: "boolean"
   GoodNearbyResponse:
     type: "array"
     items:
@@ -338,7 +319,8 @@ definitions:
         id:
           type: "integer"
           format: "int64"
-        # isRequested
+        isRequestedByMe:
+          type: "boolean"
   GoodNeedRequest:
     type: "object"
     properties:
@@ -347,7 +329,6 @@ definitions:
         format: "int64"
       message:
         type: "string"
-      # datetime
   GoodResponse:
     type: "object"
     properties:
@@ -369,7 +350,7 @@ definitions:
         type: "string"
       replyMessage:
         type: "string"
-  RequestResponse:
+  RequestAllResponse:
     type: "array"
     items:
       properties:
