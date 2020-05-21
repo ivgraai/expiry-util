@@ -33,7 +33,7 @@ export default class AllScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={{flex: 1}}>
         <NavigationEvents
           onWillFocus={payload => {
             DbHelper.selectGoods().then(result => {
