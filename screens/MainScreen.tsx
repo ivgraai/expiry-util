@@ -52,10 +52,15 @@ export default class MainScreen extends React.Component {
   }
 
   buttonAdd(object) {
+    var now: Date = new Date();
     temp = object.expiry;
+    temp.setHours(0, 0, 0, 0);
 
     for (i = 0; i < this.multiplier.length; i++) {
       temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
+      if (temp < now) {
+        continue;
+      }
       Notifications.scheduleLocalNotificationAsync(
         {
           title: object.goods.toUpperCase(),
