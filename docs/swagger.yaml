@@ -12,27 +12,12 @@ tags:
   description: "Access to goods"
 - name: "user"
   description: "Operations about user"
+- name: "request"
+  description: "List and accept needs"
 schemes:
 - "http"
 paths:
-  /user/sign-up:
-    post:
-      tags:
-      - "user"
-      summary: "Register user"
-      description: ""
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "payload"
-        required: true
-        schema:
-          $ref: "#/definitions/UserSignUpRequest"
-      responses:
-        "200":
-          description: "User is successfully created"
-  /user/sign-in:
+  /user:
     get:
       tags:
       - "user"
@@ -55,18 +40,67 @@ paths:
           schema:
             type: "string"
             format: "uuid"
-  /good:
+    post:
+      tags:
+      - "user"
+      summary: "Register user"
+      description: ""
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "payload"
+        required: true
+        schema:
+          $ref: "#/definitions/UserSignUpRequest"
+      responses:
+        "200":
+          description: "User is successfully created"
+    put:
+      tags:
+      - "user"
+      summary: "Modify user details"
+      description: ""
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "payload"
+        required: true
+        schema:
+          $ref: "#/definitions/UserChangeRequest"
+      responses:
+        "200":
+          description: "All data updated"
+    delete:
+      tags:
+      - "user"
+      summary: "Unregister user"
+      description: ""
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Profile deleted"
+  /good/add:
     post:
       tags:
       - "good"
-      summary: "Add a new good"
+      summary: "Share a new good"
       description: ""
       consumes:
       - "multipart/form-data"
       parameters:
       - name: "token"
         in: "header"
-        required: false
+        required: true
         type: "string"
       - name: "image"
         in: "formData"
@@ -93,11 +127,164 @@ paths:
         format: "float"
       - name: "available"
         in: "formData"
-        required: false
+        required: true
         type: "boolean"
       responses:
-        "200":
+        "200": # entity id
           description: "Good is added"
+  /good/image/{id}:
+    get:
+      tags:
+      - "good"
+      summary: "Find image by identifier"
+      description: ""
+      produces:
+      - "image/png"
+      parameters: # small or large?
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Photo in PNG format"
+  /good/all:
+    get:
+      tags:
+      - "good"
+      summary: "Fetch my goods"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Results"
+          schema:
+            $ref: "#/definitions/GoodAllResponse"
+  /good/nearby:
+    get:
+      tags:
+      - "good"
+      summary: "Fetch available goods"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "location.latitude"
+        in: "query"
+        required: true
+        type: "number"
+        format: "float"
+      - name: "location.longitude"
+        in: "query"
+        required: true
+        type: "number"
+        format: "float"
+      - name: "radius"
+        in: "query"
+        default: "3000"
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Ordered result by distance"
+          schema:
+            $ref: "#/definitions/GoodNearbyResponse"
+  /good/need:
+    post:
+      tags:
+      - "good"
+      summary: "Request the good"
+      description: ""
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "payload"
+        required: true
+        schema:
+          $ref: "#/definitions/GoodNeedRequest"
+      responses:
+        "200":
+          description: "Our need shown"
+  /good/{id}:
+    get:
+      tags:
+      - "good"
+      summary: "Check status of the good"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Object"
+          schema:
+            $ref: "#/definitions/GoodResponse"
+  /request:
+    get:
+      tags:
+      - "request"
+      summary: "Find all by good"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "goodId"
+        in: "query"
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Collection"
+          schema:
+            $ref: "#/definitions/RequestResponse" # refactor
+  /request/{id}:
+    put:
+      tags:
+      - "request"
+      summary: "Approve a request"
+      description: ""
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Request is modified"
 definitions:
   UserSignUpRequest:
     type: "object"
@@ -108,6 +295,108 @@ definitions:
         type: "string"
         format: "email"
       password:
+        type: "string"
+  UserChangeRequest:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        format: "email"
+      oldPassword:
+        type: "string"
+      newPassword:
+        type: "string"
+  GoodAllResponse:
+    type: "array"
+    items:
+      properties: # needs counter
+        imageId:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        expiry:
+          type: "string"
+          format: "date"
+  GoodNearbyResponse:
+    type: "array"
+    items:
+      properties:
+        imageId:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        expiry:
+          type: "string"
+          format: "date"
+        username:
+          type: "string"
+        distance:
+          type: "number"
+          format: "float"
+        id:
+          type: "integer"
+          format: "int64"
+        # isRequested
+  GoodNeedRequest:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      message:
+        type: "string"
+      # datetime
+  GoodResponse:
+    type: "object"
+    properties:
+      imageId:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      expiry:
+        type: "string"
+        format: "date"
+      address:
+        $ref: "#/definitions/Address"
+      username:
+        type: "string"
+      isAccepted:
+        type: "boolean"
+      myMessage:
+        type: "string"
+      replyMessage:
+        type: "string"
+  RequestResponse:
+    type: "array"
+    items:
+      properties:
+        username:
+          type: "string"
+        datetime:
+          type: "string"
+          format: "date-time"
+        message:
+          type: "string"
+        id: # redundant
+          type: "integer"
+          format: "int64"
+  Address:
+    type: "object"
+    properties:
+      city:
+        type: "string"
+      street:
+        type: "string"
+      region:
+        type: "string"
+      postalCode:
+        type: "string"
+      country:
+        type: "string"
+      name:
         type: "string"
 externalDocs:
   description: "Find out more about the project"
