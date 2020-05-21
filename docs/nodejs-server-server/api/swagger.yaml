@@ -13,21 +13,83 @@ tags:
   description: "Access to goods"
 - name: "user"
   description: "Operations about user"
+- name: "request"
+  description: "List and accept needs"
 schemes:
 - "http"
 paths:
-  /good:
-    post:
+  /user:
+    get:
       tags:
-      - "good"
-      summary: "Add a new good to the list"
+      - "user"
+      summary: "Login user"
       description: ""
-      operationId: "goodPOST"
-      consumes:
-      - "multipart/form-data"
+      operationId: "userGET"
       produces:
       - "application/json"
       parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Access token can now be used"
+          schema:
+            type: "string"
+            format: "uuid"
+      x-swagger-router-controller: "User"
+    post:
+      tags:
+      - "user"
+      summary: "Register user"
+      description: ""
+      operationId: "userPOST"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "payload"
+        required: true
+        schema:
+          $ref: "#/definitions/UserSignUpRequest"
+      responses:
+        "200":
+          description: "User is successfully created"
+      x-swagger-router-controller: "User"
+    delete:
+      tags:
+      - "user"
+      summary: "Unregister user"
+      description: ""
+      operationId: "userDELETE"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Profile deleted"
+      x-swagger-router-controller: "User"
+  /good/add:
+    post:
+      tags:
+      - "good"
+      summary: "Share a new good"
+      description: ""
+      operationId: "goodAddPOST"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
       - name: "image"
         in: "formData"
         required: false
@@ -41,15 +103,343 @@ paths:
         required: true
         type: "string"
         format: "date"
+      - name: "location.latitude"
+        in: "formData"
+        required: false
+        type: "number"
+        format: "float"
+      - name: "location.longitude"
+        in: "formData"
+        required: false
+        type: "number"
+        format: "float"
+      - name: "available"
+        in: "formData"
+        required: true
+        type: "boolean"
       responses:
         "200":
-          description: "Successful operation"
-          schema:
-            type: "string"
-        "405":
-          description: "Invalid input"
+          description: "Good is added"
       x-swagger-router-controller: "Good"
-definitions: {}
+  /good/image/{id}:
+    get:
+      tags:
+      - "good"
+      summary: "Find image by identifier"
+      description: ""
+      operationId: "goodImageIdGET"
+      produces:
+      - "image/png"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "size"
+        in: "query"
+        required: true
+        type: "string"
+        enum:
+        - "small"
+        - "large"
+      responses:
+        "200":
+          description: "Photo in PNG format"
+      x-swagger-router-controller: "Good"
+  /good/all:
+    get:
+      tags:
+      - "good"
+      summary: "Fetch my goods"
+      description: ""
+      operationId: "goodAllGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Results"
+          schema:
+            $ref: "#/definitions/GoodAllResponse"
+      x-swagger-router-controller: "Good"
+  /good/nearby:
+    get:
+      tags:
+      - "good"
+      summary: "Fetch available goods"
+      description: ""
+      operationId: "goodNearbyGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "location.latitude"
+        in: "query"
+        required: true
+        type: "number"
+        format: "float"
+      - name: "location.longitude"
+        in: "query"
+        required: true
+        type: "number"
+        format: "float"
+      - name: "radius"
+        in: "query"
+        required: false
+        type: "integer"
+        default: 3000
+        format: "int32"
+      responses:
+        "200":
+          description: "Ordered result by distance"
+          schema:
+            $ref: "#/definitions/GoodNearbyResponse"
+      x-swagger-router-controller: "Good"
+  /good/need:
+    post:
+      tags:
+      - "good"
+      summary: "Request the good"
+      description: ""
+      operationId: "goodNeedPOST"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "payload"
+        required: true
+        schema:
+          $ref: "#/definitions/GoodNeedRequest"
+      responses:
+        "200":
+          description: "Our need shown"
+      x-swagger-router-controller: "Good"
+  /good/{id}:
+    get:
+      tags:
+      - "good"
+      summary: "Check status of the good"
+      description: ""
+      operationId: "goodIdGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Object"
+          schema:
+            $ref: "#/definitions/GoodResponse"
+      x-swagger-router-controller: "Good"
+  /request/all:
+    get:
+      tags:
+      - "request"
+      summary: "Find all by good"
+      description: ""
+      operationId: "requestAllGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "goodId"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Collection"
+          schema:
+            $ref: "#/definitions/RequestAllResponse"
+      x-swagger-router-controller: "Request"
+  /request/{id}:
+    put:
+      tags:
+      - "request"
+      summary: "Approve a request"
+      description: ""
+      operationId: "requestIdPUT"
+      parameters:
+      - name: "token"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Need is updated"
+      x-swagger-router-controller: "Request"
+definitions:
+  UserSignUpRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
+    example:
+      password: "password"
+      name: "name"
+      email: "email"
+  GoodAllResponse:
+    type: "array"
+    items:
+      $ref: "#/definitions/GoodAllResponse_inner"
+  GoodNearbyResponse:
+    type: "array"
+    items:
+      $ref: "#/definitions/GoodNearbyResponse_inner"
+  GoodNeedRequest:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      message:
+        type: "string"
+    example:
+      id: 0
+      message: "message"
+  GoodResponse:
+    type: "object"
+    properties:
+      imageId:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      expiry:
+        type: "string"
+        format: "date"
+      address:
+        $ref: "#/definitions/Address"
+      username:
+        type: "string"
+      isAccepted:
+        type: "boolean"
+      myMessage:
+        type: "string"
+      replyMessage:
+        type: "string"
+    example:
+      imageId: 0
+      address:
+        country: "country"
+        city: "city"
+        street: "street"
+        postalCode: "postalCode"
+        name: "name"
+        region: "region"
+      replyMessage: "replyMessage"
+      isAccepted: true
+      name: "name"
+      expiry: "2000-01-23"
+      myMessage: "myMessage"
+      username: "username"
+  RequestAllResponse:
+    type: "array"
+    items:
+      $ref: "#/definitions/RequestAllResponse_inner"
+  Address:
+    type: "object"
+    properties:
+      city:
+        type: "string"
+      street:
+        type: "string"
+      region:
+        type: "string"
+      postalCode:
+        type: "string"
+      country:
+        type: "string"
+      name:
+        type: "string"
+    example:
+      country: "country"
+      city: "city"
+      street: "street"
+      postalCode: "postalCode"
+      name: "name"
+      region: "region"
+  GoodAllResponse_inner:
+    type: "object"
+    properties:
+      imageId:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      expiry:
+        type: "string"
+        format: "date"
+      isRequestedByOther:
+        type: "boolean"
+  GoodNearbyResponse_inner:
+    type: "object"
+    properties:
+      imageId:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      expiry:
+        type: "string"
+        format: "date"
+      username:
+        type: "string"
+      distance:
+        type: "number"
+        format: "float"
+      id:
+        type: "integer"
+        format: "int64"
+      isRequestedByMe:
+        type: "boolean"
+  RequestAllResponse_inner:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      datetime:
+        type: "string"
+        format: "date-time"
+      message:
+        type: "string"
+      id:
+        type: "integer"
+        format: "int64"
 externalDocs:
   description: "Find out more about the project"
   url: "https://github.com/ivgraai/expiry-util"
