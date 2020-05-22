@@ -32,7 +32,6 @@ class MainScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      goods: i18n.perishableGoods.toUpperCase(),
       expiry: new Date(),
       photo: undefined,
       label: i18n.setLocation.toUpperCase()
@@ -58,6 +57,7 @@ class MainScreen extends React.Component {
     var now: Date = new Date();
     temp = object.expiry;
     temp.setHours(0, 0, 0, 0);
+    var objectGoods = this.props.goods;
 
     for (i = 0; i < this.multiplier.length; i++) {
       temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
@@ -66,7 +66,7 @@ class MainScreen extends React.Component {
       }
       Notifications.scheduleLocalNotificationAsync(
         {
-          title: object.goods.toUpperCase(),
+          title: objectGoods.toUpperCase(),
           body: i18n.bestBefore.capitalize() + ": " + object.expiry
         },
         { time: temp.getTime() }
@@ -76,7 +76,7 @@ class MainScreen extends React.Component {
     }
 
     DbHelper.insertGood({
-      name: object.goods,
+      name: objectGoods,
       expiry: temp,
       image: object.photo
     });
@@ -155,8 +155,8 @@ class MainScreen extends React.Component {
               borderWidth: 1,
               width: "75%"
             }}
-            onChangeText={goods => this.setState({ goods })}
-            placeholder={this.state.goods}
+            onChangeText={goods => this.props.setStateGoods(goods)}
+            placeholder={i18n.perishableGoods.toUpperCase()}
           />
           <Text style={{ textAlign: "center", marginTop: 15, marginBottom: 5 }}>
             {i18n.expirationDate.toUpperCase() + ":"}

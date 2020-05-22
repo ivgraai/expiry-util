@@ -16,6 +16,8 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './constants/redux/Reducers';
 
+// With the help of the reducer and the initial state, we can create the store object.
+// A store is an object that brings actions and reducers together. It provides and holds state at the application level instead of individual components.
 const store = createStore(reducer);
 
 String.prototype.capitalize = function() {
@@ -39,6 +41,7 @@ export default function App(props) {
     );
   } else {
     return (
+// To bind a React or React Native application with Redux, you do it with the high ordered component Provider. It basically passes the store down to the rest of the application.
       <Provider store={store}>
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
