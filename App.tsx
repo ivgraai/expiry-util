@@ -12,6 +12,12 @@ import DbHelper from './DbHelper';
 
 import Constants from 'expo-constants';
 
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './constants/redux/Reducers';
+
+const store = createStore(reducer);
+
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 }
@@ -33,10 +39,12 @@ export default function App(props) {
     );
   } else {
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <AppNavigator />
+        </View>
+      </Provider>
     );
   }
 }

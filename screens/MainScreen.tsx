@@ -16,7 +16,10 @@ import DbHelper from "../DbHelper";
 import * as Location from 'expo-location';
 import { i18n } from '../constants/Dictionary';
 
-export default class MainScreen extends React.Component {
+import { connect } from 'react-redux';
+import * as conn from '../constants/redux/Connecting';
+
+class MainScreen extends React.Component {
   static navigationOptions = {
     title: i18n.new
   };
@@ -101,6 +104,7 @@ export default class MainScreen extends React.Component {
     if (!image.cancelled) {
       this.setState({ photo: image.uri });
     }
+    this.props.chooseImage();
   };
 
   render() {
@@ -131,7 +135,7 @@ export default class MainScreen extends React.Component {
               width: "75%"
             }}
           >
-            {photo ? (
+            {this.props.isChosen ? (
               <Image
                 source={{ uri: photo }}
                 style={{ width: "100%", height: "100%" }}
@@ -212,3 +216,8 @@ export default class MainScreen extends React.Component {
     );
   }
 }
+
+export default connect(
+  conn.mapStateToProps,
+  conn.mapDispatchToProps
+)(MainScreen);
