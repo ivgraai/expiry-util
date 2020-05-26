@@ -67,7 +67,7 @@ class MainScreen extends React.Component {
       Notifications.scheduleLocalNotificationAsync(
         {
           title: objectGoods.toUpperCase(),
-          body: i18n.bestBefore.capitalize() + ": " + object.expiry
+          body: i18n.bestBefore.capitalize() + ": " + object.expiry.toLocaleDateString()
         },
         { time: temp.getTime() }
       ).then(id => {
