@@ -27,7 +27,8 @@
     },
     "description": "",
     "extra": {
-      "init": false
+      "init": false,
+      "serverUrl": "http://192.168.8.104:8080/v1/"
     }
   }
 }
