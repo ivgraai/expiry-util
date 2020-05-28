@@ -28,9 +28,6 @@ class MainScreen extends React.Component {
   dayOffset = 24 * 60 * 60 * 1000;
   multiplier = [-3, 2, 1];
 
-  // TODO:
-  //  button should be disabled after persisting
-
   constructor(props) {
     super(props);
     this.state = {
