@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Alert
 } from "react-native";
+import { CheckBox } from 'react-native-elements'
 import { Notifications } from "expo";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from "expo-image-picker";
@@ -43,8 +44,10 @@ class MainScreen extends React.Component {
       lat = this.props.navigation.getParam("latitude");
       lng = this.props.navigation.getParam("longitude");
       if (undefined != lat && undefined != lng) {
-        Location.reverseGeocodeAsync({latitude: lat, longitude: lng}).then(addresses =>
-          this.setState({label: addresses[0].city}));
+        Location.reverseGeocodeAsync({latitude: lat, longitude: lng}).then(addresses => {
+          this.setState({label: addresses[0].city});
+          this.props.checkAvailable();
+        });
       }
     });
   }
@@ -163,7 +166,7 @@ class MainScreen extends React.Component {
           </Text>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <DateTimePicker
-              style={{ width: "75%", height: 175 }}
+              style={{ width: "75%", height: 190 }}
               testID="dateTimePicker"
               timeZoneOffsetInMinutes={0}
               value={this.state.expiry}
@@ -175,7 +178,11 @@ class MainScreen extends React.Component {
               }}
             />
           </View>
-          <Button title={this.state.label} onPress={() => this.props.navigation.navigate('Map')} />
+          <CheckBox
+            checked={this.props.available}
+            title={this.state.label}
+            onPress={() => this.props.available ? this.props.checkAvailable() : this.props.navigation.navigate('Map')}
+          />
           <View
             style={{
               flex: 2,
