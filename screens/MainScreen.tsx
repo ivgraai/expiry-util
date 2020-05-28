@@ -186,6 +186,8 @@ class MainScreen extends React.Component {
             />
           </View>
           <CheckBox
+            containerStyle={{backgroundColor: "transparent", borderWidth: 0}}
+            textStyle={{fontWeight: "normal"}}
             checked={this.props.available}
             title={this.state.label}
             onPress={() => this.props.available ? this.props.checkAvailable() : this.navigate()}
