@@ -9,13 +9,14 @@ import {
   StyleSheet,
   Alert
 } from "react-native";
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { CheckBox } from 'react-native-elements'
 import { Notifications } from "expo";
-import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from "expo-image-picker";
-import DbHelper from "../DbHelper";
 import * as Location from 'expo-location';
 import { i18n } from '../constants/Dictionary';
+import DbHelper from "../DbHelper";
+import UserManager from '../services/UserManager';
 
 import { connect } from 'react-redux';
 import * as conn from '../constants/redux/Connecting';
@@ -110,6 +111,12 @@ class MainScreen extends React.Component {
     this.props.chooseImage();
   };
 
+  navigate() {
+    UserManager.isSignedIn().then(result =>
+      this.props.navigation.navigate(result ? 'Map' : 'User')
+    );
+  }
+
   render() {
     let { photo } = this.state;
     return (
@@ -181,7 +188,7 @@ class MainScreen extends React.Component {
           <CheckBox
             checked={this.props.available}
             title={this.state.label}
-            onPress={() => this.props.available ? this.props.checkAvailable() : this.props.navigation.navigate('Map')}
+            onPress={() => this.props.available ? this.props.checkAvailable() : this.navigate()}
           />
           <View
             style={{

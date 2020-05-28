@@ -9,6 +9,7 @@ import AllScreen from '../screens/AllScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import MapScreen from '../screens/MapScreen';
+import UserScreen from '../screens/UserScreen';
 import { i18n } from '../constants/Dictionary';
 
 const config = Platform.select({
@@ -42,7 +43,8 @@ HomeStack.path = '';
 const MainStack = createStackNavigator(
   {
     Main: { screen: MainScreen },
-    Map: { screen: MapScreen }
+    Map: { screen: MapScreen },
+    User: { screen: UserScreen }
   },
   {
     initialRouteName: 'Main'

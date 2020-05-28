@@ -15,7 +15,13 @@ const MESSAGES: any = {
         chooseAPhoto:                           'choose a photo',
         expirationDate:                         'expiration date',
         pickedLocation:                         'picked location',
-        all:                                    'All'
+        all:                                    'All',
+        signUp:                                 'sign up',
+        name:                                   'name',
+        emailAddress:                           'email address',
+        password:                               'password',
+        confirmPassword:                        'confirm password',
+        submit:                                 'submit'
     },
     hu: {
         add:                                    'hozzáad',
@@ -30,7 +36,13 @@ const MESSAGES: any = {
         chooseAPhoto:                           'válassz egy fényképet',
         expirationDate:                         'lejárat',
         pickedLocation:                         'kiválasztott helyzet',
-        all:                                    'Összes'
+        all:                                    'Összes',
+        signUp:                                 'regisztráció',
+        name:                                   'név',
+        emailAddress:                           'email cím',
+        password:                               'jelszó',
+        confirmPassword:                        'jelszó megerősítése',
+        submit:                                 'beküld'
     }
     // , default: en
 };
