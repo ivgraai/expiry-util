@@ -109,9 +109,13 @@ class MainScreen extends React.Component {
   };
 
   navigate() {
-    UserManager.isSignedIn().then(result =>
-      this.props.navigation.navigate(result ? 'Map' : 'User')
-    );
+    UserManager.isSignedIn().then(result => {
+      if (result) {
+        this.props.navigation.navigate('Map');
+      } else {
+        this.props.navigation.navigate('User', {message: i18n.inOrderToMarkAsAvailableYouNeedToSignIn.capitalize() + '!'});
+      }
+    });
   }
 
   render() {
