@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, Alert } from "react-native";
 import { i18n } from '../constants/Dictionary';
 import HttpClient from '../services/HttpClient';
 import UserManager from '../services/UserManager';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 export default class UserScreen extends React.Component {
     private name!: string;
@@ -19,7 +20,13 @@ export default class UserScreen extends React.Component {
     signUp() {
         HttpClient.register(this.name, this.email, this.password)
             .then(response => {
-                Alert.alert(response.ok ? i18n.youHaveSuccessfullysignedUp.toUpperCase() : i18n.aProblemOccurredWhileFinalizingYourSigningUp.toUpperCase());
+                if (response.ok) {
+                    Alert.alert(i18n.youHaveSuccessfullysignedUp.toUpperCase(), '', [{
+                        text: i18n.signIn.toUpperCase(), onPress: () => this.setState({switched: false})
+                    }]);
+                } else {
+                    Alert.alert(i18n.aProblemOccurredWhileCommunicatingWithTheServer.toUpperCase());
+                }
             });
     }
 
@@ -28,7 +35,11 @@ export default class UserScreen extends React.Component {
             .then(response => {
                 if (typeof response === 'string') {
                     UserManager.setToken(response);
-                    // navigation.goBack() or to the MapScreen
+                    let replaceAction = StackActions.replace({
+                        key: undefined,
+                        routeName: 'Map'
+                    });
+                    this.props.navigation.dispatch(replaceAction);
                 }
             });
     }
@@ -45,6 +56,7 @@ export default class UserScreen extends React.Component {
                 <TextInput style = {{ borderColor: "lightgray", borderWidth: 1 }} secureTextEntry={true}/>
                 <Text>{i18n.emailAddress.toCamelCase()}</Text>
                 <TextInput style = {{ borderColor: "lightgray", borderWidth: 1 }} onChangeText={email => this.email = email}/>
+                <Button title={i18n.signIn.toCamelCase()} onPress={() => this.setState({switched: false})}/>
                 <Button title={i18n.submit.toCamelCase()} onPress={() => this.signUp()}/>
             </> : <>
                 <Text>{i18n.signIn.toUpperCase()}</Text>
