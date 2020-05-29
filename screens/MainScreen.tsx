@@ -9,12 +9,14 @@ import {
   StyleSheet,
   Alert
 } from "react-native";
-import { Notifications } from "expo";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { CheckBox } from 'react-native-elements'
+import { Notifications } from "expo";
 import * as ImagePicker from "expo-image-picker";
-import DbHelper from "../DbHelper";
 import * as Location from 'expo-location';
 import { i18n } from '../constants/Dictionary';
+import DbHelper from "../DbHelper";
+import UserManager from '../services/UserManager';
 
 import { connect } from 'react-redux';
 import * as conn from '../constants/redux/Connecting';
@@ -25,9 +27,6 @@ class MainScreen extends React.Component {
   };
   dayOffset = 24 * 60 * 60 * 1000;
   multiplier = [-3, 2, 1];
-
-  // TODO:
-  //  button should be disabled after persisting
 
   constructor(props) {
     super(props);
@@ -43,8 +42,10 @@ class MainScreen extends React.Component {
       lat = this.props.navigation.getParam("latitude");
       lng = this.props.navigation.getParam("longitude");
       if (undefined != lat && undefined != lng) {
-        Location.reverseGeocodeAsync({latitude: lat, longitude: lng}).then(addresses =>
-          this.setState({label: addresses[0].city}));
+        Location.reverseGeocodeAsync({latitude: lat, longitude: lng}).then(addresses => {
+          this.setState({label: addresses[0].city});
+          this.props.checkAvailable();
+        });
       }
     });
   }
@@ -107,6 +108,16 @@ class MainScreen extends React.Component {
     this.props.chooseImage();
   };
 
+  navigate() {
+    UserManager.isSignedIn().then(result => {
+      if (result) {
+        this.props.navigation.navigate('Map');
+      } else {
+        this.props.navigation.navigate('User', {message: i18n.inOrderToMarkAsAvailableYouNeedToSignIn.capitalize() + '!'});
+      }
+    });
+  }
+
   render() {
     let { photo } = this.state;
     return (
@@ -163,7 +174,7 @@ class MainScreen extends React.Component {
           </Text>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <DateTimePicker
-              style={{ width: "75%", height: 175 }}
+              style={{ width: "75%", height: 190 }}
               testID="dateTimePicker"
               timeZoneOffsetInMinutes={0}
               value={this.state.expiry}
@@ -175,7 +186,13 @@ class MainScreen extends React.Component {
               }}
             />
           </View>
-          <Button title={this.state.label} onPress={() => this.props.navigation.navigate('Map')} />
+          <CheckBox
+            containerStyle={{backgroundColor: "transparent", borderWidth: 0}}
+            textStyle={{fontWeight: "normal"}}
+            checked={this.props.available}
+            title={this.state.label}
+            onPress={() => this.props.available ? this.props.checkAvailable() : this.navigate()}
+          />
           <View
             style={{
               flex: 2,

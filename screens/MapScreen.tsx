@@ -11,10 +11,7 @@ class MapScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            region: {
-                latitude: 47.49801,
-                longitude: 19.03991
-            }
+            region: MapScreen.location
         };
     }
 
@@ -22,7 +19,10 @@ class MapScreen extends React.Component {
         nav.navigate('Main', {"latitude": MapScreen.location.latitude, "longitude": MapScreen.location.longitude});
     }
 
-    static location = undefined; // TODO
+    static location = {
+        latitude: 47.49801,
+        longitude: 19.03991
+    };
 
     onDragEnd(e) {
         MapScreen.location = e.nativeEvent.coordinate;

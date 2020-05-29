@@ -9,6 +9,7 @@ import AppNavigator from './navigation/AppNavigator';
 
 import * as Permissions from 'expo-permissions';
 import DbHelper from './DbHelper';
+import UserManager from './services/UserManager';
 
 import Constants from 'expo-constants';
 
@@ -65,6 +66,7 @@ if (!__DEV__) {
 if (Constants.manifest.extra.init) {
   Notifications.cancelAllScheduledNotificationsAsync();
   DbHelper.deleteGoods();
+  UserManager.removeToken();
 }
 
 async function loadResourcesAsync() {

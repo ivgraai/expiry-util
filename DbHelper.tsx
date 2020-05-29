@@ -23,6 +23,6 @@ export default class DbHelper {
     }
 
     static deleteGoods() {
-        db.exec([{sql: "DROP TABLE goods", args: []}], false);
+        db.exec([{sql: "DROP TABLE goods", args: []}], false, () => {});
     }
 }
