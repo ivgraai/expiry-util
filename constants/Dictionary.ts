@@ -25,7 +25,8 @@ const MESSAGES: any = {
         youHaveSuccessfullysignedUp:                        'you have successfully signed up',
         aProblemOccurredWhileCommunicatingWithTheServer:    'a problem occurred while communicating with the server',
         inOrderToMarkAsAvailableYouNeedToSignIn:            'in order to mark as available you need to sign in',
-        signIn:                                             'sign in'
+        signIn:                                             'sign in',
+        or:                                                 'or'
     },
     hu: {
         add:                                                'hozzáad',
@@ -50,7 +51,8 @@ const MESSAGES: any = {
         youHaveSuccessfullysignedUp:                        'sikeresen regisztráltál',
         aProblemOccurredWhileCommunicatingWithTheServer:    'probléma merült fel a szerverrel való kommunikáció során',
         inOrderToMarkAsAvailableYouNeedToSignIn:            'be kell jelentkezned, hogy megjelöld elérhetőként',
-        signIn:                                             'bejelentkezés'
+        signIn:                                             'bejelentkezés',
+        or:                                                 'vagy'
     }
     // , default: en
 };

@@ -4,6 +4,7 @@ import { i18n } from '../constants/Dictionary';
 import HttpClient from '../services/HttpClient';
 import UserManager from '../services/UserManager';
 import { StackActions, NavigationActions } from 'react-navigation';
+import { styles } from '../constants/styles/UserScreen';
 
 export default class UserScreen extends React.Component {
     private name!: string;
@@ -47,29 +48,33 @@ export default class UserScreen extends React.Component {
     render() {
         const { navigation } = this.props;
         let form = this.state.switched ? <>
-                <Text>{i18n.signUp.toUpperCase()}</Text>
-                <Text>{i18n.name.toCamelCase()}</Text>
-                <TextInput style = {{ borderColor: "lightgray", borderWidth: 1 }} onChangeText={name => this.name = name}/>
-                <Text>{i18n.password.toCamelCase()}</Text>
-                <TextInput style = {{ borderColor: "lightgray", borderWidth: 1 }} onChangeText={password => this.password = password} secureTextEntry={true}/>
-                <Text>{i18n.confirmPassword.toCamelCase()}</Text>
-                <TextInput style = {{ borderColor: "lightgray", borderWidth: 1 }} secureTextEntry={true}/>
-                <Text>{i18n.emailAddress.toCamelCase()}</Text>
-                <TextInput style = {{ borderColor: "lightgray", borderWidth: 1 }} onChangeText={email => this.email = email}/>
-                <Button title={i18n.signIn.toCamelCase()} onPress={() => this.setState({switched: false})}/>
-                <Button title={i18n.submit.toCamelCase()} onPress={() => this.signUp()}/>
+                <Text style={styles.signUpInText}>{i18n.signUp.toUpperCase()}</Text>
+                <View style={styles.hrView}/>
+                <Text style={styles.text}>{i18n.name.toCamelCase()}</Text>
+                <TextInput style = {styles.textInput} onChangeText={name => this.name = name}/>
+                <Text style={styles.text}>{i18n.password.toCamelCase()}</Text>
+                <TextInput style = {styles.textInput} onChangeText={password => this.password = password} secureTextEntry={true}/>
+                <Text style={styles.text}>{i18n.confirmPassword.toCamelCase()}</Text>
+                <TextInput style = {styles.textInput} secureTextEntry={true}/>
+                <Text style={styles.text}>{i18n.emailAddress.toCamelCase()}</Text>
+                <TextInput style = {styles.textInput} onChangeText={email => this.email = email}/>
+                <View style={styles.buttonWrapper}><Button title={i18n.signIn.toCamelCase()} onPress={() => this.setState({switched: false})}/></View>
+                <Text style={styles.orText}>{i18n.or}</Text>
+                <View style={styles.buttonWrapper}><Button title={i18n.submit.toCamelCase()} onPress={() => this.signUp()}/></View>
             </> : <>
-                <Text>{i18n.signIn.toUpperCase()}</Text>
-                <Text>{i18n.name.toCamelCase()}</Text>
-                <TextInput style = {{ borderColor: "lightgray", borderWidth: 1 }} onChangeText={name => this.name = name}/>
-                <Text>{i18n.password.toCamelCase()}</Text>
-                <TextInput style = {{ borderColor: "lightgray", borderWidth: 1 }} onChangeText={password => this.password = password} secureTextEntry={true}/>
-                <Button title={i18n.signUp.toCamelCase()} onPress={() => this.setState({switched: true})}/>
-                <Button title={i18n.submit.toCamelCase()} onPress={() => this.signIn()}/>
+                <Text style={styles.signUpInText}>{i18n.signIn.toUpperCase()}</Text>
+                <View style={styles.hrView}/>
+                <Text style={styles.text}>{i18n.name.toCamelCase()}</Text>
+                <TextInput style = {styles.textInput} onChangeText={name => this.name = name}/>
+                <Text style={styles.text}>{i18n.password.toCamelCase()}</Text>
+                <TextInput style = {styles.textInput} onChangeText={password => this.password = password} secureTextEntry={true}/>
+                <View style={styles.buttonWrapper}><Button title={i18n.signUp.toCamelCase()} onPress={() => this.setState({switched: true})}/></View>
+                <Text style={styles.orText}>{i18n.or}</Text>
+                <View style={styles.buttonWrapper}><Button title={i18n.submit.toCamelCase()} onPress={() => this.signIn()}/></View>
             </>;
         return (
-            <View style = {{ flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "stretch" }}>
-                <Text>{navigation.getParam('message')}</Text>
+            <View style={styles.container}>
+                <Text style={styles.messageText}>{navigation.getParam('message')}</Text>
                 {form}
             </View>
         );
