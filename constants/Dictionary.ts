@@ -24,7 +24,8 @@ const MESSAGES: any = {
         submit:                                         'submit',
         youHaveSuccessfullysignedUp:                    'you have successfully signed up',
         aProblemOccurredWhileFinalizingYourSigningUp:   'a problem occurred while finalizing your signing up',
-        inOrderToMarkAsAvailableYouNeedToSignIn:        'in order to mark as available you need to sign in'
+        inOrderToMarkAsAvailableYouNeedToSignIn:        'in order to mark as available you need to sign in',
+        signIn:                                         'sign in'
     },
     hu: {
         add:                                            'hozzáad',
@@ -47,8 +48,9 @@ const MESSAGES: any = {
         confirmPassword:                                'jelszó megerősítése',
         submit:                                         'beküld',
         youHaveSuccessfullysignedUp:                    'sikeresen regisztráltál',
-        aProblemOccurredWhileFinalizingYourSigningUp:   'probléma merült fel míg regisztrációját véglegesíteni próbáltuk',
-        inOrderToMarkAsAvailableYouNeedToSignIn:        'be kell jelentkezned, hogy megjelöld elérhetőként'
+        aProblemOccurredWhileFinalizingYourSigningUp:   'probléma merült fel míg regisztrációját véglegesítettük',
+        inOrderToMarkAsAvailableYouNeedToSignIn:        'be kell jelentkezned, hogy megjelöld elérhetőként',
+        signIn:                                         'bejelentkezés'
     }
     // , default: en
 };

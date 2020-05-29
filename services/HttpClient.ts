@@ -9,14 +9,14 @@ export default class HttpClient {
     private static ERROR_HANDLER = (e: any) => console.warn(e);
     private static DEFAULT_RADIUS: number = 3000;
 
-    public static login(name: string, password: string): Promise<String> {
+    public static login(name: string, password: string): Promise<void | string> {
         return fetch(BASE_URL + `user?name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json'
             }
           })
-          .then(response => response.json())
+          .then(response => response.text())
           .catch(this.ERROR_HANDLER);
     }
 
