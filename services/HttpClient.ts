@@ -6,7 +6,7 @@ const BASE_URL: string = Constants.manifest.extra.serverUrl;
 
 export default class HttpClient {
 
-    private static ERROR_HANDLER = (e: any) => console.warn(e);
+    public static ERROR_HANDLER = (e: any) => console.warn(e);
     private static DEFAULT_RADIUS: number = 3000;
 
     public static login(name: string, password: string): Promise<void | string> {
@@ -20,7 +20,7 @@ export default class HttpClient {
           .catch(this.ERROR_HANDLER);
     }
 
-    public static register(name: string, email: string, password: string): Promise<void | Response> {
+    public static register(name: string, email: string, password: string): Promise<Response> {
         return fetch(BASE_URL + 'user', {
             method: 'POST',
             headers: {
@@ -32,8 +32,7 @@ export default class HttpClient {
                 email
             })
           })
-          .then()
-          .catch(this.ERROR_HANDLER);
+          .then();
     }
 
     public static unregister(token: string): Promise<void | Response> {

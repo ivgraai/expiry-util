@@ -33,5 +33,9 @@ export const styles = StyleSheet.create({
     hrView: {
         borderBottomColor: "#808080",
         borderBottomWidth: 1
+    },
+    error: {
+        borderColor: "pink",
+        borderWidth: 3
     }
   });

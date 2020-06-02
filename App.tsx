@@ -21,14 +21,6 @@ import reducer from './constants/redux/Reducers';
 // A store is an object that brings actions and reducers together. It provides and holds state at the application level instead of individual components.
 const store = createStore(reducer);
 
-String.prototype.capitalize = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-}
-String.prototype.toCamelCase = function() {
-  return this.toLowerCase()
-      .replace(/(\s|^)(.)/g, function($1) { return $1.toUpperCase(); });
-}
-
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 

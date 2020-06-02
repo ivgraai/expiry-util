@@ -26,7 +26,13 @@ const MESSAGES: any = {
         aProblemOccurredWhileCommunicatingWithTheServer:    'a problem occurred while communicating with the server',
         inOrderToMarkAsAvailableYouNeedToSignIn:            'in order to mark as available you need to sign in',
         signIn:                                             'sign in',
-        or:                                                 'or'
+        or:                                                 'or',
+        pleaseEnterAName:                                   'please enter a name',
+        pleaseEnterAPassword:                               'please enter a password',
+        passwordMustBeAtLeast6Characters:                   'password must be at least 6 characters',
+        confirmPasswordMustBeEqualToPassword:               'confirm password must be equal to password',
+        pleaseEnterAnEmailAddress:                          'please enter an email address',
+        pleaseEnterAValidEmailAddress:                      'please enter a valid email address'
     },
     hu: {
         add:                                                'hozzáad',
@@ -34,11 +40,11 @@ const MESSAGES: any = {
         setLocation:                                        'hely meghatározása',
         bestBefore:                                         'jó mielőtt',
         successfullyAdded:                                  'sikeresen hozzáadva',
-        letsContinueWithOtherPerishableGood:                'gyerünk folytasd más romlandó áruval',
+        letsContinueWithOtherPerishableGood:                'gyerünk folytassa más romlandó áruval',
         cancel:                                             'mégsem',
         okay:                                               'Oké',
         new:                                                'Új',
-        chooseAPhoto:                                       'válassz egy fényképet',
+        chooseAPhoto:                                       'válasszon egy fényképet',
         expirationDate:                                     'lejárat',
         pickedLocation:                                     'kiválasztott helyzet',
         all:                                                'Összes',
@@ -48,11 +54,17 @@ const MESSAGES: any = {
         password:                                           'jelszó',
         confirmPassword:                                    'jelszó megerősítése',
         submit:                                             'beküld',
-        youHaveSuccessfullysignedUp:                        'sikeresen regisztráltál',
+        youHaveSuccessfullysignedUp:                        'sikeresen regisztrált',
         aProblemOccurredWhileCommunicatingWithTheServer:    'probléma merült fel a szerverrel való kommunikáció során',
-        inOrderToMarkAsAvailableYouNeedToSignIn:            'be kell jelentkezned, hogy megjelöld elérhetőként',
+        inOrderToMarkAsAvailableYouNeedToSignIn:            'be kell jelentkeznie, hogy megjelölje elérhetőként',
         signIn:                                             'bejelentkezés',
-        or:                                                 'vagy'
+        or:                                                 'vagy',
+        pleaseEnterAName:                                   'kérjük, adjon meg egy nevet',
+        pleaseEnterAPassword:                               'kérjük, adjon meg egy jelszót',
+        passwordMustBeAtLeast6Characters:                   'a jelszó legalább 6 karakter kell hogy legyen',
+        confirmPasswordMustBeEqualToPassword:               'a két jelszó meg kell hogy egyezzen',
+        pleaseEnterAnEmailAddress:                          'kérjük, adjon meg egy email címet',
+        pleaseEnterAValidEmailAddress:                      'kérjük, adjon meg egy érvényes email címet'
     }
     // , default: en
 };
