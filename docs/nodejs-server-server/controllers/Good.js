@@ -48,7 +48,8 @@ module.exports.goodImageIdGET = function goodImageIdGET (req, res, next) {
   var size = req.swagger.params['size'].value;
   Good.goodImageIdGET(id,size)
     .then(function (response) {
-      utils.writeJson(res, response);
+      res.writeHead(200, {'Content-Type': 'image/jpg'});
+      res.end(response, 'binary');
     })
     .catch(function (response) {
       utils.writeJson(res, response);

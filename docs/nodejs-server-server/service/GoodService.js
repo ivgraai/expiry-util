@@ -96,7 +96,8 @@ exports.goodIdGET = function(id,token) {
  **/
 exports.goodImageIdGET = function(id,size) {
   return new Promise(function(resolve, reject) {
-    resolve();
+    var image = fs.readFileSync('/tmp/dummy.jpg');
+    resolve(image);
   });
 }
 

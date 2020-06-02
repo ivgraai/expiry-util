@@ -3,12 +3,14 @@ import {
   FlatList,
   Text,
   View,
-  Image,
   PixelRatio
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import DbHelper from "../DbHelper";
 import { i18n } from "../constants/Dictionary";
+import HttpClient from "../services/HttpClient";
+import { SizeRequest } from "../constants/Dtos";
+import CachedImage from "../components/CachedImage";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
@@ -23,12 +25,16 @@ export default class AllScreen extends React.Component {
         {
           expiry: new Date("1970-01-01T00:00:00.000Z"),
           id: 1,
-          image:
-            "file:///var/mobile/Containers/Data/Application/48872CFA-5B74-4E97-8518-931C31599958/Library/Caches/ExponentExperienceData/%2540ivgraai%252Fexpiry-util/ImagePicker/17712052-855A-459D-8820-5A84E9F52690.jpg",
+          image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAMAAABlApw1AAAAVFBMVEX09PSYmJj////w8PCfn5/T09PDw8Ps7Ozo6OjAwMC9vb3Nzc2np6fQ0NDHx8f7+/vKysqlpaXe3t75+fmcnJytra329vaoqKjj4+O6urqzs7PX19dwzFsyAAACIklEQVR42u3dy3LiMBBA0W7hF4REE794/f9/jizigUmRhVbunrln40LFQheMS71CwkPs99fTqKpvsvrQzM7aeLru+xgengLOo7HN/rjWDS8Couwq/fJLVo0aXDuKSPweMC/vMLjZV2uNJPNfAVEW3anpu52Ytuv6ppMsPgKiuBT/BIhT8z1gNn7X/KipJAccqlocaifVwxLQqurV4ZfwrkmbAi7pOolDk6pegsQxXXtxqFfVMebLSVw65Y9+r6of4lKjqnu5er2D7vfQNX8PrbjU5cfPqKoOH6JZ18osAID/2/H4+SlO7RLRRJzShIACBBBgDQGFCHgZ0LZdJ05ViQAA4BozcRkOcwRYQkAhAgiwhpkYAIDNMROX4TBHgCUEFCKAAGuYiQEA2BwzcRkOcwRYQkAhAgiwhpkYAIDNMROX4TBHgCUEFCKAAGuYiQEA2BwzcRkOcwRYQkAhAgiwhpkYAIDNMROX4TBHgCUEFCKAAGuYiQEA2BwzcRkOcwRYQkAhAgiwZp2Jnf49scg0nY4yiGuD/4AorkUJ4lr4BwJc/wiGFBDStavFnZ0kYQmIUo/qruBW1SIxB4SLJjdxpVbVRsI94KzJ+CaOvOmiywFJrYupFyf6SRd1yAGPgnEnLjS67j8HZOdKVS/y5V1XBzG4dtOkOoc1IJOD6tngZl+uVcuLsAas2kZWta72JteaSxtWEp7FYZiNbfbb2jwMMTz7Db9pGCvtnV2wAAAAAElFTkSuQmCC',
           name: "dummy"
         }
       ]
     };
+  }
+
+  remoteURI(localURI, goodId) {
+    // Update cache: add new query parameter based on current date!
+    return /*HttpClient.findImageURL(goodId, SizeRequest.small)*/ localURI;
   }
 
   render() {
@@ -41,7 +47,7 @@ export default class AllScreen extends React.Component {
                 dataSource:
                   result._array
                     .map(a => {
-                      return { ...a, expiry: new Date(a.expiry) };
+                      return { ...a, expiry: new Date(a.expiry), image: this.remoteURI(a.image, 0) }; // TODO: fixme
                     })
                     .sort((a, b) => a.expiry.getTime() - b.expiry.getTime())
               });
@@ -55,7 +61,7 @@ export default class AllScreen extends React.Component {
             renderItem={({item}) => (
               <View style={{ flexDirection: "row", height: this.height }}>
                 <View style={{ flex: 2, alignItems: "center" }}>
-                  <Image
+                  <CachedImage
                     source={{ uri: item.image }}
                     style={{ height: "90%", width: "90%", aspectRatio: 1 }}
                   />
