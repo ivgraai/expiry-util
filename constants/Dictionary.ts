@@ -32,7 +32,8 @@ const MESSAGES: any = {
         passwordMustBeAtLeast6Characters:                   'password must be at least 6 characters',
         confirmPasswordMustBeEqualToPassword:               'confirm password must be equal to password',
         pleaseEnterAnEmailAddress:                          'please enter an email address',
-        pleaseEnterAValidEmailAddress:                      'please enter a valid email address'
+        pleaseEnterAValidEmailAddress:                      'please enter a valid email address',
+        nearby:                                             'Nearby'
     },
     hu: {
         add:                                                'hozzáad',
@@ -64,7 +65,8 @@ const MESSAGES: any = {
         passwordMustBeAtLeast6Characters:                   'a jelszó legalább 6 karakter kell hogy legyen',
         confirmPasswordMustBeEqualToPassword:               'a két jelszó meg kell hogy egyezzen',
         pleaseEnterAnEmailAddress:                          'kérjük, adjon meg egy email címet',
-        pleaseEnterAValidEmailAddress:                      'kérjük, adjon meg egy érvényes email címet'
+        pleaseEnterAValidEmailAddress:                      'kérjük, adjon meg egy érvényes email címet',
+        nearby:                                             'Közeli'
     }
     // , default: en
 };

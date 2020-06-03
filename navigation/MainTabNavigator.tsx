@@ -10,6 +10,7 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import MapScreen from '../screens/MapScreen';
 import UserScreen from '../screens/UserScreen';
+import NearbyScreen from '../screens/NearbyScreen';
 import { i18n } from '../constants/Dictionary';
 
 const config = Platform.select({
@@ -54,7 +55,7 @@ const MainStack = createStackNavigator(
 MainStack.navigationOptions = {
   tabBarLabel: i18n.new,
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-add-circle-outline' : 'md-add-circle-outline'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'} />
   )
 };
 
@@ -70,7 +71,7 @@ const AllStack = createStackNavigator(
 AllStack.navigationOptions = {
   tabBarLabel: i18n.all,
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-grid' : 'md-grid'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'} />
   )
 };
 
@@ -108,9 +109,26 @@ SettingsStack.navigationOptions = {
 
 SettingsStack.path = '';
 
+const NearbyStack = createStackNavigator(
+  {
+    Nearby: NearbyScreen
+  },
+  config
+);
+
+NearbyStack.navigationOptions = {
+  tabBarLabel: i18n.nearby,
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-help' : 'md-help'} />
+  )
+};
+
+NearbyStack.path = '';
+
 const tabNavigator = createBottomTabNavigator({
   MainStack,
-  AllStack
+  AllStack,
+  NearbyStack
 });
 
 tabNavigator.path = '';

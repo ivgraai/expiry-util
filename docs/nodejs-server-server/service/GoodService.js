@@ -139,13 +139,78 @@ exports.goodImageIdGET = function(id,size) {
  **/
 exports.goodNearbyGET = function(locationLatitude,locationLongitude,token,radius) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+    var entities = [];
+    entities.push({
+      name: 'tomato',
+      expiry: '2020-06-04',
+      distance: 1543,
+      id: 2000,
+      isRequestedByMe: true
+    });
+    entities.push({
+      name: 'minced meat',
+      expiry: '2020-06-27',
+      distance: 952,
+      id: 2001,
+      isRequestedByMe: false
+    });
+    entities.push({
+      name: 'orange juice',
+      expiry: '2020-07-14',
+      distance: 1812,
+      id: 2002,
+      isRequestedByMe: false
+    });
+    entities.push({
+      name: 'chocolate',
+      expiry: '2020-08-31',
+      distance: 687,
+      id: 2003,
+      isRequestedByMe: true
+    });
+    entities.push({
+      name: 'banana',
+      expiry: '2020-09-08',
+      distance: 406,
+      id: 2004,
+      isRequestedByMe: false
+    });
+    entities.push({
+      name: 'sausage',
+      expiry: '2020-09-28',
+      distance: 2052,
+      id: 2005,
+      isRequestedByMe: false
+    });
+    entities.push({
+      name: 'biscuits',
+      expiry: '2020-10-02',
+      distance: 570,
+      id: 2006,
+      isRequestedByMe: false
+    });
+    entities.push({
+      name: 'wine',
+      expiry: '2020-10-19',
+      distance: 3288,
+      id: 2007,
+      isRequestedByMe: false
+    });
+    entities.push({
+      name: 'washing powder',
+      expiry: '2020-11-02',
+      distance: 3700,
+      id: 2008,
+      isRequestedByMe: false
+    });
+    entities.push({
+      name: 'ice cream',
+      expiry: '2020-12-12',
+      distance: 2281,
+      id: 2009,
+      isRequestedByMe: true
+    });
+    resolve(entities);
   });
 }
 
