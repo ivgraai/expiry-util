@@ -69,8 +69,12 @@ export default class HttpClient {
         .catch(this.ERROR_HANDLER);
     }
 
-    public static findImageURL(goodId: number, size: Dtos.SizeRequest): string {
-        return BASE_URL + `good/image/${encodeURIComponent(goodId)}?size=${encodeURIComponent(size)}`;
+    public static findImageURL(goodId: number, size: Dtos.SizeRequest, ...params: [{key: string, value: string}]): string {
+        let extra: string = '';
+        for (const parameter of params) {
+            extra += `&${encodeURIComponent(parameter.key)}=${encodeURIComponent(parameter.value)}`;
+        }
+        return BASE_URL + `good/image/${encodeURIComponent(goodId)}?size=${encodeURIComponent(size)}${extra}`;
     }
 
     public static listAllGood(token: string): Promise<Dtos.GoodAllResponse[]> {
@@ -83,10 +87,10 @@ export default class HttpClient {
         })
         .then(response => response.json())
         .then(response => response.map((good: any) => new Dtos.GoodAllResponse()
-            .setImageId(good.imageId)
             .setName(good.name)
             .setExpiry(this.parseDate(good.expiry))
-            .setIsRequestedByOther(good.isRequestedByOther)))
+            .setIsRequestedByOther(good.isRequestedByOther)
+            .setId(good.id)))
         .catch(this.ERROR_HANDLER);
     }
 

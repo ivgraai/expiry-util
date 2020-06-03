@@ -6,17 +6,20 @@ import {
   PixelRatio
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
-import DbHelper from "../DbHelper";
 import { i18n } from "../constants/Dictionary";
 import HttpClient from "../services/HttpClient";
 import { SizeRequest } from "../constants/Dtos";
 import CachedImage from "../components/CachedImage";
+import UserManager from "../services/UserManager";
+import Utility from "../common/Utility";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
     title: i18n.all
   };
   height = PixelRatio.getPixelSizeForLayoutSize(75);
+
+  private static readonly EVICTION_FREQUENCY: string = 'daily';
 
   constructor() {
     super();
@@ -32,9 +35,8 @@ export default class AllScreen extends React.Component {
     };
   }
 
-  remoteURI(localURI, goodId) {
-    // Update cache: add new query parameter based on current date!
-    return /*HttpClient.findImageURL(goodId, SizeRequest.small)*/ localURI;
+  remoteURI(localURI, goodId: number) {
+    return HttpClient.findImageURL(goodId, SizeRequest.small, {key: 'cache', value : Utility.calculateURLCacheValue(AllScreen.EVICTION_FREQUENCY)});
   }
 
   render() {
@@ -42,17 +44,21 @@ export default class AllScreen extends React.Component {
       <View style={{flex: 1}}>
         <NavigationEvents
           onWillFocus={payload => {
-            DbHelper.selectGoods().then(result => {
-              this.setState({
-                dataSource:
-                  result._array
-                    .map(a => {
-                      return { ...a, expiry: new Date(a.expiry), image: this.remoteURI(a.image, 0) }; // TODO: fixme
-                    })
-                    .sort((a, b) => a.expiry.getTime() - b.expiry.getTime())
-              });
+
+            UserManager.getToken().then(token => {
+              HttpClient.listAllGood(token)
+                .then(result => {
+                  this.setState({
+                    dataSource:
+                      result.map(a => {
+                          return { ...a, image: this.remoteURI('', a.id) };
+                        })
+                        .sort((a, b) => a.expiry.getTime() - b.expiry.getTime())
+                  });
+                });
             });
             this.refs._scrollView.scrollToOffset({ offset: 0 }); // Should be in the callback.
+
           }}
         />
           <FlatList ref="_scrollView"

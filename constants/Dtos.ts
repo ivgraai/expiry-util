@@ -16,15 +16,10 @@ export enum SizeRequest {
 }
 
 export class GoodAllResponse {
-    imageId!: number;
     name!: string;
     expiry!: Date;
     isRequestedByOther!: boolean;
-
-    public setImageId(imageId: number): GoodAllResponse {
-        this.imageId = imageId;
-        return this;
-    }
+    id!: number;
 
     public setName(name: string): GoodAllResponse {
         this.name = name;
@@ -38,6 +33,11 @@ export class GoodAllResponse {
 
     public setIsRequestedByOther(isRequestedByOther: boolean): GoodAllResponse {
         this.isRequestedByOther = isRequestedByOther;
+        return this;
+    }
+
+    public setId(id: number): GoodAllResponse {
+        this.id = id;
         return this;
     }
 }

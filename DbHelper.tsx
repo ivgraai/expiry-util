@@ -18,7 +18,7 @@ export default class DbHelper {
     static selectGoods() {
         return new Promise(function(resolve, reject) {
             DbHelper.db.transaction(tx => tx.executeSql("SELECT id, name, expiry, image FROM goods", [], (_, { rows }) =>
-                resolve(rows)
+                resolve(rows/*._array*/)
             ));
         });
     }

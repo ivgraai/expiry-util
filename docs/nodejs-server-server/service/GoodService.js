@@ -38,13 +38,38 @@ exports.goodAddPOST = function(token,name,expiry,available,image,locationLatitud
  **/
 exports.goodAllGET = function(token) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+    var entities = [];
+    entities.push({
+      name: 'bread',
+      expiry: '2020-06-07',
+      isRequestedByOther: false,
+      id: 1000
+    });
+    entities.push({
+      name: 'milk',
+      expiry: '2020-06-10',
+      isRequestedByOther: false,
+      id: 1001
+    });
+    entities.push({
+      name: 'butter',
+      expiry: '2020-07-01',
+      isRequestedByOther: true,
+      id: 1002
+    });
+    entities.push({
+      name: 'apple',
+      expiry: '2020-07-31',
+      isRequestedByOther: true,
+      id: 1003
+    });
+    entities.push({
+      name: 'honey',
+      expiry: '2021-01-01',
+      isRequestedByOther: false,
+      id: 1004
+    });
+    resolve(entities);
   });
 }
 
