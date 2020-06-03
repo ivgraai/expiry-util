@@ -54,33 +54,7 @@ class MainScreen extends React.Component {
     this._unsubscribe();
   }
 
-  buttonAdd(object) {
-    var now: Date = new Date();
-    temp = object.expiry;
-    temp.setHours(0, 0, 0, 0);
-    var objectGoods = this.props.goods;
-
-    for (i = 0; i < this.multiplier.length; i++) {
-      temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
-      if (temp < now) {
-        continue;
-      }
-      Notifications.scheduleLocalNotificationAsync(
-        {
-          title: objectGoods.toUpperCase(),
-          body: i18n.bestBefore.capitalize() + ": " + object.expiry.toLocaleDateString()
-        },
-        { time: temp.getTime() }
-      ).then(id => {
-        // console.log(id);
-      });
-    }
-
-    DbHelper.insertGood({
-      name: objectGoods,
-      expiry: temp,
-      image: object.photo
-    });
+  showDialog() {
     Alert.alert(
       i18n.successfullyAdded.capitalize(),
       i18n.letsContinueWithOtherPerishableGood.capitalize() + "!",
@@ -93,6 +67,40 @@ class MainScreen extends React.Component {
       ],
       { cancelable: false }
     );
+  }
+
+  buttonAdd(object) {
+    var now: Date = new Date();
+    temp = object.expiry;
+    temp.setHours(0, 0, 0, 0);
+    var objectGoods = this.props.goods;
+
+    let promises: Array<Promise<String | Number>> = [];
+    for (i = 0; i < this.multiplier.length; i++) {
+      temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
+      if (temp < now) {
+        continue;
+      }
+      promises.push(Notifications.scheduleLocalNotificationAsync(
+        {
+          title: objectGoods.toUpperCase(),
+          body: i18n.bestBefore.capitalize() + ": " + object.expiry.toLocaleDateString()
+        },
+        { time: temp.getTime() }
+      ));
+    }
+
+    Promise.all(promises).then(localNotificationIds => {
+
+      DbHelper.insertGood({
+        name: objectGoods,
+        expiry: temp,
+        image: object.photo,
+        notifications: localNotificationIds.toString()
+      });
+      this.showDialog();
+
+    });
   }
 
   buttonPick = async () => {

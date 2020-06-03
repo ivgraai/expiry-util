@@ -45,21 +45,22 @@ export default function App(props) {
   }
 }
 
-Permissions.askAsync(Permissions.NOTIFICATIONS);
-// Notifications.getExpoPushTokenAsync().catch(reason => console.log(reason));
-DbHelper.initialize();
-Permissions.askAsync(Permissions.CAMERA_ROLL);
-Permissions.askAsync(Permissions.LOCATION);
-
 if (!__DEV__) {
   console.disableYellowBox = true;
 }
+
+Permissions.askAsync(Permissions.NOTIFICATIONS);
+Permissions.askAsync(Permissions.CAMERA_ROLL);
+Permissions.askAsync(Permissions.LOCATION);
 
 if (Constants.manifest.extra.init) {
   Notifications.cancelAllScheduledNotificationsAsync();
   DbHelper.deleteGoods();
   UserManager.removeToken();
 }
+
+// Notifications.getExpoPushTokenAsync().catch(reason => console.log(reason));
+DbHelper.initialize();
 
 async function loadResourcesAsync() {
   await Promise.all([
