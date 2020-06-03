@@ -6,11 +6,12 @@ import { actionCreators as actions } from './Actions';
 
 // mapStateToProps is an object that lives in the store whose keys are passed down to the component as props.
 export function mapStateToProps(state) {
-    const { isChosen, good, available } = state;
+    const { isChosen, good, available, location } = state;
     return {
         isChosen,
         goods: good,
-        available
+        available,
+        location
     };
 }
 
@@ -18,6 +19,7 @@ export function mapDispatchToProps(dispatch) {
     return {
         chooseImage: bindActionCreators(actions.chooseImage, dispatch),
         setStateGoods: bindActionCreators(actions.editGood, dispatch),
-        checkAvailable: bindActionCreators(actions.checkAvailable, dispatch)
+        checkAvailable: bindActionCreators(actions.checkAvailable, dispatch),
+        pickLocation: bindActionCreators(actions.pickLocation, dispatch)
     };
 }

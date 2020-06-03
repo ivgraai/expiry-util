@@ -1,12 +1,10 @@
 import React from "react";
 import {
-  Button,
   View,
   Text,
   TextInput,
   Image,
   TouchableOpacity,
-  StyleSheet,
   Alert
 } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -15,8 +13,9 @@ import { Notifications } from "expo";
 import * as ImagePicker from "expo-image-picker";
 import * as Location from 'expo-location';
 import { i18n } from '../constants/Dictionary';
-import DbHelper from "../DbHelper";
 import UserManager from '../services/UserManager';
+import HttpClient from "../services/HttpClient";
+import Utility from "../common/Utility";
 
 import { connect } from 'react-redux';
 import * as conn from '../constants/redux/Connecting';
@@ -45,6 +44,7 @@ class MainScreen extends React.Component {
         Location.reverseGeocodeAsync({latitude: lat, longitude: lng}).then(addresses => {
           this.setState({label: addresses[0].city});
           this.props.checkAvailable();
+          this.props.pickLocation({lat, lng});
         });
       }
     });
@@ -92,11 +92,26 @@ class MainScreen extends React.Component {
 
     Promise.all(promises).then(localNotificationIds => {
 
-      DbHelper.insertGood({
-        name: objectGoods,
-        expiry: temp,
-        image: object.photo,
-        notifications: localNotificationIds.toString()
+      UserManager.getToken().then(token => {
+        let available = this.props.available;
+        if (null == token) {
+          /* DbHelper.insertGood({
+            name: objectGoods,
+            expiry: temp,
+            image: object.photo,
+            notifications: localNotificationIds.toString()
+          }); */
+        } else {
+          HttpClient.addGood(
+            token,
+            objectGoods,
+            temp,
+            !available ? null : this.props.location.lat,
+            !available ? null : this.props.location.lng,
+            available,
+            Utility.convertImageToDto(object.photo)
+          );
+        }
       });
       this.showDialog();
 
