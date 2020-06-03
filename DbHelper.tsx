@@ -12,7 +12,7 @@ export default class DbHelper {
     }
 
     static insertGood(entity: any) {
-        DbHelper.db.transaction(tx => tx.executeSql("INSERT into goods(name, expiry, image, notifications) values(?, ?, ?, ?)", [entity.name, entity.expiry.toISOString(), entity.image, entity.notifications], () => {}, error => { console.log(JSON.stringify(error)); return true; }));
+        DbHelper.db.transaction(tx => tx.executeSql("INSERT into goods(name, expiry, image, notifications) values(?, ?, ?, ?)", [entity.name, entity.expiry.toISOString(), entity.image, entity.notifications], () => {}, error => { return true; }));
     }
 
     static selectGoods() {

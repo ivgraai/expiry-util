@@ -57,7 +57,7 @@ export default class AllScreen extends React.Component {
                   });
                 });
             });
-            this.refs._scrollView.scrollToOffset({ offset: 0 }); // Should be in the callback.
+            this.refs._scrollView.scrollToOffset({ offset: 0 });
 
           }}
         />

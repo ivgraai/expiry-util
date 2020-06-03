@@ -59,7 +59,7 @@ if (Constants.manifest.extra.init) {
   UserManager.removeToken();
 }
 
-// Notifications.getExpoPushTokenAsync().catch(reason => console.log(reason));
+// Notifications.getExpoPushTokenAsync();
 DbHelper.initialize();
 
 async function loadResourcesAsync() {
