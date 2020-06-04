@@ -1,15 +1,13 @@
 import React from "react";
 import {
-  FlatList,
-  Text,
   View,
   PixelRatio
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
+import GoodList from "../components/GoodList";
 import { i18n } from "../constants/Dictionary";
 import HttpClient from "../services/HttpClient";
 import { SizeRequest } from "../constants/Dtos";
-import CachedImage from "../components/CachedImage";
 import UserManager from "../services/UserManager";
 import Utility from "../common/Utility";
 
@@ -61,34 +59,7 @@ export default class AllScreen extends React.Component {
 
           }}
         />
-          <FlatList ref="_scrollView"
-            data={this.state.dataSource}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({item}) => (
-              <View style={{ flexDirection: "row", height: this.height }}>
-                <View style={{ flex: 2, alignItems: "center" }}>
-                  <CachedImage
-                    source={{ uri: item.image }}
-                    style={{ height: "90%", width: "90%", aspectRatio: 1 }}
-                  />
-                </View>
-                <View
-                  style={{
-                    flex: 2,
-                    flexDirection: "column",
-                    justifyContent: "center"
-                  }}
-                >
-                  <Text style={{ textAlign: "center" }}>
-                    {item.name.toUpperCase()}
-                  </Text>
-                  <Text style={{ textAlign: "center" }}>
-                    {item.expiry.toLocaleDateString()}
-                  </Text>
-                </View>
-              </View>
-            )}
-          />
+          <GoodList ref="_scrollView" height={this.height} dataSource={this.state.dataSource} />
       </View>
     );
   }
