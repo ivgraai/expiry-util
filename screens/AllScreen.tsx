@@ -1,7 +1,6 @@
 import React from "react";
 import {
-  View,
-  PixelRatio
+  View
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import GoodList from "../components/GoodList";
@@ -15,7 +14,6 @@ export default class AllScreen extends React.Component {
   static navigationOptions = {
     title: i18n.all
   };
-  height = PixelRatio.getPixelSizeForLayoutSize(75);
 
   private static readonly EVICTION_FREQUENCY: string = 'daily';
 
@@ -59,7 +57,7 @@ export default class AllScreen extends React.Component {
 
           }}
         />
-          <GoodList ref="_scrollView" height={this.height} dataSource={this.state.dataSource} />
+          <GoodList ref="_scrollView" dataSource={this.state.dataSource} />
       </View>
     );
   }

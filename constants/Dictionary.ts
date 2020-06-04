@@ -33,7 +33,8 @@ const MESSAGES: any = {
         confirmPasswordMustBeEqualToPassword:               'confirm password must be equal to password',
         pleaseEnterAnEmailAddress:                          'please enter an email address',
         pleaseEnterAValidEmailAddress:                      'please enter a valid email address',
-        nearby:                                             'Nearby'
+        nearby:                                             'Nearby',
+        meter:                                              'meter'
     },
     hu: {
         add:                                                'hozzáad',
@@ -66,7 +67,8 @@ const MESSAGES: any = {
         confirmPasswordMustBeEqualToPassword:               'a két jelszó meg kell hogy egyezzen',
         pleaseEnterAnEmailAddress:                          'kérjük, adjon meg egy email címet',
         pleaseEnterAValidEmailAddress:                      'kérjük, adjon meg egy érvényes email címet',
-        nearby:                                             'Közeli'
+        nearby:                                             'Közeli',
+        meter:                                              'méter'
     }
     // , default: en
 };
