@@ -15,24 +15,11 @@ export default class AllScreen extends React.Component {
     title: i18n.all
   };
 
-  private static readonly EVICTION_FREQUENCY: string = 'daily';
-
   constructor() {
     super();
     this.state = {
-      dataSource: [
-        {
-          expiry: new Date("1970-01-01T00:00:00.000Z"),
-          id: 1,
-          image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAMAAABlApw1AAAAVFBMVEX09PSYmJj////w8PCfn5/T09PDw8Ps7Ozo6OjAwMC9vb3Nzc2np6fQ0NDHx8f7+/vKysqlpaXe3t75+fmcnJytra329vaoqKjj4+O6urqzs7PX19dwzFsyAAACIklEQVR42u3dy3LiMBBA0W7hF4REE794/f9/jizigUmRhVbunrln40LFQheMS71CwkPs99fTqKpvsvrQzM7aeLru+xgengLOo7HN/rjWDS8Couwq/fJLVo0aXDuKSPweMC/vMLjZV2uNJPNfAVEW3anpu52Ytuv6ppMsPgKiuBT/BIhT8z1gNn7X/KipJAccqlocaifVwxLQqurV4ZfwrkmbAi7pOolDk6pegsQxXXtxqFfVMebLSVw65Y9+r6of4lKjqnu5er2D7vfQNX8PrbjU5cfPqKoOH6JZ18osAID/2/H4+SlO7RLRRJzShIACBBBgDQGFCHgZ0LZdJ05ViQAA4BozcRkOcwRYQkAhAgiwhpkYAIDNMROX4TBHgCUEFCKAAGuYiQEA2BwzcRkOcwRYQkAhAgiwhpkYAIDNMROX4TBHgCUEFCKAAGuYiQEA2BwzcRkOcwRYQkAhAgiwhpkYAIDNMROX4TBHgCUEFCKAAGuYiQEA2BwzcRkOcwRYQkAhAgiwZp2Jnf49scg0nY4yiGuD/4AorkUJ4lr4BwJc/wiGFBDStavFnZ0kYQmIUo/qruBW1SIxB4SLJjdxpVbVRsI94KzJ+CaOvOmiywFJrYupFyf6SRd1yAGPgnEnLjS67j8HZOdKVS/y5V1XBzG4dtOkOoc1IJOD6tngZl+uVcuLsAas2kZWta72JteaSxtWEp7FYZiNbfbb2jwMMTz7Db9pGCvtnV2wAAAAAElFTkSuQmCC',
-          name: "dummy"
-        }
-      ]
+      dataSource: [ ]
     };
-  }
-
-  remoteURI(localURI, goodId: number) {
-    return HttpClient.findImageURL(goodId, SizeRequest.small, {key: 'cache', value : Utility.calculateURLCacheValue(AllScreen.EVICTION_FREQUENCY)});
   }
 
   render() {
@@ -47,7 +34,7 @@ export default class AllScreen extends React.Component {
                   this.setState({
                     dataSource:
                       result.map(a => {
-                          return { ...a, image: this.remoteURI('', a.id) };
+                          return { ...a, image: Utility.remoteURI('', a.id, SizeRequest.small) };
                         })
                         .sort((a, b) => a.expiry.getTime() - b.expiry.getTime())
                   });

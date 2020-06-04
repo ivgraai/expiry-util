@@ -34,7 +34,9 @@ const MESSAGES: any = {
         pleaseEnterAnEmailAddress:                          'please enter an email address',
         pleaseEnterAValidEmailAddress:                      'please enter a valid email address',
         nearby:                                             'Nearby',
-        meter:                                              'meter'
+        meter:                                              'meter',
+        showMyNeed:                                         'show my need',
+        statusOfMyRequest:                                  'status of my request'
     },
     hu: {
         add:                                                'hozzáad',
@@ -68,7 +70,9 @@ const MESSAGES: any = {
         pleaseEnterAnEmailAddress:                          'kérjük, adjon meg egy email címet',
         pleaseEnterAValidEmailAddress:                      'kérjük, adjon meg egy érvényes email címet',
         nearby:                                             'Közeli',
-        meter:                                              'méter'
+        meter:                                              'méter',
+        showMyNeed:                                         'jelzem az igényemet',
+        statusOfMyRequest:                                  'igénylésem állapota'
     }
     // , default: en
 };
