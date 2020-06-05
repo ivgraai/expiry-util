@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import CachedImage from "../components/CachedImage";
 import Utility from "../common/Utility";
@@ -10,58 +10,44 @@ interface IProps {
     navigation: any;
 }
 
-interface IState {
-    response: Dtos.GoodResponse | null
-}
+export default function DetailsScreen(props: IProps) {
+    let id: number = props.navigation.getParam("goodId");
+    const [response, setResponse] = useState<Dtos.GoodResponse | null>(null);
 
-class DetailsScreen extends React.Component<IProps, IState> {
-    private id: number = this.props.navigation.getParam("goodId");
-
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            response: null
-        }
-    }
-
-    componentDidMount() {
+    useEffect(() => {
         UserManager.getToken().then(token => {
-            HttpClient.checkStatus(token, this.id).then(response => {
+            HttpClient.checkStatus(token, id).then(response => {
                 if (response) {
-                    this.setState({response});
+                    setResponse(response);
                 }
             })
         });
-    }
+    }, []);
 
-    render() {
-        return (
-            <View style={{flex: 1, justifyContent: "space-around"}}>
-                <CachedImage
-                    source={{ uri: Utility.remoteURI("", this.id, Dtos.SizeRequest.large) }}
-                    style={{ flex: 3, height: "100%", width: "100%", aspectRatio: 1, alignSelf: "center" }}
-                />
-                <View style={{flex: 2}}>
-                    <Text>{this.state.response?.name.toUpperCase()}</Text>
-                    <Text>{this.state.response?.expiry.toLocaleDateString()}</Text>
-                    <Text>{this.state.response?.myMessage}</Text>
-                    {
-                        (this.state.response?.isAccepted) ? <>
-                        <Text>{this.state.response?.username}</Text>
-                        <Text>{this.state.response?.replyMessage}</Text>
-                        <Text>{this.state.response?.address.postalCode}</Text>
-                        <Text>{this.state.response?.address.country}</Text>
-                        <Text>{this.state.response?.address.region}</Text>
-                        <Text>{this.state.response?.address.city}</Text>
-                        <Text>{this.state.response?.address.street}</Text>
-                        <Text>{this.state.response?.address.name}</Text>
-                    </> :
-                        null
-                    }
-                </View>
+    return (
+        <View style={{flex: 1, justifyContent: "space-around"}}>
+            <CachedImage
+                source={{ uri: Utility.remoteURI("", id, Dtos.SizeRequest.large) }}
+                style={{ flex: 3, height: "100%", width: "100%", aspectRatio: 1, alignSelf: "center" }}
+            />
+            <View style={{flex: 2}}>
+                <Text>{response?.name.toUpperCase()}</Text>
+                <Text>{response?.expiry.toLocaleDateString()}</Text>
+                <Text>{response?.myMessage}</Text>
+                {
+                    (response?.isAccepted) ? <>
+                    <Text>{response?.username}</Text>
+                    <Text>{response?.replyMessage}</Text>
+                    <Text>{response?.address.postalCode}</Text>
+                    <Text>{response?.address.country}</Text>
+                    <Text>{response?.address.region}</Text>
+                    <Text>{response?.address.city}</Text>
+                    <Text>{response?.address.street}</Text>
+                    <Text>{response?.address.name}</Text>
+                </> :
+                    null
+                }
             </View>
-        );
-    }
+        </View>
+    );
 }
-
-export default DetailsScreen;
