@@ -36,7 +36,9 @@ const MESSAGES: any = {
         nearby:                                             'Nearby',
         meter:                                              'meter',
         showMyNeed:                                         'show my need',
-        statusOfMyRequest:                                  'status of my request'
+        statusOfMyRequest:                                  'status of my request',
+        loading:                                            'loading',
+        inOrderToShowYourNeedYouHaveToSignIn:               'in order to show your need you have to sign in'
     },
     hu: {
         add:                                                'hozzáad',
@@ -72,7 +74,9 @@ const MESSAGES: any = {
         nearby:                                             'Közeli',
         meter:                                              'méter',
         showMyNeed:                                         'jelzem az igényemet',
-        statusOfMyRequest:                                  'igénylésem állapota'
+        statusOfMyRequest:                                  'igénylésem állapota',
+        loading:                                            'töltés',
+        inOrderToShowYourNeedYouHaveToSignIn:               'be kell jelentkeznie, hogy jelezze az igényét'
     }
     // , default: en
 };

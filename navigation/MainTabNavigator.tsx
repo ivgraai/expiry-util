@@ -11,6 +11,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import MapScreen from '../screens/MapScreen';
 import UserScreen from '../screens/UserScreen';
 import NearbyScreen from '../screens/NearbyScreen';
+import DetailsScreen from '../screens/DetailsScreen';
 import { i18n } from '../constants/Dictionary';
 
 const config = Platform.select({
@@ -111,7 +112,9 @@ SettingsStack.path = '';
 
 const NearbyStack = createStackNavigator(
   {
-    Nearby: NearbyScreen
+    Nearby: NearbyScreen,
+    Details: DetailsScreen,
+    User: UserScreen
   },
   config
 );

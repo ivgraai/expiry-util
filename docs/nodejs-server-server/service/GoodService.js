@@ -84,29 +84,38 @@ exports.goodAllGET = function(token) {
  **/
 exports.goodIdGET = function(id,token) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "imageId" : 0,
+    var entity = (2000 == id) ? {
   "address" : {
-    "country" : "country",
-    "city" : "city",
-    "street" : "street",
-    "postalCode" : "postalCode",
-    "name" : "name",
-    "region" : "region"
+    "country" : "Hungary",
+    "city" : "Budapest",
+    "street" : "Bokor utca 15-21.",
+    "postalCode" : "1037",
+    "name" : "iCONTEST Ltd.",
+    "region" : "Pest"
   },
-  "replyMessage" : "replyMessage",
+  "replyMessage" : "n/a",
+  "isAccepted" : false,
+  "name" : "tomato",
+  "expiry" : "2020-06-04",
+  "myMessage" : "Please!?",
+  "username" : "merdei"
+} : {
+  "address" : {
+    "country" : "England",
+    "city" : "London",
+    "street" : "Flat 28 Culloden House, Batavia Road",
+    "postalCode" : "SE14 6AW",
+    "name" : "UNCLE",
+    "region" : "New Cross - Lewisham"
+  },
+  "replyMessage" : "I am waiting you between 5-7pm, thanks!",
   "isAccepted" : true,
-  "name" : "name",
-  "expiry" : "2000-01-23",
-  "myMessage" : "myMessage",
-  "username" : "username"
+  "name" : "chocolate",
+  "expiry" : "2020-08-31",
+  "myMessage" : "I love sweets...",
+  "username" : "givan"
 };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+    resolve(entity);
   });
 }
 
