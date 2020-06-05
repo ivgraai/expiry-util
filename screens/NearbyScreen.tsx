@@ -32,7 +32,7 @@ export default class NearbyScreen extends React.Component {
 
     handleOnPress(id: number, isRequestedByMe: boolean) {
         if (isRequestedByMe) {
-            this.props.navigation.navigate('Details');
+            this.props.navigation.navigate('Details', {"goodId": id});
         } else {
             // TODO
         }
