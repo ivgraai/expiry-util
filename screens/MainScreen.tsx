@@ -16,6 +16,7 @@ import { i18n } from '../constants/Dictionary';
 import UserManager from '../services/UserManager';
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
+import { StackActions } from 'react-navigation';
 
 import { connect } from 'react-redux';
 import * as conn from '../constants/redux/Connecting';
@@ -136,7 +137,13 @@ class MainScreen extends React.Component {
       if (result) {
         this.props.navigation.navigate('Map');
       } else {
-        this.props.navigation.navigate('User', {message: i18n.inOrderToMarkAsAvailableYouNeedToSignIn.capitalize() + '!'});
+        this.props.navigation.navigate('User', {
+          message: i18n.inOrderToMarkAsAvailableYouNeedToSignIn.capitalize() + '!',
+          stackAction: StackActions.replace({
+            key: undefined,
+            routeName: 'Map'
+          })
+        });
       }
     });
   }

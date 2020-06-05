@@ -7,6 +7,7 @@ import * as Location from 'expo-location';
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
+import { StackActions } from 'react-navigation';
 
 export default class NearbyScreen extends React.Component {
     static navigationOptions = {
@@ -36,7 +37,15 @@ export default class NearbyScreen extends React.Component {
         if (isRequestedByMe) {
             this.props.navigation.navigate('Details', {"goodId": id});
         } else {
-            // TODO
+            UserManager.getToken().then(token => {
+                if (null == token) {
+                    this.props.navigation.navigate('User', {
+                        message: i18n.inOrderToShowYourNeedYouHaveToSignIn.capitalize() + '!',
+                        stackAction: StackActions.pop({})
+                    });
+                    return;
+                }
+            });
         }
     }
 

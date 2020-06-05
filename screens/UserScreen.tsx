@@ -3,7 +3,6 @@ import { View, Text, TextInput, Button, Alert } from "react-native";
 import { i18n } from '../constants/Dictionary';
 import HttpClient from '../services/HttpClient';
 import UserManager from '../services/UserManager';
-import { StackActions } from 'react-navigation';
 import { styles } from '../constants/styles/UserScreen';
 import validate from 'validate.js';
 import constraints from '../constants/validation/UserConstraint';
@@ -80,11 +79,8 @@ export default class UserScreen extends React.Component<IProps, IState> {
             .then(response => {
                 if (typeof response === 'string') {
                     UserManager.setToken(response);
-                    let replaceAction = StackActions.replace({
-                        key: undefined,
-                        routeName: 'Map'
-                    });
-                    this.props.navigation.dispatch(replaceAction);
+                    let action = this.props.navigation.getParam('stackAction');
+                    this.props.navigation.dispatch(action);
                 }
             });
     }

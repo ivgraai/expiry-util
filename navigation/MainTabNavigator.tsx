@@ -113,7 +113,8 @@ SettingsStack.path = '';
 const NearbyStack = createStackNavigator(
   {
     Nearby: NearbyScreen,
-    Details: DetailsScreen
+    Details: DetailsScreen,
+    User: UserScreen
   },
   config
 );
