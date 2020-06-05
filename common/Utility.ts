@@ -21,6 +21,6 @@ export default class Utility {
     }
 
     static remoteURI(_localURI: string, goodId: number, size: SizeRequest) {
-      return HttpClient.findImageURL(goodId, SizeRequest.small, {key: 'cache', value : Utility.calculateURLCacheValue(Utility.EVICTION_FREQUENCY)});
+      return HttpClient.findImageURL(goodId, size, {key: 'cache', value : Utility.calculateURLCacheValue(Utility.EVICTION_FREQUENCY)});
     }
 }

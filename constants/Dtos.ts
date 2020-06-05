@@ -43,19 +43,15 @@ export class GoodAllResponse {
 }
 
 export class GoodNearbyResponse {
-    imageId: number;
     name: string;
     expiry: Date;
-    username: string;
     distance: number;
     id: number;
     isRequestedByMe: boolean;
 
     constructor(response: any, lambda: (value: string) => Date) {
-        this.imageId = response.imageId;
         this.name = response.name;
         this.expiry = lambda(response.expiry);
-        this.username = response.username;
         this.distance = response.distance;
         this.id = response.id;
         this.isRequestedByMe = response.isRequestedByMe;

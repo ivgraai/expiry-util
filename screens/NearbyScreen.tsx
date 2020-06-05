@@ -31,7 +31,7 @@ export default class NearbyScreen extends React.Component {
     }
 
     handleOnPress(id: number, isRequestedByMe: boolean) {
-        // console.log("EXPO - NearbyScreen: " + id + ", " + isRequestedByMe);
+        console.log("EXPO - NearbyScreen: " + id + ", " + isRequestedByMe);
     }
 
     renderDistanceAndRequest(item: Dtos.GoodNearbyResponse) {
@@ -44,9 +44,9 @@ export default class NearbyScreen extends React.Component {
     }
 
     render() {
-        var temp: React.ReactNode = (item: any) => this.renderDistanceAndRequest(item);
+        var temporary: React.ReactNode = (item: any) => this.renderDistanceAndRequest(item);
         return (
-            <GoodList dataSource={this.state.ds} customNodesForTheItem={temp}>
+            <GoodList dataSource={this.state.ds} customNodesForTheItem={temporary}>
             </GoodList>
         );
     }
