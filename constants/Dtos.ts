@@ -59,7 +59,6 @@ export class GoodNearbyResponse {
 }
 
 export class GoodResponse {
-    imageId: number;
     name: string;
     expiry: Date;
     address: Address;
@@ -69,7 +68,6 @@ export class GoodResponse {
     replyMessage: string;
 
     constructor(response: any, lambda: (value: string) => Date) {
-        this.imageId = response.imageId;
         this.address = new Address(response.address);
         this.replyMessage = response.replyMessage;
         this.isAccepted = response.isAccepted;

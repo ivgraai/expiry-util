@@ -31,7 +31,11 @@ export default class NearbyScreen extends React.Component {
     }
 
     handleOnPress(id: number, isRequestedByMe: boolean) {
-        console.log("EXPO - NearbyScreen: " + id + ", " + isRequestedByMe);
+        if (isRequestedByMe) {
+            this.props.navigation.navigate('Details');
+        } else {
+            // TODO
+        }
     }
 
     renderDistanceAndRequest(item: Dtos.GoodNearbyResponse) {
