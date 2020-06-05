@@ -14,6 +14,7 @@ export default class NearbyScreen extends React.Component {
     };
 
     state = {
+        loading: true,
         ds: []
     };
 
@@ -22,11 +23,12 @@ export default class NearbyScreen extends React.Component {
         let token: string | null = await UserManager.getToken();
         HttpClient.listNearbyGood(token, location.coords.latitude, location.coords.longitude)
             .then(result => {
-                this.setState({ds: result.map(item => ({
-                    ...item,
-                    image: Utility.remoteURI('', item.id, Dtos.SizeRequest.small)
-                }))
-                .sort((item1, item2) => item1.distance - item2.distance)});
+                this.setState({loading: false,
+                    ds: result.map(item => ({
+                        ...item,
+                        image: Utility.remoteURI('', item.id, Dtos.SizeRequest.small)
+                    }))
+                    .sort((item1, item2) => item1.distance - item2.distance)});
             });
     }
 
@@ -49,9 +51,10 @@ export default class NearbyScreen extends React.Component {
 
     render() {
         var temporary: React.ReactNode = (item: any) => this.renderDistanceAndRequest(item);
-        return (
-            <GoodList dataSource={this.state.ds} customNodesForTheItem={temporary}>
-            </GoodList>
-        );
+        return <>{
+            this.state.loading ?
+                <Text>{i18n.loading.capitalize()}...</Text> :
+                <GoodList dataSource={this.state.ds} customNodesForTheItem={temporary}></GoodList>
+        }</>;
     }
 }
