@@ -24,7 +24,10 @@ exports.requestAllGET = function(token,goodId) {
       message: "I love sweets...",
       id: 3001
     });
-    resolve(entities);
+    resolve({
+      accepted:(1003 == goodId) ? 3001 : null,
+      datas: entities
+    });
   });
 }
 

@@ -79,16 +79,12 @@ export class GoodResponse {
 }
 
 export class RequestAllResponse {
-    username: string;
-    datetime: Date;
-    message: string;
-    id: number;
+    accepted: number;
+    datas: RequestData[];
 
     constructor(response: any, lambda: (value: string) => Date) {
-        this.username = response.username;
-        this.datetime = lambda(response.datetime);
-        this.message = response.message;
-        this.id = response.id;
+        this.accepted = response.accepted;
+        this.datas = response.datas.map((request: any) => new RequestData(request, lambda));
     }
 }
 
@@ -107,5 +103,19 @@ export class Address {
         this.postalCode = response.postalCode;
         this.name = response.name;
         this.region = response.region;
+    }
+}
+
+export class RequestData {
+    username: string;
+    datetime: Date;
+    message: string;
+    id: number;
+
+    constructor(response: any, lambda: (value: string) => Date) {
+    this.username = response.username;
+    this.datetime = lambda(response.datetime);
+    this.message = response.message;
+    this.id = response.id;
     }
 }

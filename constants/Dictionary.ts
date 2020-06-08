@@ -39,7 +39,8 @@ const MESSAGES: any = {
         statusOfMyRequest:                                  'status of my request',
         loading:                                            'loading',
         inOrderToShowYourNeedYouHaveToSignIn:               'in order to show your need you have to sign in',
-        lookWhoRequestedThis:                               'look who requested this'
+        lookWhoRequestedThis:                               'look who requested this',
+        approve:                                            'approve'
     },
     hu: {
         add:                                                'hozzáad',
@@ -78,7 +79,8 @@ const MESSAGES: any = {
         statusOfMyRequest:                                  'igénylésem állapota',
         loading:                                            'töltés',
         inOrderToShowYourNeedYouHaveToSignIn:               'be kell jelentkeznie, hogy jelezze az igényét',
-        lookWhoRequestedThis:                               'nézze meg, hogy ki igényelte ezt'
+        lookWhoRequestedThis:                               'nézze meg, hogy ki igényelte ezt',
+        approve:                                            'jóváhagy'
     }
     // , default: en
 };

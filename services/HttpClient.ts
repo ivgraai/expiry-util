@@ -138,7 +138,7 @@ export default class HttpClient {
         .catch(this.ERROR_HANDLER);
     }
 
-    public static findAllRequest(token: string, goodId: number | null): Promise<Dtos.RequestAllResponse[]> {
+    public static findAllRequest(token: string, goodId: number | null): Promise<Dtos.RequestAllResponse> {
         let url: string = BASE_URL + 'request/all';
         if (undefined != goodId) {
             url += `?goodId=${encodeURIComponent(goodId)}`;
@@ -151,8 +151,7 @@ export default class HttpClient {
             }
         })
         .then(response => response.json())
-        .then(response => response.map((request: any) => new Dtos.RequestAllResponse(request, this.parseDateTime)))
-        .catch(this.ERROR_HANDLER);
+        .then(response => new Dtos.RequestAllResponse(response, this.parseDateTime))
     }
 
     public static approveRequest(token: string, requestId: number, message: string): Promise<void | Response> {
