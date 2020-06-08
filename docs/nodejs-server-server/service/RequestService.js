@@ -11,13 +11,20 @@
  **/
 exports.requestAllGET = function(token,goodId) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+    var entities = [];
+    entities.push({
+      username: "applicant_1",
+      datetime: "2020-06-08T09:15:30.000Z",
+      message: "Please!?",
+      id: 3000
+    });
+    entities.push({
+      username: "applicant_2",
+      datetime: "2020-06-08T09:30:15.000Z",
+      message: "I love sweets...",
+      id: 3001
+    });
+    resolve(entities);
   });
 }
 

@@ -154,10 +154,11 @@ export default class HttpClient {
         .catch(this.ERROR_HANDLER);
     }
 
-    public static approveRequest(token: string, requestId: number): Promise<void | Response> {
+    public static approveRequest(token: string, requestId: number, message: string): Promise<void | Response> {
         return fetch(BASE_URL + `request/${encodeURIComponent(requestId)}`, {
             method: 'PUT',
-            headers: this.createHeaderWithToken(token)
+            headers: this.createHeaderWithToken(token),
+            body: message
         })
         .then()
         .catch(this.ERROR_HANDLER);

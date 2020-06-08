@@ -12,6 +12,7 @@ import MapScreen from '../screens/MapScreen';
 import UserScreen from '../screens/UserScreen';
 import NearbyScreen from '../screens/NearbyScreen';
 import DetailsScreen from '../screens/DetailsScreen';
+import ApprovalScreen from '../screens/ApprovalScreen';
 import { i18n } from '../constants/Dictionary';
 
 const config = Platform.select({
@@ -64,7 +65,8 @@ MainStack.path = '';
 
 const AllStack = createStackNavigator(
   {
-    All: AllScreen
+    All: AllScreen,
+    Approval: ApprovalScreen
   },
   config
 );
