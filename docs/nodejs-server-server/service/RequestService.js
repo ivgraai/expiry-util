@@ -28,9 +28,10 @@ exports.requestAllGET = function(token,goodId) {
  *
  * token String 
  * id Long 
+ * message RequestChangeRequest 
  * no response value expected for this operation
  **/
-exports.requestIdPUT = function(token,id) {
+exports.requestIdPUT = function(token,id,message) {
   return new Promise(function(resolve, reject) {
     resolve();
   });

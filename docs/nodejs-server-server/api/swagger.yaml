@@ -293,6 +293,11 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - in: "body"
+        name: "message"
+        required: true
+        schema:
+          $ref: "#/definitions/RequestChangeRequest"
       responses:
         "200":
           description: "Need is updated"
@@ -334,9 +339,6 @@ definitions:
   GoodResponse:
     type: "object"
     properties:
-      imageId:
-        type: "integer"
-        format: "int64"
       name:
         type: "string"
       expiry:
@@ -353,7 +355,6 @@ definitions:
       replyMessage:
         type: "string"
     example:
-      imageId: 0
       address:
         country: "country"
         city: "city"
@@ -393,12 +394,11 @@ definitions:
       postalCode: "postalCode"
       name: "name"
       region: "region"
+  RequestChangeRequest:
+    type: "string"
   GoodAllResponse_inner:
     type: "object"
     properties:
-      imageId:
-        type: "integer"
-        format: "int64"
       name:
         type: "string"
       expiry:
@@ -406,19 +406,17 @@ definitions:
         format: "date"
       isRequestedByOther:
         type: "boolean"
+      id:
+        type: "integer"
+        format: "int64"
   GoodNearbyResponse_inner:
     type: "object"
     properties:
-      imageId:
-        type: "integer"
-        format: "int64"
       name:
         type: "string"
       expiry:
         type: "string"
         format: "date"
-      username:
-        type: "string"
       distance:
         type: "number"
         format: "float"

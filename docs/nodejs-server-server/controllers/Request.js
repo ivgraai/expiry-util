@@ -18,7 +18,8 @@ module.exports.requestAllGET = function requestAllGET (req, res, next) {
 module.exports.requestIdPUT = function requestIdPUT (req, res, next) {
   var token = req.swagger.params['token'].value;
   var id = req.swagger.params['id'].value;
-  Request.requestIdPUT(token,id)
+  var message = req.swagger.params['message'].value;
+  Request.requestIdPUT(token,id,message)
     .then(function (response) {
       utils.writeJson(res, response);
     })

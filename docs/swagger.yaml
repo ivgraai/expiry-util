@@ -271,6 +271,11 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - name: "message"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/RequestChangeRequest"
       responses:
         "200":
           description: "Need is updated"
@@ -289,9 +294,6 @@ definitions:
     type: "array"
     items:
       properties:
-        imageId:
-          type: "integer"
-          format: "int64"
         name:
           type: "string"
         expiry:
@@ -299,20 +301,18 @@ definitions:
           format: "date"
         isRequestedByOther: # counter
           type: "boolean"
+        id:
+          type: "integer"
+          format: "int64"
   GoodNearbyResponse:
     type: "array"
     items:
       properties:
-        imageId:
-          type: "integer"
-          format: "int64"
         name:
           type: "string"
         expiry:
           type: "string"
           format: "date"
-        username:
-          type: "string"
         distance:
           type: "number"
           format: "float"
@@ -332,9 +332,6 @@ definitions:
   GoodResponse:
     type: "object"
     properties:
-      imageId:
-        type: "integer"
-        format: "int64"
       name:
         type: "string"
       expiry:
@@ -379,6 +376,8 @@ definitions:
         type: "string"
       name:
         type: "string"
+  RequestChangeRequest:
+    type: "string"
 externalDocs:
   description: "Find out more about the project"
   url: "https://github.com/ivgraai/expiry-util"
