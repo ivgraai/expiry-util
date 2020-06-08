@@ -27,7 +27,7 @@ export default class AllScreen extends React.Component {
     return !isRequestedByOther ?
         null
       :
-        <Button title={i18n.lookWhoRequestedThis.toUpperCase()} onPress={() => this.props.navigation.navigate('Approval', {"goodId": id})}/>;
+        <Button title={i18n.lookWhoRequestedThis.toUpperCase()} onPress={() => this.props.navigation.navigate('Approval', {"goodId": id})} />;
   }
 
   render() {

@@ -1,6 +1,7 @@
 import Constants from 'expo-constants';
 import * as Dtos from '../constants/Dtos';
 import { Platform } from 'react-native';
+import moment from 'moment';
 
 const BASE_URL: string = Constants.manifest.extra.serverUrl;
 
@@ -150,7 +151,7 @@ export default class HttpClient {
             }
         })
         .then(response => response.json())
-        .then(response => response.map((request: any) => new Dtos.RequestAllResponse(request, this.parseDate)))
+        .then(response => response.map((request: any) => new Dtos.RequestAllResponse(request, this.parseDateTime)))
         .catch(this.ERROR_HANDLER);
     }
 
@@ -177,6 +178,10 @@ export default class HttpClient {
 
     private static parseDate(value: string): Date {
         return new Date(value);
+    }
+
+    private static parseDateTime(value: string): Date {
+        return moment(value).toDate();
     }
 
 }
