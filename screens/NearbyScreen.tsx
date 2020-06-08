@@ -8,7 +8,7 @@ import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
 import { StackActions } from 'react-navigation';
-import { styles } from '../constants/styles/NearbyScreen';
+import { styles } from '../constants/styles/Dialog';
 
 export default class NearbyScreen extends React.Component {
     static navigationOptions = {
