@@ -38,7 +38,8 @@ const MESSAGES: any = {
         showMyNeed:                                         'show my need',
         statusOfMyRequest:                                  'status of my request',
         loading:                                            'loading',
-        inOrderToShowYourNeedYouHaveToSignIn:               'in order to show your need you have to sign in'
+        inOrderToShowYourNeedYouHaveToSignIn:               'in order to show your need you have to sign in',
+        lookWhoRequestedThis:                               'look who requested this'
     },
     hu: {
         add:                                                'hozzáad',
@@ -76,7 +77,8 @@ const MESSAGES: any = {
         showMyNeed:                                         'jelzem az igényemet',
         statusOfMyRequest:                                  'igénylésem állapota',
         loading:                                            'töltés',
-        inOrderToShowYourNeedYouHaveToSignIn:               'be kell jelentkeznie, hogy jelezze az igényét'
+        inOrderToShowYourNeedYouHaveToSignIn:               'be kell jelentkeznie, hogy jelezze az igényét',
+        lookWhoRequestedThis:                               'nézze meg, hogy ki igényelte ezt'
     }
     // , default: en
 };
