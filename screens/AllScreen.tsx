@@ -37,7 +37,7 @@ export default class AllScreen extends React.Component {
         <NavigationEvents
           onWillFocus={payload => {
 
-            /* UserManager.getToken().then(token => {
+            UserManager.getToken().then(token => {
               HttpClient.listAllGood(token)
                 .then(result => {
                   this.setState({
@@ -49,7 +49,7 @@ export default class AllScreen extends React.Component {
                   });
                 });
             });
-            this.refs._scrollView.scrollToOffset({ offset: 0 }); */
+            this.refs._scrollView.scrollToOffset({ offset: 0 });
 
           }}
         />
