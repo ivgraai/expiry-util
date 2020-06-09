@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  View
+  View, Button
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import GoodList from "../components/GoodList";
@@ -9,6 +9,7 @@ import HttpClient from "../services/HttpClient";
 import { SizeRequest } from "../constants/Dtos";
 import UserManager from "../services/UserManager";
 import Utility from "../common/Utility";
+import * as Dtos from "../constants/Dtos";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
@@ -22,7 +23,15 @@ export default class AllScreen extends React.Component {
     };
   }
 
+  renderIsRequested(id: number, isRequestedByOther: boolean) {
+    return !isRequestedByOther ?
+        null
+      :
+        <Button title={i18n.lookWhoRequestedThis.toUpperCase()} onPress={() => this.props.navigation.navigate('Approval', {"goodId": id})} />;
+  }
+
   render() {
+    var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
     return (
       <View style={{flex: 1}}>
         <NavigationEvents
@@ -44,7 +53,7 @@ export default class AllScreen extends React.Component {
 
           }}
         />
-          <GoodList ref="_scrollView" dataSource={this.state.dataSource} />
+          <GoodList ref="_scrollView" dataSource={this.state.dataSource} customNodesForTheItem={temporary} />
       </View>
     );
   }

@@ -369,9 +369,26 @@ definitions:
       myMessage: "myMessage"
       username: "username"
   RequestAllResponse:
-    type: "array"
-    items:
-      $ref: "#/definitions/RequestAllResponse_inner"
+    type: "object"
+    properties:
+      accepted:
+        type: "integer"
+        format: "int64"
+      datas:
+        type: "array"
+        items:
+          $ref: "#/definitions/RequestAllResponse_datas"
+    example:
+      accepted: 0
+      datas:
+      - datetime: "2000-01-23T04:56:07.000+00:00"
+        id: 6
+        message: "message"
+        username: "username"
+      - datetime: "2000-01-23T04:56:07.000+00:00"
+        id: 6
+        message: "message"
+        username: "username"
   Address:
     type: "object"
     properties:
@@ -425,7 +442,7 @@ definitions:
         format: "int64"
       isRequestedByMe:
         type: "boolean"
-  RequestAllResponse_inner:
+  RequestAllResponse_datas:
     type: "object"
     properties:
       username:
@@ -438,6 +455,11 @@ definitions:
       id:
         type: "integer"
         format: "int64"
+    example:
+      datetime: "2000-01-23T04:56:07.000+00:00"
+      id: 6
+      message: "message"
+      username: "username"
 externalDocs:
   description: "Find out more about the project"
   url: "https://github.com/ivgraai/expiry-util"

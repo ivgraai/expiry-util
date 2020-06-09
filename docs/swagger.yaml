@@ -348,19 +348,25 @@ definitions:
       replyMessage:
         type: "string"
   RequestAllResponse:
-    type: "array"
-    items:
-      properties:
-        username:
-          type: "string"
-        datetime:
-          type: "string"
-          format: "date-time"
-        message:
-          type: "string"
-        id: # redundant
-          type: "integer"
-          format: "int64"
+    type: "object"
+    properties:
+      accepted:
+        type: "integer"
+        format: "int64"
+      datas:
+        type: "array"
+        items:
+          properties:
+            username:
+              type: "string"
+            datetime:
+              type: "string"
+              format: "date-time"
+            message:
+              type: "string"
+            id: # redundant
+              type: "integer"
+              format: "int64"
   Address:
     type: "object"
     properties:

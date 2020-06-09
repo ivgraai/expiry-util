@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button, Modal, TextInput } from "react-native";
+import { Text, View, Button, TextInput } from "react-native";
 import { i18n } from "../constants/Dictionary";
 import GoodList from "../components/GoodList";
 import * as Dtos from "../constants/Dtos";
@@ -8,7 +8,7 @@ import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
 import { StackActions } from 'react-navigation';
-import { styles } from '../constants/styles/NearbyScreen';
+import Dialog from '../components/Dialog';
 
 export default class NearbyScreen extends React.Component {
     static navigationOptions = {
@@ -16,8 +16,7 @@ export default class NearbyScreen extends React.Component {
     };
     private readonly DEFAULT_TUPLE_VALUE = {
         token: '',
-        goodId: 0,
-        requestMessage: ''
+        goodId: 0
     };
 
     state = {
@@ -41,8 +40,8 @@ export default class NearbyScreen extends React.Component {
             });
     }
 
-    onRequestClose() {
-        HttpClient.requestTheGood(this.tuple.token, this.tuple.goodId, this.tuple.requestMessage).then(_emptyResponse => {
+    onRequestClose(message: string): void {
+        HttpClient.requestTheGood(this.tuple.token, this.tuple.goodId, message).then(_emptyResponse => {
             this.tuple = this.DEFAULT_TUPLE_VALUE;
             this.setState({dialogVisible: false});
         });
@@ -68,16 +67,8 @@ export default class NearbyScreen extends React.Component {
     }
 
     renderDistanceAndRequest(item: Dtos.GoodNearbyResponse) {
-        var callback = () => this.onRequestClose();
         return <View>
-            <Modal transparent={true} visible={this.state.dialogVisible} onRequestClose={callback}>
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <TextInput style={styles.modalTextInput} onChangeText={message => this.tuple.requestMessage = message} />
-                        <Button title={i18n.submit.toUpperCase()} onPress={callback} />
-                    </View>
-                </View>
-            </Modal>
+            <Dialog visible={this.state.dialogVisible} onClose={msg => this.onRequestClose(msg)} />
             <Text style={{ textAlign: "center" }}>{item.distance} {i18n.meter}</Text>
             <Button title={item.isRequestedByMe ? i18n.statusOfMyRequest.toUpperCase() : i18n.showMyNeed.toUpperCase()} onPress={
                 () => this.handleOnPress(item.id, item.isRequestedByMe)

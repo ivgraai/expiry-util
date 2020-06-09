@@ -1,6 +1,7 @@
 import Constants from 'expo-constants';
 import * as Dtos from '../constants/Dtos';
 import { Platform } from 'react-native';
+import moment from 'moment';
 
 const BASE_URL: string = Constants.manifest.extra.serverUrl;
 
@@ -137,7 +138,7 @@ export default class HttpClient {
         .catch(this.ERROR_HANDLER);
     }
 
-    public static findAllRequest(token: string, goodId: number | null): Promise<Dtos.RequestAllResponse[]> {
+    public static findAllRequest(token: string, goodId: number | null): Promise<Dtos.RequestAllResponse> {
         let url: string = BASE_URL + 'request/all';
         if (undefined != goodId) {
             url += `?goodId=${encodeURIComponent(goodId)}`;
@@ -150,14 +151,14 @@ export default class HttpClient {
             }
         })
         .then(response => response.json())
-        .then(response => response.map((request: any) => new Dtos.RequestAllResponse(request, this.parseDate)))
-        .catch(this.ERROR_HANDLER);
+        .then(response => new Dtos.RequestAllResponse(response, this.parseDateTime))
     }
 
-    public static approveRequest(token: string, requestId: number): Promise<void | Response> {
+    public static approveRequest(token: string, requestId: number, message: string): Promise<void | Response> {
         return fetch(BASE_URL + `request/${encodeURIComponent(requestId)}`, {
             method: 'PUT',
-            headers: this.createHeaderWithToken(token)
+            headers: this.createHeaderWithToken(token),
+            body: message
         })
         .then()
         .catch(this.ERROR_HANDLER);
@@ -176,6 +177,10 @@ export default class HttpClient {
 
     private static parseDate(value: string): Date {
         return new Date(value);
+    }
+
+    private static parseDateTime(value: string): Date {
+        return moment(value).toDate();
     }
 
 }
