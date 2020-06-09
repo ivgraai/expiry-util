@@ -8,7 +8,7 @@ interface IProps {
     onClose: (message: string) => void
 }
 
-class Dialog extends React.Component<IProps> {
+class Dialog extends React.PureComponent<IProps> {
     private message: string | undefined = undefined;
 
     modalOnClose() {
@@ -18,9 +18,7 @@ class Dialog extends React.Component<IProps> {
         this.props.onClose(this.message);
     }
 
-    componentWillReceiveProps(_: IProps) {
-        // empty method
-    }
+    // static getDerivedStateFromProps(props, state) { empty method }
 
     render() {
         var callback = () => this.modalOnClose();
