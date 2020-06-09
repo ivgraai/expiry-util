@@ -49,13 +49,12 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
     }
 
     acceptRequest(message: string): void {
-        let datas = this.state.allRequests!.datas;
         UserManager.getToken().then(token => {
             HttpClient.approveRequest(token!, this.requestId, message)
                 .then(() => this.updateState({
                     allRequests: {
                         accepted: this.requestId,
-                        datas
+                        datas: this.state.allRequests!.datas
                     },
                     showModal: false
                 }));
