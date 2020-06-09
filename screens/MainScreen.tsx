@@ -128,8 +128,8 @@ class MainScreen extends React.Component {
 
     if (!image.cancelled) {
       this.setState({ photo: image.uri });
+      this.props.chooseImage();
     }
-    this.props.chooseImage();
   };
 
   navigate() {
