@@ -1,11 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Dimensions, Button } from "react-native";
+import { StyleSheet, View, Dimensions, } from "react-native";
 import MapView from 'react-native-maps';
 import { i18n } from "../constants/Dictionary";
+import { HeaderBackButton } from "react-navigation";
 
 class MapScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
-        headerLeft: <Button onPress={()=>this.goBack(navigation)} title={"< " + i18n.okay} />
+        headerLeft: <HeaderBackButton backTitleVisible={true} onPress={()=>this.goBack(navigation)} title={i18n.okay} />
       });
 
     constructor(props) {
