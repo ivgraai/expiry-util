@@ -2,6 +2,7 @@ import React from "react";
 import { Text, FlatList, Button } from "react-native";
 import Dialog from "../components/Dialog";
 import { i18n } from "../constants/Dictionary";
+import Utility from "../common/Utility";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import * as Dtos from "../constants/Dtos";
@@ -12,7 +13,8 @@ interface IProps {
 
 interface IState {
     allRequests: undefined | Dtos.RequestAllResponse,
-    showModal: boolean
+    showModal: boolean,
+    beneficiary: string | undefined
 }
 
 export default class ApprovalScreen extends React.Component<IProps, IState> {
@@ -22,7 +24,8 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
         super(props);
         this.state = {
             allRequests: undefined,
-            showModal: false
+            showModal: false,
+            beneficiary: undefined
         };
     }
     private requestId: number = 0;
@@ -30,18 +33,29 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
     componentDidMount() {
         UserManager.getToken().then(token => {
             HttpClient.findAllRequest(token!, this.goodId)
-                .then(allRequests => this.setState({allRequests}))
+                .then(allRequests => this.updateState({allRequests}))
                 .catch(HttpClient.ERROR_HANDLER);
         });
     }
 
+    updateState(state: any) {
+        if (undefined != state.allRequests && null != state.allRequests.accepted) {
+            let value = state.allRequests.datas.find(
+                    (item: { id: number; }) => item.id == state.allRequests.accepted
+                ).username;
+            state = Utility.assignChildState("beneficiary", value, state);
+        }
+        this.setState(state);
+    }
+
     acceptRequest(message: string): void {
+        let datas = this.state.allRequests!.datas;
         UserManager.getToken().then(token => {
             HttpClient.approveRequest(token!, this.requestId, message)
-                .then(() => this.setState({
+                .then(() => this.updateState({
                     allRequests: {
                         accepted: this.requestId,
-                        datas: this.state.allRequests!.datas
+                        datas
                     },
                     showModal: false
                 }));
@@ -51,10 +65,12 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
     render() {
         var onPress = (item: Dtos.RequestData) => {
             this.requestId = item.id;
-            this.setState({showModal: true});
+            this.updateState({showModal: true});
         };
         return <>
             <Dialog visible={this.state.showModal} onClose={msg => this.acceptRequest(msg)} />
+            {this.state.beneficiary &&
+                <Text>{i18n.youAlreadyApprovedTheFollowingApplicantRequest.capitalize() + ": " + this.state.beneficiary}</Text>}
             <FlatList
                 data={this.state.allRequests?.datas}
                 keyExtractor={item => item.id.toString()}

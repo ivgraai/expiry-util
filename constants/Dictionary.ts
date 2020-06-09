@@ -40,7 +40,8 @@ const MESSAGES: any = {
         loading:                                            'loading',
         inOrderToShowYourNeedYouHaveToSignIn:               'in order to show your need you have to sign in',
         lookWhoRequestedThis:                               'look who requested this',
-        approve:                                            'approve'
+        approve:                                            'approve',
+        youAlreadyApprovedTheFollowingApplicantRequest:     'you already approved the following applicant\'s request'
     },
     hu: {
         add:                                                'hozzáad',
@@ -80,7 +81,8 @@ const MESSAGES: any = {
         loading:                                            'töltés',
         inOrderToShowYourNeedYouHaveToSignIn:               'be kell jelentkeznie, hogy jelezze az igényét',
         lookWhoRequestedThis:                               'nézze meg, hogy ki igényelte ezt',
-        approve:                                            'jóváhagy'
+        approve:                                            'jóváhagy',
+        youAlreadyApprovedTheFollowingApplicantRequest:     'már elfogadta a következő kérelmező igényét'
     }
     // , default: en
 };
