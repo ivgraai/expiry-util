@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Dimensions, } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import MapView from 'react-native-maps';
 import { i18n } from "../constants/Dictionary";
 import { HeaderBackButton } from "react-navigation";

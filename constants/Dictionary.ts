@@ -1,8 +1,49 @@
 import * as Localization from 'expo-localization';
 import { I18nResolver } from 'i18n-ts';
 
-const MESSAGES: any = {
-    en: {
+type TYPE = {
+    add: string,
+    perishableGoods: string,
+    setLocation: string,
+    bestBefore: string,
+    successfullyAdded: string,
+    letsContinueWithOtherPerishableGood: string,
+    cancel: string,
+    okay: string,
+    new: string,
+    chooseAPhoto: string,
+    expirationDate: string,
+    pickedLocation: string,
+    all: string,
+    signUp: string,
+    name: string,
+    emailAddress: string,
+    password: string,
+    confirmPassword: string,
+    submit: string,
+    youHaveSuccessfullysignedUp: string,
+    aProblemOccurredWhileCommunicatingWithTheServer: string,
+    inOrderToMarkAsAvailableYouNeedToSignIn: string,
+    signIn: string,
+    or: string,
+    pleaseEnterAName: string,
+    pleaseEnterAPassword: string,
+    passwordMustBeAtLeast6Characters: string,
+    confirmPasswordMustBeEqualToPassword: string,
+    pleaseEnterAnEmailAddress: string,
+    pleaseEnterAValidEmailAddress: string,
+    nearby: string,
+    meter: string,
+    showMyNeed: string,
+    statusOfMyRequest: string,
+    loading: string,
+    inOrderToShowYourNeedYouHaveToSignIn: string,
+    lookWhoRequestedThis: string,
+    approve: string,
+    youAlreadyApprovedTheFollowingApplicantRequest: string
+};
+
+const en = {
         add:                                                'add',
         perishableGoods:                                    'perishable goods',
         setLocation:                                        'set location',
@@ -42,7 +83,9 @@ const MESSAGES: any = {
         lookWhoRequestedThis:                               'look who requested this',
         approve:                                            'approve',
         youAlreadyApprovedTheFollowingApplicantRequest:     'you already approved the following applicant\'s request'
-    },
+};
+const MESSAGES: any = {
+    en: en,
     hu: {
         add:                                                'hozzáad',
         perishableGoods:                                    'romlandó áru',
@@ -83,8 +126,8 @@ const MESSAGES: any = {
         lookWhoRequestedThis:                               'nézze meg, hogy ki igényelte ezt',
         approve:                                            'jóváhagy',
         youAlreadyApprovedTheFollowingApplicantRequest:     'már elfogadta a következő kérelmező igényét'
-    }
-    // , default: en
+    },
+    default: en
 };
 
-export const i18n: unknown = new I18nResolver(MESSAGES, Localization.locale).translation;
+export const i18n = new I18nResolver<TYPE>(MESSAGES, Localization.locale).translation;
