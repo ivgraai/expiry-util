@@ -14,10 +14,11 @@ export default class Utility {
 
     static calculateURLCacheValue(evictionFrequency: string): string {
         var now = new Date();
-        if ('daily' === evictionFrequency) {
-            return now.toLocaleDateString();
+        switch (evictionFrequency) {
+            case 'daily':   return now.toLocaleDateString();
+            case 'yearly':  return now.getFullYear().toString();
+            default:        return now.toISOString();
         }
-        return now.toISOString();
     }
 
     static remoteURI(_localURI: string, goodId: number, size: SizeRequest): string {
