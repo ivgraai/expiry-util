@@ -26,8 +26,8 @@ class Dialog extends React.PureComponent<IProps> {
             <Modal transparent={true} visible={this.props.visible} onRequestClose={callback}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <TextInput style={styles.modalTextInput} onChangeText={text => this.message = text} />
-                        <Button title={i18n.submit.toUpperCase()} onPress={callback} />
+                        <TextInput style={styles.modalTextInput} onChangeText={text => this.message = text} testID="textInput" />
+                        <Button title={i18n.submit.toUpperCase()} onPress={callback} testID="button" />
                     </View>
                 </View>
             </Modal>

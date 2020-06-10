@@ -20,10 +20,10 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "**/*.{js,jsx,ts,tsx}",
-      "!**/coverage/**",
+      "!./coverage/**",
       "!**/node_modules/**",
       "!*.config.{js,ts}",
-      "!**/docs/**"
+      "!./docs/**"
     ]
   },
   "dependencies": {
@@ -65,6 +65,7 @@
     "babel-preset-expo": "^8.1.0",
     "i18n-ts": "^1.0.5",
     "jest-expo": "^37.0.0",
+    "react-native-testing-library": "^2.1.0",
     "typescript": "^3.9.2"
   },
   "private": true
