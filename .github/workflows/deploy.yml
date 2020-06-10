@@ -19,6 +19,6 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
           expo-packager: npm
       - run: npm ci
-      - run: npm test -- --watchAll=false -u
+      - run: npm test -- --watchAll=false --update-snapshot
       - run: expo doctor
       - run: expo publish
