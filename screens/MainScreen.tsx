@@ -47,12 +47,17 @@ class MainScreen extends React.Component {
           this.props.checkAvailable();
           this.props.pickLocation({lat, lng});
         });
+        this.resetNavigationParameters();
       }
     });
   }
 
   componentWillUnmount() {
     this._unsubscribe();
+  }
+
+  resetNavigationParameters() {
+    this.props.navigation.setParams({"latitude": undefined, "longitude": undefined});
   }
 
   showDialog() {
