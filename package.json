@@ -21,7 +21,9 @@
     "collectCoverageFrom": [
       "**/*.{js,jsx,ts,tsx}",
       "!**/coverage/**",
-      "!**/node_modules/**"
+      "!**/node_modules/**",
+      "!*.config.{js,ts}",
+      "!**/docs/**"
     ]
   },
   "dependencies": {
