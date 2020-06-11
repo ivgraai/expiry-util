@@ -110,11 +110,11 @@ export default class UserScreen extends React.Component<IProps, IState> {
                 <Text style={styles.signUpInText}>{i18n.signIn.toUpperCase()}</Text>
                 <View style={styles.hrView}/>
                 <Text style={styles.text}>{i18n.name.toCamelCase()}</Text>
-                <TextInput style = {[styles.textInput, this.getErrorStyle('name')]} onChangeText={value => this.name = value} onBlur={() => this.validateNameAndPassword()}/>
+                <TextInput style = {[styles.textInput, this.getErrorStyle('name')]} onChangeText={value => this.name = value} onBlur={() => this.validateNameAndPassword()} testID="signInUsername"/>
                 <Text style={styles.text}>{i18n.password.toCamelCase()}</Text>
-                <TextInput style = {[styles.textInput, this.getErrorStyle('password')]} onChangeText={value => this.password = value} onBlur={() => this.validateNameAndPassword()} secureTextEntry={true}/>
+                <TextInput style = {[styles.textInput, this.getErrorStyle('password')]} onChangeText={value => this.password = value} onBlur={() => this.validateNameAndPassword()} secureTextEntry={true} testID="signInPassword"/>
                 <Errors messages={this.state.errors} separator={"\n"}/>
-                <View style={styles.buttonWrapper}><Button title={i18n.submit.toCamelCase()} onPress={() => this.signIn()}/></View>
+                <View style={styles.buttonWrapper}><Button title={i18n.submit.toCamelCase()} onPress={() => this.signIn()} testID="signInButton"/></View>
                 <Text style={styles.orText}>{i18n.or}</Text>
                 <View style={styles.buttonWrapper}><Button title={i18n.signUp.toCamelCase()} onPress={() => this.setState({switched: true})}/></View>
             </>;
