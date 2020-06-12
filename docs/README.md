@@ -4,3 +4,7 @@
 
 `npm install`
 `expo start`
+
+[Scan this QR code](../assets/images/qr.png) \
+or \
+[download from here](https://expo.io/@ivgraai/expiry-util)
