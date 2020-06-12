@@ -1,17 +1,16 @@
 import { AppLoading, Notifications } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+import * as FileSystem from 'expo-file-system';
 
 import AppNavigator from './navigation/AppNavigator';
-
-import * as Permissions from 'expo-permissions';
 import DbHelper from './DbHelper';
 import UserManager from './services/UserManager';
-
-import Constants from 'expo-constants';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -56,6 +55,10 @@ Permissions.askAsync(Permissions.LOCATION);
 if (Constants.manifest.extra.init) {
   Notifications.cancelAllScheduledNotificationsAsync();
   DbHelper.deleteGoods();
+  DbHelper.selectImages().then(list => {
+    list.forEach(fileUri => FileSystem.deleteAsync(fileUri, {idempotent: true}));
+    DbHelper.deleteDownloads();
+  });
   UserManager.removeToken();
 }
 

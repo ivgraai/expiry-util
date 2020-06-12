@@ -1,6 +1,7 @@
 import React from "react";
 import { FlatList, View, Text, PixelRatio } from "react-native";
 import CachedImage from "../components/CachedImage";
+import DbHelper from "../DbHelper";
 
 class GoodList extends React.PureComponent {
     render() {
@@ -15,6 +16,7 @@ class GoodList extends React.PureComponent {
                   <CachedImage
                     source={{ uri: item.image }}
                     style={{ height: "90%", width: "90%", aspectRatio: 1 }}
+                    onDownloaded={(uri: string) => DbHelper.newImage(uri, true)}
                   />
                 </View>
                 <View

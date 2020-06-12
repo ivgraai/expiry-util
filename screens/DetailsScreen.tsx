@@ -5,6 +5,7 @@ import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
 import UserManager from "../services/UserManager";
+import DbHelper from "../DbHelper";
 
 interface IProps {
     navigation: any;
@@ -29,6 +30,7 @@ export default function DetailsScreen(props: IProps) {
             <CachedImage
                 source={{ uri: Utility.remoteURI("", id, Dtos.SizeRequest.large) }}
                 style={{ flex: 3, height: "100%", width: "100%", aspectRatio: 1, alignSelf: "center" }}
+                onDownloaded={(uri: string) => DbHelper.newImage(uri, false)}
             />
             <View style={{flex: 2}}>
                 <Text>{response?.name.toUpperCase()}</Text>
