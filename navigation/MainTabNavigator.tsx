@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, Text } from 'react-native';
+import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import { i18n } from '../constants/Dictionary';
@@ -17,7 +17,14 @@ import ApprovalScreen from '../screens/ApprovalScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
-  default: {},
+  default: {
+    defaultNavigationOptions: {
+      headerTintColor: Colors.tintColor,
+      headerStyle: {
+        backgroundColor: Colors.header
+      }
+    }
+  },
 });
 
 const MainStack = createStackNavigator(
@@ -27,7 +34,8 @@ const MainStack = createStackNavigator(
     User: { screen: UserScreen }
   },
   {
-    initialRouteName: 'Main'
+    initialRouteName: 'Main',
+    ...config
   }
 );
 
