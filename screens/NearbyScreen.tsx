@@ -1,14 +1,15 @@
 import React from "react";
-import { Text, View, Button, TextInput } from "react-native";
+import { Text, View, Button } from "react-native";
 import { i18n } from "../constants/Dictionary";
 import GoodList from "../components/GoodList";
 import * as Dtos from "../constants/Dtos";
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
-import { StackActions } from 'react-navigation';
-import Dialog from '../components/Dialog';
+import { StackActions } from "react-navigation";
+import Dialog from "../components/Dialog";
+import Colors from "../constants/Colors";
 
 export default class NearbyScreen extends React.Component {
     static navigationOptions = {
@@ -70,7 +71,7 @@ export default class NearbyScreen extends React.Component {
         return <View>
             <Dialog visible={this.state.dialogVisible} onClose={msg => this.onRequestClose(msg)} />
             <Text style={{ textAlign: "center" }}>{item.distance} {i18n.meter}</Text>
-            <Button title={item.isRequestedByMe ? i18n.statusOfMyRequest.toUpperCase() : i18n.showMyNeed.toUpperCase()} onPress={
+            <Button title={item.isRequestedByMe ? i18n.statusOfMyRequest.toUpperCase() : i18n.showMyNeed.toUpperCase()} color={Colors.tintColor} onPress={
                 () => this.handleOnPress(item.id, item.isRequestedByMe)
             }/>
         </View>;

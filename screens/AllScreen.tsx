@@ -10,6 +10,7 @@ import { SizeRequest } from "../constants/Dtos";
 import UserManager from "../services/UserManager";
 import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
+import Colors from "../constants/Colors";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
@@ -27,7 +28,7 @@ export default class AllScreen extends React.Component {
     return !isRequestedByOther ?
         null
       :
-        <Button title={i18n.lookWhoRequestedThis.toUpperCase()} onPress={() => this.props.navigation.navigate('Approval', {"goodId": id})} />;
+        <Button title={i18n.lookWhoRequestedThis.toUpperCase()} onPress={() => this.props.navigation.navigate('Approval', {"goodId": id})} color={Colors.tintColor} />;
   }
 
   render() {

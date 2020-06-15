@@ -1,7 +1,8 @@
 import React from "react";
-import { FlatList, View, Text, PixelRatio } from "react-native";
+import { FlatList, View, Text } from "react-native";
 import CachedImage from "../components/CachedImage";
 import DbHelper from "../DbHelper";
+import { styles } from "../constants/styles/GoodList";
 
 class GoodList extends React.PureComponent {
     render() {
@@ -11,8 +12,8 @@ class GoodList extends React.PureComponent {
             data={dataSource}
             keyExtractor={item => item.id.toString()}
             renderItem={({item}) => (
-              <View style={{ flexDirection: "row", height: PixelRatio.getPixelSizeForLayoutSize(height ?? 75) }}>
-                <View style={{ flex: 2, alignItems: "center" }}>
+              <View style={styles.parent}>
+                <View style={styles.leftChild}>
                   <CachedImage
                     source={{ uri: item.image }}
                     style={{ height: "90%", width: "90%", aspectRatio: 1 }}
@@ -20,11 +21,7 @@ class GoodList extends React.PureComponent {
                   />
                 </View>
                 <View
-                  style={{
-                    flex: 2,
-                    flexDirection: "column",
-                    justifyContent: "center"
-                  }}
+                  style={styles.rightChild}
                 >
                   <Text style={{ textAlign: "center" }}>
                     {item.name.toUpperCase()}
