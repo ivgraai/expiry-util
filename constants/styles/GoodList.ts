@@ -17,7 +17,8 @@ export const styles = StyleSheet.create({
         flex: 2,
         alignItems: "center",
         borderRightWidth: borderWidth,
-        borderRightColor: borderColor
+        borderRightColor: borderColor,
+        justifyContent: "center"
     },
     leftChildImage: {
         height: "90%",
@@ -33,7 +34,8 @@ export const styles = StyleSheet.create({
         flex: 0.2,
         backgroundColor: Colors.tintColor,
         borderTopRightRadius: 18,
-        overflow: "hidden"
+        overflow: "hidden",
+        justifyContent: "center"
     },
     grandChildHeaderText: {
         textAlign: "center",
