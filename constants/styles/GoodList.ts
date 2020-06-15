@@ -19,9 +19,32 @@ export const styles = StyleSheet.create({
         borderRightWidth: borderWidth,
         borderRightColor: borderColor
     },
+    leftChildImage: {
+        height: "90%",
+        width: "90%",
+        aspectRatio: 1
+    },
     rightChild: {
         flex: 2,
+        flexDirection: "column"
+    },
+    grandChildHeader: {
+        // position: "absolute",
+        flex: 0.2,
+        backgroundColor: Colors.tintColor,
+        borderTopRightRadius: 18,
+        overflow: "hidden"
+    },
+    grandChildHeaderText: {
+        textAlign: "center",
+        color: Colors.backgroundColor
+    },
+    grandChildBody: {
+        flex: 1,
         flexDirection: "column",
         justifyContent: "center"
+    },
+    grandChildBodyText: {
+        textAlign: "center"
     }
 });

@@ -16,21 +16,25 @@ class GoodList extends React.PureComponent {
                 <View style={styles.leftChild}>
                   <CachedImage
                     source={{ uri: item.image }}
-                    style={{ height: "90%", width: "90%", aspectRatio: 1 }}
+                    style={styles.leftChildImage}
                     onDownloaded={(uri: string) => DbHelper.newImage(uri, true)}
                   />
                 </View>
                 <View
                   style={styles.rightChild}
                 >
-                  <Text style={{ textAlign: "center" }}>
-                    {item.name.toUpperCase()}
-                  </Text>
-                  <Text style={{ textAlign: "center" }}>
-                    {item.expiry.toLocaleDateString()}
-                  </Text>
-                  { customNodesForTheItem ?
-                    customNodesForTheItem(item) : null }
+                  <View style={styles.grandChildHeader}>
+                    <Text style={styles.grandChildHeaderText}>
+                      {item.name.toUpperCase()}
+                    </Text>
+                  </View>
+                  <View style={styles.grandChildBody}>
+                    <Text style={styles.grandChildBodyText}>
+                      {item.expiry.toLocaleDateString()}
+                    </Text>
+                    { customNodesForTheItem ?
+                      customNodesForTheItem(item) : null }
+                  </View>
                 </View>
               </View>
             )}
