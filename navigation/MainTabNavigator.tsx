@@ -4,8 +4,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import { i18n } from '../constants/Dictionary';
 import Colors from '../constants/Colors';
-import TabBarIcon from '../components/TabBarIcon';
 import TabBarLabel from '../components/TabBarLabel';
+import TabBarIcon from '../components/TabBarIcon';
 
 import MainScreen from '../screens/MainScreen';
 import AllScreen from '../screens/AllScreen';
@@ -64,7 +64,7 @@ const NearbyStack = createStackNavigator(
 
 NearbyStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (<TabBarLabel focused={focused}>{i18n.nearby}</TabBarLabel>),
-  tabBarIcon: <TabBarIcon name={Platform.OS === 'ios' ? 'ios-help' : 'md-help'} />
+  tabBarIcon: <TabBarIcon name={Platform.OS === 'ios' ? 'ios-globe' : 'md-globe'} />
 };
 
 NearbyStack.path = '';
