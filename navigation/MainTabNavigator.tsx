@@ -1,8 +1,12 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
+import { i18n } from '../constants/Dictionary';
+import Colors from '../constants/Colors';
 import TabBarIcon from '../components/TabBarIcon';
+import TabBarLabel from '../components/TabBarLabel';
+
 import MainScreen from '../screens/MainScreen';
 import AllScreen from '../screens/AllScreen';
 import MapScreen from '../screens/MapScreen';
@@ -10,7 +14,6 @@ import UserScreen from '../screens/UserScreen';
 import NearbyScreen from '../screens/NearbyScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import ApprovalScreen from '../screens/ApprovalScreen';
-import { i18n } from '../constants/Dictionary';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -29,10 +32,8 @@ const MainStack = createStackNavigator(
 );
 
 MainStack.navigationOptions = {
-  tabBarLabel: i18n.new,
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'} />
-  )
+  tabBarLabel: ({ focused }) => (<TabBarLabel focused={focused}>{i18n.new}</TabBarLabel>),
+  tabBarIcon: <TabBarIcon name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'} />
 };
 
 MainStack.path = '';
@@ -46,10 +47,8 @@ const AllStack = createStackNavigator(
 );
 
 AllStack.navigationOptions = {
-  tabBarLabel: i18n.all,
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'} />
-  )
+  tabBarLabel: ({ focused }) => (<TabBarLabel focused={focused}>{i18n.all}</TabBarLabel>),
+  tabBarIcon: <TabBarIcon name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'} />
 };
 
 AllStack.path = '';
@@ -64,19 +63,29 @@ const NearbyStack = createStackNavigator(
 );
 
 NearbyStack.navigationOptions = {
-  tabBarLabel: i18n.nearby,
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-help' : 'md-help'} />
-  )
+  tabBarLabel: ({ focused }) => (<TabBarLabel focused={focused}>{i18n.nearby}</TabBarLabel>),
+  tabBarIcon: <TabBarIcon name={Platform.OS === 'ios' ? 'ios-help' : 'md-help'} />
 };
 
 NearbyStack.path = '';
 
-const tabNavigator = createBottomTabNavigator({
-  MainStack,
-  AllStack,
-  NearbyStack
-});
+const tabNavigator = createBottomTabNavigator(
+  {
+    MainStack,
+    AllStack,
+    NearbyStack
+  },
+  {
+    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      style: {
+        backgroundColor: Colors.tabBar
+      },
+      labelStyle: {
+      }
+    }
+  }
+);
 
 tabNavigator.path = '';
 
