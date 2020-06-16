@@ -1,23 +1,21 @@
 import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
-
-const borderWidth = 2;
-const borderColor = Colors.backgroundColor;
+import Layout from "../Layout";
 
 export const styles = StyleSheet.create({
     parent: {
         flexDirection: "row",
         height: PixelRatio.getPixelSizeForLayoutSize(75),
-        borderWidth: borderWidth,
-        borderColor: borderColor,
+        borderWidth: Layout.borderWidth,
+        borderColor: Layout.borderColor,
         margin: 5,
-        borderRadius: 20
+        borderRadius: Layout.borderRadius
     },
     leftChild: {
         flex: 2,
         alignItems: "center",
-        borderRightWidth: borderWidth,
-        borderRightColor: borderColor,
+        borderRightWidth: Layout.borderWidth,
+        borderRightColor: Layout.borderColor,
         justifyContent: "center"
     },
     leftChildImage: {
@@ -33,9 +31,11 @@ export const styles = StyleSheet.create({
         // position: "absolute",
         flex: 0.2,
         backgroundColor: Colors.tintColor,
-        borderTopRightRadius: 18,
+        borderTopRightRadius: Layout.borderRadius - 2,
         overflow: "hidden",
-        justifyContent: "center"
+        justifyContent: "center",
+        borderBottomWidth: Layout.borderWidth,
+        borderBottomColor: Layout.borderColor
     },
     grandChildHeaderText: {
         textAlign: "center",
