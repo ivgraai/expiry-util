@@ -1,11 +1,11 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { Ionicons } from '@expo/vector-icons';
 
 import { i18n } from '../constants/Dictionary';
 import Colors from '../constants/Colors';
 import TabBarLabel from '../components/TabBarLabel';
-import TabBarIcon from '../components/TabBarIcon';
 
 import MainScreen from '../screens/MainScreen';
 import AllScreen from '../screens/AllScreen';
@@ -19,9 +19,9 @@ const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {
     defaultNavigationOptions: {
-      headerTintColor: Colors.tintColor,
+      headerTintColor: Colors.header,
       headerStyle: {
-        backgroundColor: Colors.header
+        backgroundColor: Colors.backgroundColor
       }
     }
   },
@@ -41,7 +41,7 @@ const MainStack = createStackNavigator(
 
 MainStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (<TabBarLabel focused={focused}>{i18n.new}</TabBarLabel>),
-  tabBarIcon: <TabBarIcon name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'} />
+  tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'} size={26} style={{ marginBottom: -3 }} color={Colors.tintColor} />
 };
 
 MainStack.path = '';
@@ -56,7 +56,7 @@ const AllStack = createStackNavigator(
 
 AllStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (<TabBarLabel focused={focused}>{i18n.all}</TabBarLabel>),
-  tabBarIcon: <TabBarIcon name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'} />
+  tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'} size={26} style={{ marginBottom: -3 }} color={Colors.tintColor} />
 };
 
 AllStack.path = '';
@@ -72,7 +72,7 @@ const NearbyStack = createStackNavigator(
 
 NearbyStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (<TabBarLabel focused={focused}>{i18n.nearby}</TabBarLabel>),
-  tabBarIcon: <TabBarIcon name={Platform.OS === 'ios' ? 'ios-globe' : 'md-globe'} />
+  tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-globe' : 'md-globe'} size={26} style={{ marginBottom: -3 }} color={Colors.tintColor} />
 };
 
 NearbyStack.path = '';
@@ -87,7 +87,7 @@ const tabNavigator = createBottomTabNavigator(
     tabBarPosition: 'bottom',
     tabBarOptions: {
       style: {
-        backgroundColor: Colors.tabBar
+        backgroundColor: Colors.backgroundColor
       },
       labelStyle: {
       }

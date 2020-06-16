@@ -4,7 +4,5 @@ const backgroundColor = '#AED59E';
 export default {
   tintColor,
   backgroundColor,
-  tabIcon: tintColor,
-  tabBar: backgroundColor,
-  header: backgroundColor
+  header: tintColor
 };

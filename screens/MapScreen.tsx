@@ -7,7 +7,7 @@ import Colors from "../constants/Colors";
 
 class MapScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
-        headerLeft: <HeaderBackButton backTitleVisible={true} onPress={()=>this.goBack(navigation)} title={i18n.okay} tintColor={Colors.tintColor} />
+        headerLeft: <HeaderBackButton backTitleVisible={true} onPress={()=>this.goBack(navigation)} title={i18n.okay} tintColor={Colors.header} />
       });
 
     constructor(props) {
