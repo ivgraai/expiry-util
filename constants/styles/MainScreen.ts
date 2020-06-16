@@ -40,12 +40,12 @@ export const styles = StyleSheet.create({
         flex: 2,
         alignItems: "center"
     },
+    dataPerishableGoodsTextInputWrapper: {
+        width,
+        height: "10%"
+    },
     dataPerishableGoodsTextInput: {
-        textAlign: "center",
-        height: "10%",
-        borderColor: "lightgray",
-        borderWidth: 1,
-        width: width
+        textAlign: "center"
     },
     dataExpirationDateWrapper: {
         marginTop: 15,

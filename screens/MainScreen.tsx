@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  TextInput,
   Image,
   TouchableOpacity,
   Alert
@@ -19,6 +18,7 @@ import Utility from "../common/Utility";
 import { StackActions } from "react-navigation";
 import { styles } from "../constants/styles/MainScreen";
 import Colors from "../constants/Colors";
+import StyledTextInput from "../components/StyledTextInput";
 
 import { connect } from "react-redux";
 import * as conn from "../constants/redux/Connecting";
@@ -200,16 +200,18 @@ class MainScreen extends React.Component<IProps, IState> {
           </TouchableOpacity>
         </View>
         <View style={styles.dataView}>
-          <TextInput
-            selectTextOnFocus={true}
-            style={styles.dataPerishableGoodsTextInput}
-            onChangeText={goods => this.props.setStateGoods(goods)}
-            placeholder={i18n.perishableGoods.toUpperCase()}
-          />
+          <View style={styles.dataPerishableGoodsTextInputWrapper}>
+            <StyledTextInput
+              selectTextOnFocus={true}
+              style={styles.dataPerishableGoodsTextInput}
+              onChangeText={(goods: string) => this.props.setStateGoods(goods)}
+              header={i18n.perishableGoods.toUpperCase()}
+            />
+          </View>
           <View style={styles.dataExpirationDateWrapper}>
             <View style={styles.dataExpirationDateTextWrapper}>
               <Text style={styles.dataExpirationDateText}>
-                {i18n.expirationDate.toUpperCase() + ":"}
+                {i18n.expirationDate.toUpperCase()}
               </Text>
             </View>
             <View style={styles.dataExpirationDateView}>
@@ -248,7 +250,7 @@ class MainScreen extends React.Component<IProps, IState> {
               <Text
                 style={styles.addText}
               >
-                {i18n.add.capitalize()}
+                {i18n.add.toUpperCase()}
               </Text>
             </TouchableOpacity>
           </View>
