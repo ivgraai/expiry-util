@@ -1,4 +1,8 @@
 import { StyleSheet } from "react-native";
+import Colors from "../Colors";
+import Layout from "../Layout";
+
+const width: string = "85%";
 
 export const styles = StyleSheet.create({
     mainView: {
@@ -13,17 +17,24 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     photoTouchableOpacity: {
-        borderColor: "lightgray",
-        borderWidth: 1,
+        borderColor: Layout.borderColor,
+        borderWidth: Layout.borderWidth,
         height: "75%",
-        width: "75%"
+        width: width,
+        borderRadius: Layout.borderRadius
     },
     photoImage: {
         width: "100%",
-        height: "100%"
+        height: "100%",
+        borderRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference
+    },
+    photoTextWrapper: {
+        justifyContent: "center",
+        flex: 1
     },
     photoText: {
-        textAlign: "center"
+        textAlign: "center",
+        color: Colors.tintColor
     },
     dataView: {
         flex: 2,
@@ -34,47 +45,61 @@ export const styles = StyleSheet.create({
         height: "10%",
         borderColor: "lightgray",
         borderWidth: 1,
-        width: "75%"
+        width: width
+    },
+    dataExpirationDateWrapper: {
+        marginTop: 15,
+        borderWidth: Layout.borderWidth,
+        borderColor: Layout.borderColor,
+        borderRadius: Layout.borderRadius
+    },
+    dataExpirationDateTextWrapper: {
+        backgroundColor: Colors.tintColor,
+        borderTopLeftRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference,
+        borderTopRightRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference,
+        borderBottomWidth: Layout.borderWidth,
+        borderBottomColor: Layout.borderColor
     },
     dataExpirationDateText: {
         textAlign: "center",
-        marginTop: 15,
-        marginBottom: 5
+        color: Colors.backgroundColor
     },
     dataExpirationDateView: {
         flexDirection: "row",
-        justifyContent: "center"
+        justifyContent: "center",
+        marginTop: -15
     },
     dataExpirationDateDateTimePicker: {
-        width: "75%",
-        height: 190
+        width: width,
+        height: 200
     },
     dataLocationCheckBoxContainer: {
         backgroundColor: "transparent",
         borderWidth: 0
     },
     dataLocationCheckBoxText: {
-        fontWeight: "normal"
+        fontWeight: "normal",
+        color: Colors.tintColor
     },
     addView: {
         flex: 2,
-        width: "75%",
+        width: width,
         flexDirection: "column",
         justifyContent: "center"
     },
     addTouchableOpacity: {
         marginRight: 40,
         marginLeft: 40,
-        marginTop: 10,
+        marginTop: -15,
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: "gray",
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: "white"
+        backgroundColor: Colors.tintColor,
+        borderRadius: Layout.borderRadius,
+        borderWidth: Layout.borderWidth,
+        borderColor: Layout.borderColor
     },
     addText: {
-        color: "white",
+        color: Colors.backgroundColor,
         textAlign: "center",
         paddingLeft: 10,
         paddingRight: 10

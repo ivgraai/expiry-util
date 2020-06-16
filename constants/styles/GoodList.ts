@@ -21,7 +21,8 @@ export const styles = StyleSheet.create({
     leftChildImage: {
         height: "90%",
         width: "90%",
-        aspectRatio: 1
+        aspectRatio: 1,
+        borderRadius: Layout.borderRadius
     },
     rightChild: {
         flex: 2,
@@ -31,7 +32,7 @@ export const styles = StyleSheet.create({
         // position: "absolute",
         flex: 0.2,
         backgroundColor: Colors.tintColor,
-        borderTopRightRadius: Layout.borderRadius - 2,
+        borderTopRightRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference,
         overflow: "hidden",
         justifyContent: "center",
         borderBottomWidth: Layout.borderWidth,

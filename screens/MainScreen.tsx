@@ -18,6 +18,7 @@ import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
 import { StackActions } from "react-navigation";
 import { styles } from "../constants/styles/MainScreen";
+import Colors from "../constants/Colors";
 
 import { connect } from "react-redux";
 import * as conn from "../constants/redux/Connecting";
@@ -192,7 +193,9 @@ class MainScreen extends React.Component<IProps, IState> {
                 style={styles.photoImage}
               />
             ) : (
-              <Text style={styles.photoText}>{(i18n.chooseAPhoto.toUpperCase())}</Text>
+              <View style={styles.photoTextWrapper}>
+                <Text style={styles.photoText}>{(i18n.chooseAPhoto.toUpperCase())}</Text>
+              </View>
             )}
           </TouchableOpacity>
         </View>
@@ -203,24 +206,28 @@ class MainScreen extends React.Component<IProps, IState> {
             onChangeText={goods => this.props.setStateGoods(goods)}
             placeholder={i18n.perishableGoods.toUpperCase()}
           />
-          <Text style={styles.dataExpirationDateText}>
-            {i18n.expirationDate.toUpperCase() + ":"}
-          </Text>
-          <View style={styles.dataExpirationDateView}>
-            <DateTimePicker
-              style={styles.dataExpirationDateDateTimePicker}
-              testID="dateTimePicker"
-              timeZoneOffsetInMinutes={0}
-              value={this.state.expiry}
-              mode={"date"}
-              is24Hour={true}
-              display="default"
-              onChange={(event, date) => {
-                if (date) {
-                  this.setState({ expiry: date });
-                }
-              }}
-            />
+          <View style={styles.dataExpirationDateWrapper}>
+            <View style={styles.dataExpirationDateTextWrapper}>
+              <Text style={styles.dataExpirationDateText}>
+                {i18n.expirationDate.toUpperCase() + ":"}
+              </Text>
+            </View>
+            <View style={styles.dataExpirationDateView}>
+              <DateTimePicker
+                style={styles.dataExpirationDateDateTimePicker}
+                testID="dateTimePicker"
+                timeZoneOffsetInMinutes={0}
+                value={this.state.expiry}
+                mode={"date"}
+                is24Hour={true}
+                display="default"
+                onChange={(_, date) => {
+                  if (date) {
+                    this.setState({ expiry: date });
+                  }
+                }}
+              />
+            </View>
           </View>
           <CheckBox
             containerStyle={styles.dataLocationCheckBoxContainer}
@@ -228,6 +235,8 @@ class MainScreen extends React.Component<IProps, IState> {
             checked={this.props.available}
             title={this.state.label}
             onPress={() => this.props.available ? this.props.checkAvailable() : this.navigate()}
+            checkedColor={Colors.tintColor}
+            uncheckedColor={Colors.tintColor}
           />
           <View
             style={styles.addView}
