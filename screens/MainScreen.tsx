@@ -8,7 +8,7 @@ import {
   Alert
 } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { CheckBox } from 'react-native-elements'
+import { CheckBox } from 'react-native-elements';
 import { Notifications } from "expo";
 import * as ImagePicker from "expo-image-picker";
 import * as Location from 'expo-location';
@@ -17,6 +17,7 @@ import UserManager from '../services/UserManager';
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
 import { StackActions } from 'react-navigation';
+import { styles } from "../constants/styles/MainScreen";
 
 import { connect } from 'react-redux';
 import * as conn from '../constants/redux/Connecting';
@@ -157,59 +158,39 @@ class MainScreen extends React.Component {
     let { photo } = this.state;
     return (
       <View
-        style={{
-          flex: 1,
-          flexDirection: "column",
-          justifyContent: "space-around"
-        }}
+        style={styles.mainView}
       >
         <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
+          style={styles.photoView}
         >
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={this.buttonPick}
-            style={{
-              borderColor: "lightgray",
-              borderWidth: 1,
-              height: "75%",
-              width: "75%"
-            }}
+            style={styles.photoTouchableOpacity}
           >
             {this.props.isChosen ? (
               <Image
                 source={{ uri: photo }}
-                style={{ width: "100%", height: "100%" }}
+                style={styles.photoImage}
               />
             ) : (
-              <Text style={{ textAlign: "center" }}>{(i18n.chooseAPhoto.toUpperCase())}</Text>
+              <Text style={styles.photoText}>{(i18n.chooseAPhoto.toUpperCase())}</Text>
             )}
           </TouchableOpacity>
         </View>
-        <View style={{ flex: 2, alignItems: "center" }}>
+        <View style={styles.dataView}>
           <TextInput
             selectTextOnFocus={true}
-            style={{
-              textAlign: "center",
-              height: "10%",
-              borderColor: "lightgray",
-              borderWidth: 1,
-              width: "75%"
-            }}
+            style={styles.dataPerishableGoodsTextInput}
             onChangeText={goods => this.props.setStateGoods(goods)}
             placeholder={i18n.perishableGoods.toUpperCase()}
           />
-          <Text style={{ textAlign: "center", marginTop: 15, marginBottom: 5 }}>
+          <Text style={styles.dataExpirationDateText}>
             {i18n.expirationDate.toUpperCase() + ":"}
           </Text>
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <View style={styles.dataExpirationDateView}>
             <DateTimePicker
-              style={{ width: "75%", height: 190 }}
+              style={styles.dataExpirationDateDateTimePicker}
               testID="dateTimePicker"
               timeZoneOffsetInMinutes={0}
               value={this.state.expiry}
@@ -222,42 +203,22 @@ class MainScreen extends React.Component {
             />
           </View>
           <CheckBox
-            containerStyle={{backgroundColor: "transparent", borderWidth: 0}}
-            textStyle={{fontWeight: "normal"}}
+            containerStyle={styles.dataLocationCheckBoxContainer}
+            textStyle={styles.dataLocationCheckBoxText}
             checked={this.props.available}
             title={this.state.label}
             onPress={() => this.props.available ? this.props.checkAvailable() : this.navigate()}
           />
           <View
-            style={{
-              flex: 2,
-              width: "75%",
-              flexDirection: "column",
-              justifyContent: "center"
-            }}
+            style={styles.addView}
           >
             <TouchableOpacity
-              style={{
-                marginRight: 40,
-                marginLeft: 40,
-                marginTop: 10,
-                paddingTop: 10,
-                paddingBottom: 10,
-                backgroundColor: "gray",
-                borderRadius: 10,
-                borderWidth: 1,
-                borderColor: "white"
-              }}
+              style={styles.addTouchableOpacity}
               onPress={() => this.buttonAdd(this.state)}
               underlayColor="white"
             >
               <Text
-                style={{
-                  color: "white",
-                  textAlign: "center",
-                  paddingLeft: 10,
-                  paddingRight: 10
-                }}
+                style={styles.addText}
               >
                 {i18n.add.capitalize()}
               </Text>
