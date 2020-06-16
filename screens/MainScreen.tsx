@@ -7,29 +7,47 @@ import {
   TouchableOpacity,
   Alert
 } from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { CheckBox } from 'react-native-elements';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { CheckBox } from "react-native-elements";
 import { Notifications } from "expo";
 import * as ImagePicker from "expo-image-picker";
-import * as Location from 'expo-location';
-import { i18n } from '../constants/Dictionary';
-import UserManager from '../services/UserManager';
+import * as Location from "expo-location";
+import { i18n } from "../constants/Dictionary";
+import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
-import { StackActions } from 'react-navigation';
+import { StackActions } from "react-navigation";
 import { styles } from "../constants/styles/MainScreen";
 
-import { connect } from 'react-redux';
-import * as conn from '../constants/redux/Connecting';
+import { connect } from "react-redux";
+import * as conn from "../constants/redux/Connecting";
 
-class MainScreen extends React.Component {
+interface IProps {
+  navigation: any;
+  isChosen: boolean;
+  goods: string;
+  available: boolean;
+  location: {lat: number, lng: number};
+  chooseImage: () => void;
+  setStateGoods: (name: string) => void;
+  checkAvailable: () => void;
+  pickLocation: (location: {lat: number, lng: number}) => void;
+}
+interface IState {
+  expiry: Date;
+  photo: string | undefined;
+  label: string;
+}
+
+class MainScreen extends React.Component<IProps, IState> {
   static navigationOptions = {
     title: i18n.new
   };
   dayOffset = 24 * 60 * 60 * 1000;
   multiplier = [-3, 2, 1];
+  _unsubscribe: any;
 
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       expiry: new Date(),
@@ -39,9 +57,9 @@ class MainScreen extends React.Component {
   }
 
   componentDidMount() {
-    this._unsubscribe = this.props.navigation.addListener('didFocus', () => {
-      lat = this.props.navigation.getParam("latitude");
-      lng = this.props.navigation.getParam("longitude");
+    this._unsubscribe = this.props.navigation.addListener("didFocus", () => {
+      let lat = this.props.navigation.getParam("latitude");
+      let lng = this.props.navigation.getParam("longitude");
       if (undefined != lat && undefined != lng) {
         Location.reverseGeocodeAsync({latitude: lat, longitude: lng}).then(addresses => {
           this.setState({label: addresses[0].city});
@@ -76,14 +94,14 @@ class MainScreen extends React.Component {
     );
   }
 
-  buttonAdd(object) {
+  buttonAdd(object: IState) {
     var now: Date = new Date();
-    temp = object.expiry;
+    let temp = object.expiry;
     temp.setHours(0, 0, 0, 0);
     var objectGoods = this.props.goods;
 
     let promises: Array<Promise<String | Number>> = [];
-    for (i = 0; i < this.multiplier.length; i++) {
+    for (var i = 0; i < this.multiplier.length; i++) {
       temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
       if (temp < now) {
         continue;
@@ -116,7 +134,7 @@ class MainScreen extends React.Component {
             !available ? null : this.props.location.lat,
             !available ? null : this.props.location.lng,
             available,
-            Utility.convertImageToDto(object.photo)
+            Utility.convertImageToDto(object.photo!)
           );
         }
       });
@@ -126,7 +144,7 @@ class MainScreen extends React.Component {
   }
 
   buttonPick = async () => {
-    image = await ImagePicker.launchImageLibraryAsync({
+    let image = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3]
@@ -141,13 +159,13 @@ class MainScreen extends React.Component {
   navigate() {
     UserManager.isSignedIn().then(result => {
       if (result) {
-        this.props.navigation.navigate('Map');
+        this.props.navigation.navigate("Map");
       } else {
-        this.props.navigation.navigate('User', {
+        this.props.navigation.navigate("User", {
           message: i18n.inOrderToMarkAsAvailableYouNeedToSignIn.capitalize() + '!',
           stackAction: StackActions.replace({
             key: undefined,
-            routeName: 'Map'
+            routeName: "Map"
           })
         });
       }
@@ -194,11 +212,13 @@ class MainScreen extends React.Component {
               testID="dateTimePicker"
               timeZoneOffsetInMinutes={0}
               value={this.state.expiry}
-              mode={'date'}
+              mode={"date"}
               is24Hour={true}
               display="default"
               onChange={(event, date) => {
-                this.setState({ expiry: date });
+                if (date) {
+                  this.setState({ expiry: date });
+                }
               }}
             />
           </View>
@@ -215,7 +235,6 @@ class MainScreen extends React.Component {
             <TouchableOpacity
               style={styles.addTouchableOpacity}
               onPress={() => this.buttonAdd(this.state)}
-              underlayColor="white"
             >
               <Text
                 style={styles.addText}
