@@ -81,7 +81,7 @@ export default class NearbyScreen extends React.Component {
         var temporary: React.ReactNode = (item: any) => this.renderDistanceAndRequest(item);
         return <>{
             this.state.loading ?
-                <Text>{i18n.loading.capitalize()}...</Text> :
+                <Text style={{color: Colors.tintColor}}>{i18n.loading.capitalize()}...</Text> :
                 <GoodList dataSource={this.state.ds} customNodesForTheItem={temporary}></GoodList>
         }</>;
     }

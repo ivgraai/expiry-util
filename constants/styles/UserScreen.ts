@@ -14,8 +14,8 @@ export const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     textInput: {
-        textAlign: "center"
-        // , height: "10%"
+        textAlign: "center",
+        minHeight: "13%"
     },
     buttonWrapper: {
         alignSelf: "center"
@@ -44,11 +44,11 @@ export const styles = StyleSheet.create({
         borderBottomRightRadius: Layout.borderRadius
     },
     validationResultText: {
-        color: Colors.tintColor,
+        color: Colors.errorText,
         flex: 1
     },
     inputsAndValidationResultView: {
-        flex: 3,
+        flex: 5,
         justifyContent: "space-between"
     },
     buttonsView: {
