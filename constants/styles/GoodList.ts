@@ -19,8 +19,8 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
     },
     leftChildImage: {
-        height: "90%",
-        width: "90%",
+        height: "80%",
+        width: "80%",
         aspectRatio: 1,
         borderRadius: Layout.borderRadius
     },

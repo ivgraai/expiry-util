@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     photoTouchableOpacity: {
         borderColor: Layout.borderColor,
         borderWidth: Layout.borderWidth,
-        height: "75%",
+        height: "85%",
         width: width,
         borderRadius: Layout.borderRadius
     },
