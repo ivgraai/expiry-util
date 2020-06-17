@@ -40,7 +40,8 @@ export const styles = StyleSheet.create({
     },
     grandChildHeaderText: {
         textAlign: "center",
-        color: Colors.backgroundColor
+        color: Colors.backgroundColor,
+        letterSpacing: Layout.letterSpacing
     },
     grandChildBody: {
         flex: 1,

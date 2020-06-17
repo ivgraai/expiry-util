@@ -34,7 +34,8 @@ export const styles = StyleSheet.create({
     },
     photoText: {
         textAlign: "center",
-        color: Colors.tintColor
+        color: Colors.tintColor,
+        letterSpacing: Layout.letterSpacing
     },
     dataView: {
         flex: 2,
@@ -62,7 +63,8 @@ export const styles = StyleSheet.create({
     },
     dataExpirationDateText: {
         textAlign: "center",
-        color: Colors.backgroundColor
+        color: Colors.backgroundColor,
+        letterSpacing: Layout.letterSpacing
     },
     dataExpirationDateView: {
         flexDirection: "row",
@@ -79,7 +81,8 @@ export const styles = StyleSheet.create({
     },
     dataLocationCheckBoxText: {
         fontWeight: "normal",
-        color: Colors.tintColor
+        color: Colors.tintColor,
+        letterSpacing: Layout.letterSpacing
     },
     addView: {
         flex: 2,
@@ -102,6 +105,7 @@ export const styles = StyleSheet.create({
         color: Colors.backgroundColor,
         textAlign: "center",
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 10,
+        letterSpacing: Layout.letterSpacing
     }
 });
