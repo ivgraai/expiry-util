@@ -207,6 +207,8 @@ class MainScreen extends React.Component<IProps, IState> {
               style={styles.dataPerishableGoodsTextInput}
               onChangeText={(goods: string) => this.props.setStateGoods(goods)}
               header={i18n.perishableGoods.toUpperCase()}
+              placeholder={i18n.egBreadMilkOrEggs.capitalize()}
+              placeholderTextColor={Colors.backgroundColor}
             />
           </View>
           <View style={styles.dataExpirationDateWrapper}>

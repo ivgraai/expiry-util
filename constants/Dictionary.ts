@@ -43,7 +43,8 @@ type TYPE = {
     youAlreadyApprovedTheFollowingApplicantRequest: string,
     goToSignIn: string,
     goToSignUp: string,
-    leaveAMessage: string
+    leaveAMessage: string,
+    egBreadMilkOrEggs: string
 };
 
 const en = {
@@ -88,7 +89,8 @@ const en = {
         youAlreadyApprovedTheFollowingApplicantRequest:     'you already approved the following applicant\'s request',
         goToSignIn:                                         'go to sign in',
         goToSignUp:                                         'go to sign up',
-        leaveAMessage:                                      'leave a message'
+        leaveAMessage:                                      'leave a message',
+        egBreadMilkOrEggs:                                  'e.g., bread, milk or eggs'
 };
 const MESSAGES: any = {
     en: en,
@@ -134,7 +136,8 @@ const MESSAGES: any = {
         youAlreadyApprovedTheFollowingApplicantRequest:     'már elfogadta a következő kérelmező igényét',
         goToSignIn:                                         'ugrás a bejelentkezésre',
         goToSignUp:                                         'ugrás a regisztrációra',
-        leaveAMessage:                                      'hagyjon egy üzenetet'
+        leaveAMessage:                                      'hagyjon egy üzenetet',
+        egBreadMilkOrEggs:                                  'pl. kenyér, tej vagy tojás'
     },
     fr: {
         add:                                                'ajouter',
@@ -178,7 +181,8 @@ const MESSAGES: any = {
         youAlreadyApprovedTheFollowingApplicantRequest:     'vous avez déjà approuvé la demande du demandeur suivant',
         goToSignIn:                                         'aller se connecter',
         goToSignUp:                                         'aller s\'inscrire',
-        leaveAMessage:                                      'laisser un message'
+        leaveAMessage:                                      'laisser un message',
+        egBreadMilkOrEggs:                                  'par exemple, pain, lait ou œufs'
     },
     es: {
         add:                                                'agregar',
@@ -222,7 +226,8 @@ const MESSAGES: any = {
         youAlreadyApprovedTheFollowingApplicantRequest:     'ya aprobó la solicitud del próximo solicitante',
         goToSignIn:                                         'ir a iniciar sesión',
         goToSignUp:                                         'ir a registrarse',
-        leaveAMessage:                                      'deja un mensaje'
+        leaveAMessage:                                      'deja un mensaje',
+        egBreadMilkOrEggs:                                  'por ejemplo, pan, leche o huevos'
     },
     default: en
 };
