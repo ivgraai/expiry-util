@@ -5,7 +5,7 @@ import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
 import UserManager from "../services/UserManager";
-import DbHelper from "../DbHelper";
+import DbHelper from "../services/DbHelper";
 
 interface IProps {
     navigation: any;

@@ -9,7 +9,7 @@ import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
 
 import AppNavigator from './navigation/AppNavigator';
-import DbHelper from './DbHelper';
+import DbHelper from './services/DbHelper';
 import UserManager from './services/UserManager';
 
 import { createStore } from 'redux';

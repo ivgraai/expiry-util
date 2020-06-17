@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, View, Text } from "react-native";
 import CachedImage from "../components/CachedImage";
-import DbHelper from "../DbHelper";
+import DbHelper from "../services/DbHelper";
 import { styles } from "../constants/styles/GoodList";
 
 class GoodList extends React.PureComponent {
