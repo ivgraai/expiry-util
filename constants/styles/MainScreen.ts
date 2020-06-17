@@ -90,22 +90,9 @@ export const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center"
     },
-    addTouchableOpacity: {
-        marginRight: 40,
-        marginLeft: 40,
+    addStyledButton: {
         marginTop: -15,
-        paddingTop: 10,
-        paddingBottom: 10,
-        backgroundColor: Colors.tintColor,
-        borderRadius: Layout.borderRadius,
-        borderWidth: Layout.borderWidth,
-        borderColor: Layout.borderColor
-    },
-    addText: {
-        color: Colors.backgroundColor,
-        textAlign: "center",
-        paddingLeft: 10,
-        paddingRight: 10,
-        letterSpacing: Layout.letterSpacing
+        marginRight: 40,
+        marginLeft: 40
     }
 });

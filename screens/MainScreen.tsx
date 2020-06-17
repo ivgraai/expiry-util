@@ -19,6 +19,7 @@ import { StackActions } from "react-navigation";
 import { styles } from "../constants/styles/MainScreen";
 import Colors from "../constants/Colors";
 import StyledTextInput from "../components/StyledTextInput";
+import StyledButton from "../components/StyledButton";
 
 import { connect } from "react-redux";
 import * as conn from "../constants/redux/Connecting";
@@ -243,16 +244,9 @@ class MainScreen extends React.Component<IProps, IState> {
           <View
             style={styles.addView}
           >
-            <TouchableOpacity
-              style={styles.addTouchableOpacity}
-              onPress={() => this.buttonAdd(this.state)}
-            >
-              <Text
-                style={styles.addText}
-              >
-                {i18n.add.toUpperCase()}
-              </Text>
-            </TouchableOpacity>
+            <StyledButton style={styles.addStyledButton} onPress={() => this.buttonAdd(this.state)}>
+              {i18n.add.toUpperCase()}
+            </StyledButton>
           </View>
         </View>
       </View>

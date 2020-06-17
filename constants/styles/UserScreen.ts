@@ -22,7 +22,9 @@ export const styles = StyleSheet.create({
     },
     orText: {
         textAlign: "center",
-        color: Colors.backgroundColor
+        color: Colors.tintColor,
+        marginTop: 10,
+        marginBottom: 10
     },
     messageText: {
         fontSize: 20,

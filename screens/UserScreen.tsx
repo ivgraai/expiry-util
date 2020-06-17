@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, Button, Alert } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import StyledTextInput from '../components/StyledTextInput';
+import StyledButton from '../components/StyledButton';
 import { i18n } from '../constants/Dictionary';
 import HttpClient from '../services/HttpClient';
 import UserManager from '../services/UserManager';
 import { styles } from '../constants/styles/UserScreen';
-import Colors from '../constants/Colors';
 import validate from 'validate.js';
 import constraints from '../constants/validation/UserConstraint';
 
@@ -104,9 +104,9 @@ export default class UserScreen extends React.Component<IProps, IState> {
                     <Errors messages={this.state.errors} separator={"\n"}/>
                 </View>
                 <View style={styles.buttonsView}>
-                    <View style={styles.buttonWrapper}><Button title={i18n.signUp.toUpperCase()} onPress={() => this.signUp()} color={Colors.tintColor}/></View>
+                    <View style={styles.buttonWrapper}><StyledButton onPress={() => this.signUp()}>{i18n.signUp.toUpperCase()}</StyledButton></View>
                     <Text style={styles.orText}>{i18n.or.toUpperCase()}</Text>
-                    <View style={styles.buttonWrapper}><Button title={i18n.goToSignIn.toUpperCase()} onPress={() => this.setState({switched: false})} color={Colors.tintColor}/></View>
+                    <View style={styles.buttonWrapper}><StyledButton onPress={() => this.setState({switched: false})}>{i18n.goToSignIn.toUpperCase()}</StyledButton></View>
                 </View>
             </> : <>
                 <View style={styles.inputsAndValidationResultView}>
@@ -117,9 +117,9 @@ export default class UserScreen extends React.Component<IProps, IState> {
                     <Errors messages={this.state.errors} separator={"\n"}/>
                 </View>
                 <View style={styles.buttonsView}>
-                    <View style={styles.buttonWrapper}><Button title={i18n.signIn.toUpperCase()} onPress={() => this.signIn()} color={Colors.tintColor} testID="signInButton"/></View>
+                    <View style={styles.buttonWrapper}><StyledButton onPress={() => this.signIn()} testID="signInButton">{i18n.signIn.toUpperCase()}</StyledButton></View>
                     <Text style={styles.orText}>{i18n.or.toUpperCase()}</Text>
-                    <View style={styles.buttonWrapper}><Button title={i18n.goToSignUp.toUpperCase()} onPress={() => this.setState({switched: true})} color={Colors.tintColor}/></View>
+                    <View style={styles.buttonWrapper}><StyledButton onPress={() => this.setState({switched: true})}>{i18n.goToSignUp.toUpperCase()}</StyledButton></View>
                 </View>
             </>;
         return (
