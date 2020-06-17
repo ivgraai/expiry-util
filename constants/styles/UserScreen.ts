@@ -40,8 +40,8 @@ export const styles = StyleSheet.create({
     error: {
         borderColor: Colors.errorBackground,
         borderWidth: Layout.borderWidth,
-        borderBottomLeftRadius: Layout.borderRadius,
-        borderBottomRightRadius: Layout.borderRadius
+        borderBottomLeftRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference,
+        borderBottomRightRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference
     },
     validationResultText: {
         color: Colors.errorText,

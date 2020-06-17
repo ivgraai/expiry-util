@@ -6,7 +6,8 @@ export const styles = StyleSheet.create({
     view: {
         borderWidth: Layout.borderWidth,
         borderColor: Layout.borderColor,
-        borderRadius: Layout.borderRadius
+        borderRadius: Layout.borderRadius,
+        paddingBottom: 1
     },
     textView: {
         backgroundColor: Colors.tintColor,
