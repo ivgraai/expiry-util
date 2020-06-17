@@ -4,5 +4,7 @@ const backgroundColor = '#AED59E';
 export default {
   tintColor,
   backgroundColor,
-  header: tintColor
+  header: tintColor,
+  errorText: '#FF6666',
+  errorBackground: '#FFCCCC'
 };

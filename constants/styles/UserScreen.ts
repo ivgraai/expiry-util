@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import Colors from "../Colors";
+import Layout from "../Layout";
 
 export const styles = StyleSheet.create({
     container: {
@@ -12,20 +14,21 @@ export const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     textInput: {
-        height: "5%",
-        borderColor: "lightgray",
-        borderWidth: 1
+        textAlign: "center"
+        // , height: "10%"
     },
     buttonWrapper: {
         alignSelf: "center"
     },
     orText: {
-        textAlign: "center"
+        textAlign: "center",
+        color: Colors.backgroundColor
     },
     messageText: {
         fontSize: 20,
-        color: "red",
-        textAlign: "center"
+        color: Colors.errorText,
+        textAlign: "center",
+        flex: 1
     },
     signUpInText: {
         fontStyle: "italic"
@@ -35,7 +38,25 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     error: {
-        borderColor: "pink",
-        borderWidth: 3
+        borderColor: Colors.errorBackground,
+        borderWidth: Layout.borderWidth,
+        borderBottomLeftRadius: Layout.borderRadius,
+        borderBottomRightRadius: Layout.borderRadius
+    },
+    validationResultText: {
+        color: Colors.tintColor,
+        flex: 1
+    },
+    inputsAndValidationResultView: {
+        flex: 3,
+        justifyContent: "space-between"
+    },
+    buttonsView: {
+        flex: 2,
+        justifyContent: "center"
+    },
+    inputsView: {
+        justifyContent: "space-around",
+        flex: 3
     }
   });

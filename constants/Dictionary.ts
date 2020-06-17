@@ -40,7 +40,9 @@ type TYPE = {
     inOrderToShowYourNeedYouHaveToSignIn: string,
     lookWhoRequestedThis: string,
     approve: string,
-    youAlreadyApprovedTheFollowingApplicantRequest: string
+    youAlreadyApprovedTheFollowingApplicantRequest: string,
+    goToSignIn: string,
+    goToSignUp: string
 };
 
 const en = {
@@ -82,7 +84,9 @@ const en = {
         inOrderToShowYourNeedYouHaveToSignIn:               'in order to show your interest you have to sign in',
         lookWhoRequestedThis:                               'someone requested this',
         approve:                                            'approve',
-        youAlreadyApprovedTheFollowingApplicantRequest:     'you already approved the following applicant\'s request'
+        youAlreadyApprovedTheFollowingApplicantRequest:     'you already approved the following applicant\'s request',
+        goToSignIn:                                         'go to sign in',
+        goToSignUp:                                         'go to sign up'
 };
 const MESSAGES: any = {
     en: en,
@@ -125,7 +129,9 @@ const MESSAGES: any = {
         inOrderToShowYourNeedYouHaveToSignIn:               'be kell jelentkeznie, hogy jelezze az igényét',
         lookWhoRequestedThis:                               'valaki igényelte ezt',
         approve:                                            'jóváhagy',
-        youAlreadyApprovedTheFollowingApplicantRequest:     'már elfogadta a következő kérelmező igényét'
+        youAlreadyApprovedTheFollowingApplicantRequest:     'már elfogadta a következő kérelmező igényét',
+        goToSignIn:                                         'ugrás a bejelentkezésre',
+        goToSignUp:                                         'ugrás a regisztrációra'
     },
     fr: {
         add:                                                'ajouter',
@@ -166,7 +172,9 @@ const MESSAGES: any = {
         inOrderToShowYourNeedYouHaveToSignIn:               'afin de montrer votre besoin, vous devez vous connecter',
         lookWhoRequestedThis:                               'quelqu\'un l\'a demandé',
         approve:                                            'approuver',
-        youAlreadyApprovedTheFollowingApplicantRequest:     'vous avez déjà approuvé la demande du demandeur suivant'
+        youAlreadyApprovedTheFollowingApplicantRequest:     'vous avez déjà approuvé la demande du demandeur suivant',
+        goToSignIn:                                         'aller se connecter',
+        goToSignUp:                                         'aller s\'inscrire'
     },
     es: {
         add:                                                'agregar',
@@ -207,7 +215,9 @@ const MESSAGES: any = {
         inOrderToShowYourNeedYouHaveToSignIn:               'para mostrar su interés, debe iniciar sesión',
         lookWhoRequestedThis:                               'alguien solicitó esto',
         approve:                                            'aprobar',
-        youAlreadyApprovedTheFollowingApplicantRequest:     'ya aprobó la solicitud del próximo solicitante'
+        youAlreadyApprovedTheFollowingApplicantRequest:     'ya aprobó la solicitud del próximo solicitante',
+        goToSignIn:                                         'ir a iniciar sesión',
+        goToSignUp:                                         'ir a registrarse'
     },
     default: en
 };

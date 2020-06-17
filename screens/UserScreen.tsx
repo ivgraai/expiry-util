@@ -1,9 +1,11 @@
-import React from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import React from 'react';
+import { View, Text, Button, Alert } from 'react-native';
+import StyledTextInput from '../components/StyledTextInput';
 import { i18n } from '../constants/Dictionary';
 import HttpClient from '../services/HttpClient';
 import UserManager from '../services/UserManager';
 import { styles } from '../constants/styles/UserScreen';
+import Colors from '../constants/Colors';
 import validate from 'validate.js';
 import constraints from '../constants/validation/UserConstraint';
 
@@ -20,7 +22,7 @@ function Errors(props: any) {
     const errors = props.messages;
     let text = !errors ? [] : Object.values(errors).join(props.separator);
     return (
-        <Text>{text}</Text>
+        <Text style={styles.validationResultText}>{text}</Text>
       );
 }
 
@@ -92,31 +94,33 @@ export default class UserScreen extends React.Component<IProps, IState> {
     render() {
         const { navigation } = this.props;
         let form = this.state.switched ? <>
-                <Text style={styles.signUpInText}>{i18n.signUp.toUpperCase()}</Text>
-                <View style={styles.hrView}/>
-                <Text style={styles.text}>{i18n.name.toCamelCase()}</Text>
-                <TextInput style = {[styles.textInput, this.getErrorStyle('name')]} onChangeText={value => this.name = value} onBlur={() => this.validateAll()}/>
-                <Text style={styles.text}>{i18n.password.toCamelCase()}</Text>
-                <TextInput style = {[styles.textInput, this.getErrorStyle('password')]} onChangeText={value => this.password = value} onBlur={() => this.validateAll()} secureTextEntry={true}/>
-                <Text style={styles.text}>{i18n.confirmPassword.toCamelCase()}</Text>
-                <TextInput style = {[styles.textInput, this.getErrorStyle('confirmPassword')]} onChangeText={value => this.confirmPassword = value} onBlur={() => this.validateAll()} secureTextEntry={true}/>
-                <Text style={styles.text}>{i18n.emailAddress.toCamelCase()}</Text>
-                <TextInput style = {[styles.textInput, this.getErrorStyle('emailAddress')]} onChangeText={value => this.email = value} onBlur={() => this.validateAll()}/>
-                <Errors messages={this.state.errors} separator={"\n"}/>
-                <View style={styles.buttonWrapper}><Button title={i18n.submit.toCamelCase()} onPress={() => this.signUp()}/></View>
-                <Text style={styles.orText}>{i18n.or}</Text>
-                <View style={styles.buttonWrapper}><Button title={i18n.signIn.toCamelCase()} onPress={() => this.setState({switched: false})}/></View>
+                <View style={styles.inputsAndValidationResultView}>
+                    <View style={styles.inputsView}>
+                        <StyledTextInput header={i18n.name.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('name')]} onChangeText={(value: string) => this.name = value} onBlur={() => this.validateAll()}/>
+                        <StyledTextInput header={i18n.password.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('password')]} onChangeText={(value: string) => this.password = value} onBlur={() => this.validateAll()} secureTextEntry={true}/>
+                        <StyledTextInput header={i18n.confirmPassword.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('confirmPassword')]} onChangeText={(value: string) => this.confirmPassword = value} onBlur={() => this.validateAll()} secureTextEntry={true}/>
+                        <StyledTextInput header={i18n.emailAddress.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('emailAddress')]} onChangeText={(value: string) => this.email = value} onBlur={() => this.validateAll()}/>
+                    </View>
+                    <Errors messages={this.state.errors} separator={"\n"}/>
+                </View>
+                <View style={styles.buttonsView}>
+                    <View style={styles.buttonWrapper}><Button title={i18n.signUp.toUpperCase()} onPress={() => this.signUp()} color={Colors.tintColor}/></View>
+                    <Text style={styles.orText}>{i18n.or.toUpperCase()}</Text>
+                    <View style={styles.buttonWrapper}><Button title={i18n.goToSignIn.toUpperCase()} onPress={() => this.setState({switched: false})} color={Colors.tintColor}/></View>
+                </View>
             </> : <>
-                <Text style={styles.signUpInText}>{i18n.signIn.toUpperCase()}</Text>
-                <View style={styles.hrView}/>
-                <Text style={styles.text}>{i18n.name.toCamelCase()}</Text>
-                <TextInput style = {[styles.textInput, this.getErrorStyle('name')]} onChangeText={value => this.name = value} onBlur={() => this.validateNameAndPassword()} testID="signInUsername"/>
-                <Text style={styles.text}>{i18n.password.toCamelCase()}</Text>
-                <TextInput style = {[styles.textInput, this.getErrorStyle('password')]} onChangeText={value => this.password = value} onBlur={() => this.validateNameAndPassword()} secureTextEntry={true} testID="signInPassword"/>
-                <Errors messages={this.state.errors} separator={"\n"}/>
-                <View style={styles.buttonWrapper}><Button title={i18n.submit.toCamelCase()} onPress={() => this.signIn()} testID="signInButton"/></View>
-                <Text style={styles.orText}>{i18n.or}</Text>
-                <View style={styles.buttonWrapper}><Button title={i18n.signUp.toCamelCase()} onPress={() => this.setState({switched: true})}/></View>
+                <View style={styles.inputsAndValidationResultView}>
+                    <View style={styles.inputsView}>
+                        <StyledTextInput header={i18n.name.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('name')]} onChangeText={(value: string) => this.name = value} onBlur={() => this.validateNameAndPassword()} testID="signInUsername"/>
+                        <StyledTextInput header={i18n.password.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('password')]} onChangeText={(value: string) => this.password = value} onBlur={() => this.validateNameAndPassword()} secureTextEntry={true} testID="signInPassword"/>
+                    </View>
+                    <Errors messages={this.state.errors} separator={"\n"}/>
+                </View>
+                <View style={styles.buttonsView}>
+                    <View style={styles.buttonWrapper}><Button title={i18n.signIn.toUpperCase()} onPress={() => this.signIn()} color={Colors.tintColor} testID="signInButton"/></View>
+                    <Text style={styles.orText}>{i18n.or.toUpperCase()}</Text>
+                    <View style={styles.buttonWrapper}><Button title={i18n.goToSignUp.toUpperCase()} onPress={() => this.setState({switched: true})} color={Colors.tintColor}/></View>
+                </View>
             </>;
         return (
             <View style={styles.container}>
