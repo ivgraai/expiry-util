@@ -1,4 +1,8 @@
 import { StyleSheet } from "react-native";
+import Colors from "../Colors";
+import Layout from "../Layout";
+
+const borderColor = Colors.tintColor;
 
 export const styles = StyleSheet.create({
     centeredView: {
@@ -10,8 +14,10 @@ export const styles = StyleSheet.create({
     modalView: {
         margin: 20,
         backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
+        borderRadius: Layout.borderRadius,
+        borderWidth: Layout.borderWidth,
+        borderColor: borderColor,
+        padding: 10,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -23,7 +29,15 @@ export const styles = StyleSheet.create({
         elevation: 5
       },
     modalTextInput: {
-        borderWidth: 1,
-        minWidth: 50
+        borderWidth: Layout.borderWidth,
+        borderColor: borderColor,
+        borderRadius: Layout.borderRadius,
+        flex: 0.75,
+        textAlign: "center",
+        marginBottom: 10,
+        aspectRatio: 1.75
+    },
+    modalTextInputWrapper: {
+      flexDirection: "row"
     }
   });

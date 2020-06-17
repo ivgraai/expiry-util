@@ -42,7 +42,8 @@ type TYPE = {
     approve: string,
     youAlreadyApprovedTheFollowingApplicantRequest: string,
     goToSignIn: string,
-    goToSignUp: string
+    goToSignUp: string,
+    leaveAMessage: string
 };
 
 const en = {
@@ -86,7 +87,8 @@ const en = {
         approve:                                            'approve',
         youAlreadyApprovedTheFollowingApplicantRequest:     'you already approved the following applicant\'s request',
         goToSignIn:                                         'go to sign in',
-        goToSignUp:                                         'go to sign up'
+        goToSignUp:                                         'go to sign up',
+        leaveAMessage:                                      'leave a message'
 };
 const MESSAGES: any = {
     en: en,
@@ -131,7 +133,8 @@ const MESSAGES: any = {
         approve:                                            'jóváhagy',
         youAlreadyApprovedTheFollowingApplicantRequest:     'már elfogadta a következő kérelmező igényét',
         goToSignIn:                                         'ugrás a bejelentkezésre',
-        goToSignUp:                                         'ugrás a regisztrációra'
+        goToSignUp:                                         'ugrás a regisztrációra',
+        leaveAMessage:                                      'hagyjon egy üzenetet'
     },
     fr: {
         add:                                                'ajouter',
@@ -174,7 +177,8 @@ const MESSAGES: any = {
         approve:                                            'approuver',
         youAlreadyApprovedTheFollowingApplicantRequest:     'vous avez déjà approuvé la demande du demandeur suivant',
         goToSignIn:                                         'aller se connecter',
-        goToSignUp:                                         'aller s\'inscrire'
+        goToSignUp:                                         'aller s\'inscrire',
+        leaveAMessage:                                      'laisser un message'
     },
     es: {
         add:                                                'agregar',
@@ -217,7 +221,8 @@ const MESSAGES: any = {
         approve:                                            'aprobar',
         youAlreadyApprovedTheFollowingApplicantRequest:     'ya aprobó la solicitud del próximo solicitante',
         goToSignIn:                                         'ir a iniciar sesión',
-        goToSignUp:                                         'ir a registrarse'
+        goToSignUp:                                         'ir a registrarse',
+        leaveAMessage:                                      'deja un mensaje'
     },
     default: en
 };
