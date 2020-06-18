@@ -39,10 +39,6 @@ export const styles = StyleSheet.create({
     signUpInText: {
         fontStyle: "italic"
     },
-    hrView: {
-        borderBottomColor: "#808080",
-        borderBottomWidth: PixelRatio.getPixelSizeForLayoutSize(0.5)
-    },
     error: {
         borderColor: Colors.errorBackground,
         borderWidth: Layout.borderWidth,

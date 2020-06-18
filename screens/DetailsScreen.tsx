@@ -40,6 +40,7 @@ export default function DetailsScreen(props: IProps) {
             <View style={styles.dataView}>
                 <StyledComponent header={response?.name.toUpperCase()} style={styles.styledComponent}>
                     <Text style={styles.dataText}>{response?.expiry.toLocaleDateString()}</Text>
+                    <View style={styles.hrView} />
                     <Text style={styles.dataText}>{response?.myMessage}</Text>
                 </StyledComponent>
                 <Text style={styles.warnText}>{(response?.isAccepted ? i18n.yourRequestHasAlreadyBeenApproved.capitalize() : i18n.yourRequestHasNotYetBeenApproved.capitalize()) + '!'}</Text>

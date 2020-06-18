@@ -4,6 +4,7 @@ import HttpClient from "../services/HttpClient";
 
 export default class Utility {
     private static readonly EVICTION_FREQUENCY: string = Constants.manifest.extra.imageCacheEvictionFrequency;
+    public static readonly LINE_SEPARATOR: string = '\n';
 
     static convertImageToDto(uri: string): ImageRequest {
         var collection = uri.split('/');
@@ -43,6 +44,6 @@ export default class Utility {
     }
 
     static formatAddress(address: Address): string {
-        return address.postalCode + ' ' + address.country + ", " + address.region + ' ' + address.city + ", " + address.street + ", " + address.name;
+        return address.postalCode + ' ' + address.country + Utility.LINE_SEPARATOR + address.region + ", " + address.city + Utility.LINE_SEPARATOR + address.street + Utility.LINE_SEPARATOR + address.name;
     }
 }

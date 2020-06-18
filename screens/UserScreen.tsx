@@ -5,6 +5,7 @@ import StyledButton from '../components/StyledButton';
 import { i18n } from '../constants/Dictionary';
 import HttpClient from '../services/HttpClient';
 import UserManager from '../services/UserManager';
+import Utility from '../common/Utility';
 import { styles } from '../constants/styles/UserScreen';
 import validate from 'validate.js';
 import constraints from '../constants/validation/UserConstraint';
@@ -101,7 +102,7 @@ export default class UserScreen extends React.Component<IProps, IState> {
                         <StyledTextInput header={i18n.confirmPassword.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('confirmPassword')]} onChangeText={(value: string) => this.confirmPassword = value} onBlur={() => this.validateAll()} secureTextEntry={true}/>
                         <StyledTextInput header={i18n.emailAddress.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('emailAddress')]} onChangeText={(value: string) => this.email = value} onBlur={() => this.validateAll()}/>
                     </View>
-                    <Errors messages={this.state.errors} separator={"\n"}/>
+                    <Errors messages={this.state.errors} separator={Utility.LINE_SEPARATOR}/>
                 </View>
                 <View style={styles.buttonsView}>
                     <View style={styles.buttonWrapper}><StyledButton onPress={() => this.signUp()}>{i18n.signUp.toUpperCase()}</StyledButton></View>
@@ -114,7 +115,7 @@ export default class UserScreen extends React.Component<IProps, IState> {
                         <StyledTextInput header={i18n.name.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('name')]} onChangeText={(value: string) => this.name = value} onBlur={() => this.validateNameAndPassword()} testID="signInUsername"/>
                         <StyledTextInput header={i18n.password.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('password')]} onChangeText={(value: string) => this.password = value} onBlur={() => this.validateNameAndPassword()} secureTextEntry={true} testID="signInPassword"/>
                     </View>
-                    <Errors messages={this.state.errors} separator={"\n"}/>
+                    <Errors messages={this.state.errors} separator={Utility.LINE_SEPARATOR}/>
                 </View>
                 <View style={styles.buttonsView}>
                     <View style={styles.buttonWrapper}><StyledButton onPress={() => this.signIn()} testID="signInButton">{i18n.signIn.toUpperCase()}</StyledButton></View>

@@ -2,7 +2,7 @@ import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
-const margin: number = PixelRatio.getPixelSizeForLayoutSize(3);
+const margin: number = PixelRatio.getPixelSizeForLayoutSize(2.5);
 
 export const styles = StyleSheet.create({
     rootView: {
@@ -41,5 +41,11 @@ export const styles = StyleSheet.create({
     },
     marginBottom: {
         marginBottom: margin
+    },
+    hrView: {
+        borderBottomColor: Layout.borderColor,
+        borderBottomWidth: Layout.borderWidth,
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(1.5),
+        marginBottom: PixelRatio.getPixelSizeForLayoutSize(1.5)
     }
 });
