@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import CachedImage from "../components/CachedImage";
 import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
@@ -29,7 +29,7 @@ export default function DetailsScreen(props: IProps) {
     }, []);
 
     return (
-        <View style={styles.rootView}>
+        <ScrollView scrollEnabled={response?.isAccepted}>
             <View style={styles.imageView}>
                 <CachedImage
                     source={{ uri: Utility.remoteURI("", id, Dtos.SizeRequest.large) }}
@@ -38,26 +38,26 @@ export default function DetailsScreen(props: IProps) {
                 />
             </View>
             <View style={styles.dataView}>
-                <StyledComponent header={response?.name.toUpperCase()}>
+                <StyledComponent header={response?.name.toUpperCase()} style={styles.styledComponent}>
                     <Text style={styles.dataText}>{response?.expiry.toLocaleDateString()}</Text>
                     <Text style={styles.dataText}>{response?.myMessage}</Text>
                 </StyledComponent>
                 <Text style={styles.warnText}>{(response?.isAccepted ? i18n.yourRequestHasAlreadyBeenApproved.capitalize() : i18n.yourRequestHasNotYetBeenApproved.capitalize()) + '!'}</Text>
                 {
                     (response?.isAccepted) ? <>
-                    <StyledComponent header={i18n.username.toUpperCase()}>
+                    <StyledComponent header={i18n.username.toUpperCase()} style={styles.styledComponent}>
                         <Text style={styles.dataText}>{response?.username}</Text>
                     </StyledComponent>
-                    <StyledComponent header={i18n.address.toUpperCase()}>
+                    <StyledComponent header={i18n.address.toUpperCase()} style={styles.styledComponent}>
                         <Text style={styles.dataText}>{Utility.formatAddress(response?.address)}</Text>
                     </StyledComponent>
-                    <StyledComponent header={i18n.reply.toUpperCase()}>
+                    <StyledComponent header={i18n.reply.toUpperCase()} style={[styles.styledComponent, styles.marginBottom]}>
                         <Text style={styles.dataText}>{response?.replyMessage}</Text>
                     </StyledComponent>
                 </> :
                     null
                 }
             </View>
-        </View>
+        </ScrollView>
     );
 }

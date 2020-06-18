@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
@@ -8,8 +8,8 @@ export const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "stretch",
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: PixelRatio.getPixelSizeForLayoutSize(5),
+        paddingBottom: PixelRatio.getPixelSizeForLayoutSize(5),
         width: Layout.widthPercentageAsString,
         alignSelf: "center"
     },
@@ -26,12 +26,12 @@ export const styles = StyleSheet.create({
     orText: {
         textAlign: "center",
         color: Colors.tintColor,
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(5),
+        marginBottom: PixelRatio.getPixelSizeForLayoutSize(5),
         letterSpacing: Layout.letterSpacing
     },
     messageText: {
-        fontSize: 20,
+        fontSize: PixelRatio.getFontScale() * 20,
         color: Colors.errorText,
         textAlign: "center",
         flex: 1
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     },
     hrView: {
         borderBottomColor: "#808080",
-        borderBottomWidth: 1
+        borderBottomWidth: PixelRatio.getPixelSizeForLayoutSize(0.5)
     },
     error: {
         borderColor: Colors.errorBackground,

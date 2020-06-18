@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         borderWidth: Layout.borderWidth,
         borderColor: Layout.borderColor,
         borderRadius: Layout.borderRadius,
-        paddingBottom: 1
+        paddingBottom: PixelRatio.getPixelSizeForLayoutSize(0.5)
     },
     textView: {
         backgroundColor: Colors.tintColor,

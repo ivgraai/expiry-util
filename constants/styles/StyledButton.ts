@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
-const padding = 10;
+const padding = PixelRatio.getPixelSizeForLayoutSize(5);
 
 export const styles = StyleSheet.create({
     touchableOpacity: {

@@ -1,6 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
+
+const margin: number = PixelRatio.getPixelSizeForLayoutSize(3);
 
 export const styles = StyleSheet.create({
     rootView: {
@@ -9,11 +11,12 @@ export const styles = StyleSheet.create({
     imageView: {
         flex: 2,
         alignSelf: "center",
-        justifyContent: "space-around"
+        justifyContent: "space-around",
+        marginTop: margin
     },
     image: {
         aspectRatio: 1,
-        width: (Layout.widthPercentageAsNumber - 15) + '%',
+        width: Layout.widthPercentageAsString,
         borderColor: Layout.borderColor,
         borderWidth: Layout.borderWidth,
         borderRadius: Layout.borderRadius
@@ -27,9 +30,16 @@ export const styles = StyleSheet.create({
     warnText: {
         textAlign: "center",
         color: Colors.tintColor,
-        fontSize: 18
+        fontSize: PixelRatio.getFontScale() * 20,
+        marginTop: margin * 3.5
     },
     dataText: {
         alignSelf: "center"
+    },
+    styledComponent: {
+        marginTop: margin
+    },
+    marginBottom: {
+        marginBottom: margin
     }
 });

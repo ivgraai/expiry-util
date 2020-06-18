@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
@@ -47,16 +47,16 @@ export const styles = StyleSheet.create({
         textAlign: "center"
     },
     dataExpirationDateWrapper: {
-        marginTop: 15
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5)
     },
     dataExpirationDateView: {
         flexDirection: "row",
         justifyContent: "center",
-        marginTop: -15
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5) * -1
     },
     dataExpirationDateDateTimePicker: {
         width: Layout.widthPercentageAsString,
-        height: 200
+        height: PixelRatio.getPixelSizeForLayoutSize(100)
     },
     dataLocationCheckBoxContainer: {
         backgroundColor: "transparent",
@@ -74,8 +74,8 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
     },
     addStyledButton: {
-        marginTop: -15,
-        marginRight: 40,
-        marginLeft: 40
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5) * -1,
+        marginRight: PixelRatio.getPixelSizeForLayoutSize(20),
+        marginLeft: PixelRatio.getPixelSizeForLayoutSize(20)
     }
 });
