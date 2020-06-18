@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
-import MapView from 'react-native-maps';
+import { View } from "react-native";
+import MapView from "react-native-maps";
 import { i18n } from "../constants/Dictionary";
 import { HeaderBackButton } from "react-navigation";
 import Colors from "../constants/Colors";
+import { styles } from "../constants/styles/MapScreen";
 
 class MapScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
@@ -18,7 +19,7 @@ class MapScreen extends React.Component {
     }
 
     static goBack(nav) {
-        nav.navigate('Main', {"latitude": MapScreen.location.latitude, "longitude": MapScreen.location.longitude});
+        nav.navigate("Main", {"latitude": MapScreen.location.latitude, "longitude": MapScreen.location.longitude});
     }
 
     static location = {
@@ -46,18 +47,5 @@ class MapScreen extends React.Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    mapStyle: {
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height
-    }
-});
 
 export default MapScreen;
