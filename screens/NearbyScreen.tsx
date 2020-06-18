@@ -10,6 +10,7 @@ import Utility from "../common/Utility";
 import { StackActions } from "react-navigation";
 import Dialog from "../components/Dialog";
 import Colors from "../constants/Colors";
+import { styles } from "../constants/styles/NearbyScreen";
 
 export default class NearbyScreen extends React.Component {
     static navigationOptions = {
@@ -70,7 +71,7 @@ export default class NearbyScreen extends React.Component {
     renderDistanceAndRequest(item: Dtos.GoodNearbyResponse) {
         return <View>
             <Dialog visible={this.state.dialogVisible} onClose={msg => this.onRequestClose(msg)} />
-            <Text style={{ textAlign: "center" }}>{item.distance} {i18n.meter}</Text>
+            <Text style={styles.distanceText}>{item.distance} {i18n.meter}</Text>
             <Button title={item.isRequestedByMe ? i18n.statusOfMyRequest.toUpperCase() : i18n.showMyNeed.toUpperCase()} color={Colors.tintColor} onPress={
                 () => this.handleOnPress(item.id, item.isRequestedByMe)
             }/>
@@ -81,7 +82,7 @@ export default class NearbyScreen extends React.Component {
         var temporary: React.ReactNode = (item: any) => this.renderDistanceAndRequest(item);
         return <>{
             this.state.loading ?
-                <Text style={{color: Colors.tintColor}}>{i18n.loading.capitalize()}...</Text> :
+                <Text style={styles.loadingText}>{i18n.loading.capitalize()}...</Text> :
                 <GoodList dataSource={this.state.ds} customNodesForTheItem={temporary}></GoodList>
         }</>;
     }

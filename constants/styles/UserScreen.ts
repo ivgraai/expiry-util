@@ -8,7 +8,10 @@ export const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "stretch",
-        padding: 10
+        paddingTop: 10,
+        paddingBottom: 10,
+        width: Layout.widthPercentageAsString,
+        alignSelf: "center"
     },
     text: {
         fontWeight: "bold"
