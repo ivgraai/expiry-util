@@ -1,5 +1,5 @@
 import Constants from "expo-constants";
-import { ImageRequest, SizeRequest } from "../constants/Dtos";
+import { ImageRequest, SizeRequest, Address } from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
 
 export default class Utility {
@@ -40,5 +40,9 @@ export default class Utility {
         }
         current[pieces[i]] = value;
         return newState;
+    }
+
+    static formatAddress(address: Address): string {
+        return address.postalCode + ' ' + address.country + ", " + address.region + ' ' + address.city + ", " + address.street + ", " + address.name;
     }
 }

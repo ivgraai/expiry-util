@@ -4,24 +4,23 @@ import Layout from "../Layout";
 
 export const styles = StyleSheet.create({
     rootView: {
-        flex: 1,
-        justifyContent: "space-around"
+        flex: 1
     },
     imageView: {
-        flex: 3,
+        flex: 2,
         alignSelf: "center",
         justifyContent: "space-around"
     },
     image: {
         aspectRatio: 1,
-        width: Layout.width,
+        width: (Layout.widthPercentageAsNumber - 15) + '%',
         borderColor: Layout.borderColor,
         borderWidth: Layout.borderWidth,
         borderRadius: Layout.borderRadius
     },
     dataView: {
         flex: 2,
-        width: Layout.width,
+        width: Layout.widthPercentageAsString,
         alignSelf: "center",
         justifyContent: "space-around"
     },
@@ -29,12 +28,6 @@ export const styles = StyleSheet.create({
         textAlign: "center",
         color: Colors.tintColor,
         fontSize: 18
-    },
-    baseDataView: {
-
-    },
-    replyDataView: {
-
     },
     dataText: {
         alignSelf: "center"

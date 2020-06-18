@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
         borderColor: Layout.borderColor,
         borderWidth: Layout.borderWidth,
         height: "85%",
-        width: Layout.width,
+        width: Layout.widthPercentageAsString,
         borderRadius: Layout.borderRadius
     },
     photoImage: {
@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     dataPerishableGoodsTextInputWrapper: {
-        width: Layout.width,
+        width: Layout.widthPercentageAsString,
         height: "10%"
     },
     dataPerishableGoodsTextInput: {
@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
         marginTop: -15
     },
     dataExpirationDateDateTimePicker: {
-        width: Layout.width,
+        width: Layout.widthPercentageAsString,
         height: 200
     },
     dataLocationCheckBoxContainer: {
@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
     },
     addView: {
         flex: 2,
-        width: Layout.width,
+        width: Layout.widthPercentageAsString,
         flexDirection: "column",
         justifyContent: "center"
     },

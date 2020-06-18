@@ -38,27 +38,23 @@ export default function DetailsScreen(props: IProps) {
                 />
             </View>
             <View style={styles.dataView}>
-                { response?.isAccepted ? null :
-                    <Text style={styles.warnText}>{i18n.yourRequestHasNotYetBeenApproved.capitalize() + '!'}</Text> }
-                <View style={styles.baseDataView}>
-                    <StyledComponent header={response?.name.toUpperCase()}>
-                        <Text style={styles.dataText}>{response?.expiry.toLocaleDateString()}</Text>
-                        <Text style={styles.dataText}>{response?.myMessage}</Text>
-                    </StyledComponent>
-                </View>
+                <StyledComponent header={response?.name.toUpperCase()}>
+                    <Text style={styles.dataText}>{response?.expiry.toLocaleDateString()}</Text>
+                    <Text style={styles.dataText}>{response?.myMessage}</Text>
+                </StyledComponent>
+                <Text style={styles.warnText}>{(response?.isAccepted ? i18n.yourRequestHasAlreadyBeenApproved.capitalize() : i18n.yourRequestHasNotYetBeenApproved.capitalize()) + '!'}</Text>
                 {
-                    (response?.isAccepted) ? <View style={styles.replyDataView}>
-                    <StyledComponent header={i18n.approved.toUpperCase()}>
+                    (response?.isAccepted) ? <>
+                    <StyledComponent header={i18n.username.toUpperCase()}>
                         <Text style={styles.dataText}>{response?.username}</Text>
-                        <Text style={styles.dataText}>{response?.replyMessage}</Text>
-                        <Text style={styles.dataText}>{response?.address.postalCode}</Text>
-                        <Text style={styles.dataText}>{response?.address.country}</Text>
-                        <Text style={styles.dataText}>{response?.address.region}</Text>
-                        <Text style={styles.dataText}>{response?.address.city}</Text>
-                        <Text style={styles.dataText}>{response?.address.street}</Text>
-                        <Text style={styles.dataText}>{response?.address.name}</Text>
                     </StyledComponent>
-                </View> :
+                    <StyledComponent header={i18n.address.toUpperCase()}>
+                        <Text style={styles.dataText}>{Utility.formatAddress(response?.address)}</Text>
+                    </StyledComponent>
+                    <StyledComponent header={i18n.reply.toUpperCase()}>
+                        <Text style={styles.dataText}>{response?.replyMessage}</Text>
+                    </StyledComponent>
+                </> :
                     null
                 }
             </View>

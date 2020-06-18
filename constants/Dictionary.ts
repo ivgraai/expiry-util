@@ -46,8 +46,10 @@ type TYPE = {
     leaveAMessage: string,
     egBreadMilkOrEggs: string,
     yourRequestHasNotYetBeenApproved: string,
-    approved: string,
-    details: string
+    yourRequestHasAlreadyBeenApproved: string,
+    username: string,
+    address: string,
+    reply: string
 };
 
 const en = {
@@ -95,8 +97,10 @@ const en = {
         leaveAMessage:                                      'leave a message',
         egBreadMilkOrEggs:                                  'e.g., bread, milk or eggs',
         yourRequestHasNotYetBeenApproved:                   'your request has not yet been approved',
-        approved:                                           'approved',
-        details:                                            'details'
+        yourRequestHasAlreadyBeenApproved:                  'your request has already been approved',
+        username:                                           'username',
+        address:                                            'address',
+        reply:                                              'reply'
 };
 const MESSAGES: any = {
     en: en,
@@ -145,8 +149,10 @@ const MESSAGES: any = {
         leaveAMessage:                                      'hagyjon egy üzenetet',
         egBreadMilkOrEggs:                                  'pl. kenyér, tej vagy tojás',
         yourRequestHasNotYetBeenApproved:                   'kérését még nem hagyták jóvá',
-        approved:                                           'jóváhagyva',
-        details:                                            'részletek'
+        yourRequestHasAlreadyBeenApproved:                  'kérését már jóváhagyták',
+        username:                                           'felhasználónév',
+        address:                                            'cím',
+        reply:                                              'válasz'
     },
     fr: {
         add:                                                'ajouter',
@@ -193,8 +199,10 @@ const MESSAGES: any = {
         leaveAMessage:                                      'laisser un message',
         egBreadMilkOrEggs:                                  'par exemple, pain, lait ou œufs',
         yourRequestHasNotYetBeenApproved:                   'votre demande n\'a pas encore été approuvée',
-        approved:                                           'approuvé',
-        details:                                            'détails'
+        yourRequestHasAlreadyBeenApproved:                  'votre demande a déjà été approuvée',
+        username:                                           'nom d\'utilisateur',
+        address:                                            'adresse',
+        reply:                                              'réponse'
     },
     es: {
         add:                                                'agregar',
@@ -241,8 +249,10 @@ const MESSAGES: any = {
         leaveAMessage:                                      'deja un mensaje',
         egBreadMilkOrEggs:                                  'por ejemplo, pan, leche o huevos',
         yourRequestHasNotYetBeenApproved:                   'su solicitud aún no ha sido aprobada',
-        approved:                                           'aprobado',
-        details:                                            'detalles'
+        yourRequestHasAlreadyBeenApproved:                  'su solicitud ya ha sido aprobada',
+        username:                                           'nombre de usuario',
+        address:                                            'dirección',
+        reply:                                              'respuesta'
     },
     default: en
 };
