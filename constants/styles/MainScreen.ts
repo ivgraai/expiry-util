@@ -49,22 +49,7 @@ export const styles = StyleSheet.create({
         textAlign: "center"
     },
     dataExpirationDateWrapper: {
-        marginTop: 15,
-        borderWidth: Layout.borderWidth,
-        borderColor: Layout.borderColor,
-        borderRadius: Layout.borderRadius
-    },
-    dataExpirationDateTextWrapper: {
-        backgroundColor: Colors.tintColor,
-        borderTopLeftRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference,
-        borderTopRightRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference,
-        borderBottomWidth: Layout.borderWidth,
-        borderBottomColor: Layout.borderColor
-    },
-    dataExpirationDateText: {
-        textAlign: "center",
-        color: Colors.backgroundColor,
-        letterSpacing: Layout.letterSpacing
+        marginTop: 15
     },
     dataExpirationDateView: {
         flexDirection: "row",

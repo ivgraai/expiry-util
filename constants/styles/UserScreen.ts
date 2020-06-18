@@ -24,7 +24,8 @@ export const styles = StyleSheet.create({
         textAlign: "center",
         color: Colors.tintColor,
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        letterSpacing: Layout.letterSpacing
     },
     messageText: {
         fontSize: 20,

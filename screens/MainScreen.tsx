@@ -20,6 +20,7 @@ import { styles } from "../constants/styles/MainScreen";
 import Colors from "../constants/Colors";
 import StyledTextInput from "../components/StyledTextInput";
 import StyledButton from "../components/StyledButton";
+import StyledComponent from "../components/StyledComponent";
 
 import { connect } from "react-redux";
 import * as conn from "../constants/redux/Connecting";
@@ -211,12 +212,7 @@ class MainScreen extends React.Component<IProps, IState> {
               placeholderTextColor={Colors.backgroundColor}
             />
           </View>
-          <View style={styles.dataExpirationDateWrapper}>
-            <View style={styles.dataExpirationDateTextWrapper}>
-              <Text style={styles.dataExpirationDateText}>
-                {i18n.expirationDate.toUpperCase()}
-              </Text>
-            </View>
+          <StyledComponent style={styles.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>
             <View style={styles.dataExpirationDateView}>
               <DateTimePicker
                 style={styles.dataExpirationDateDateTimePicker}
@@ -233,7 +229,7 @@ class MainScreen extends React.Component<IProps, IState> {
                 }}
               />
             </View>
-          </View>
+          </StyledComponent>
           <CheckBox
             containerStyle={styles.dataLocationCheckBoxContainer}
             textStyle={styles.dataLocationCheckBoxText}

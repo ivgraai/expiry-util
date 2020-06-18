@@ -6,6 +6,9 @@ import * as Dtos from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
 import UserManager from "../services/UserManager";
 import DbHelper from "../services/DbHelper";
+import { styles } from "../constants/styles/DetailsScreen";
+import { i18n } from "../constants/Dictionary";
+import StyledComponent from "../components/StyledComponent";
 
 interface IProps {
     navigation: any;
@@ -26,27 +29,31 @@ export default function DetailsScreen(props: IProps) {
     }, []);
 
     return (
-        <View style={{flex: 1, justifyContent: "space-around"}}>
+        <View style={styles.rootView}>
             <CachedImage
                 source={{ uri: Utility.remoteURI("", id, Dtos.SizeRequest.large) }}
-                style={{ flex: 3, height: "100%", width: "100%", aspectRatio: 1, alignSelf: "center" }}
+                style={styles.imageView}
                 onDownloaded={(uri: string) => DbHelper.newImage(uri, false)}
             />
-            <View style={{flex: 2}}>
-                <Text>{response?.name.toUpperCase()}</Text>
-                <Text>{response?.expiry.toLocaleDateString()}</Text>
-                <Text>{response?.myMessage}</Text>
+            <View style={styles.dataView}>
+                <Text style={styles.warnText}>{i18n.yourRequestHasNotYetBeenApproved.capitalize() + '!'}</Text>
+                <View style={styles.baseDataView}>
+                    <StyledComponent header={response?.name.toUpperCase()}>
+                        <Text style={styles.dataText}>{response?.expiry.toLocaleDateString()}</Text>
+                        <Text style={styles.dataText}>{response?.myMessage}</Text>
+                    </StyledComponent>
+                </View>
                 {
-                    (response?.isAccepted) ? <>
-                    <Text>{response?.username}</Text>
-                    <Text>{response?.replyMessage}</Text>
-                    <Text>{response?.address.postalCode}</Text>
-                    <Text>{response?.address.country}</Text>
-                    <Text>{response?.address.region}</Text>
-                    <Text>{response?.address.city}</Text>
-                    <Text>{response?.address.street}</Text>
-                    <Text>{response?.address.name}</Text>
-                </> :
+                    (response?.isAccepted) ? <View style={styles.replyDataView}>
+                    <Text style={styles.dataText}>{response?.username}</Text>
+                    <Text style={styles.dataText}>{response?.replyMessage}</Text>
+                    <Text style={styles.dataText}>{response?.address.postalCode}</Text>
+                    <Text style={styles.dataText}>{response?.address.country}</Text>
+                    <Text style={styles.dataText}>{response?.address.region}</Text>
+                    <Text style={styles.dataText}>{response?.address.city}</Text>
+                    <Text style={styles.dataText}>{response?.address.street}</Text>
+                    <Text style={styles.dataText}>{response?.address.name}</Text>
+                </View> :
                     null
                 }
             </View>

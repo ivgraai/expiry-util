@@ -44,7 +44,8 @@ type TYPE = {
     goToSignIn: string,
     goToSignUp: string,
     leaveAMessage: string,
-    egBreadMilkOrEggs: string
+    egBreadMilkOrEggs: string,
+    yourRequestHasNotYetBeenApproved: string
 };
 
 const en = {
@@ -90,7 +91,8 @@ const en = {
         goToSignIn:                                         'go to sign in',
         goToSignUp:                                         'go to sign up',
         leaveAMessage:                                      'leave a message',
-        egBreadMilkOrEggs:                                  'e.g., bread, milk or eggs'
+        egBreadMilkOrEggs:                                  'e.g., bread, milk or eggs',
+        yourRequestHasNotYetBeenApproved:                   'your request has not yet been approved'
 };
 const MESSAGES: any = {
     en: en,
@@ -137,7 +139,8 @@ const MESSAGES: any = {
         goToSignIn:                                         'ugrás a bejelentkezésre',
         goToSignUp:                                         'ugrás a regisztrációra',
         leaveAMessage:                                      'hagyjon egy üzenetet',
-        egBreadMilkOrEggs:                                  'pl. kenyér, tej vagy tojás'
+        egBreadMilkOrEggs:                                  'pl. kenyér, tej vagy tojás',
+        yourRequestHasNotYetBeenApproved:                   'kérését még nem hagyták jóvá'
     },
     fr: {
         add:                                                'ajouter',
@@ -182,7 +185,8 @@ const MESSAGES: any = {
         goToSignIn:                                         'aller se connecter',
         goToSignUp:                                         'aller s\'inscrire',
         leaveAMessage:                                      'laisser un message',
-        egBreadMilkOrEggs:                                  'par exemple, pain, lait ou œufs'
+        egBreadMilkOrEggs:                                  'par exemple, pain, lait ou œufs',
+        yourRequestHasNotYetBeenApproved:                   'votre demande n\'a pas encore été approuvée'
     },
     es: {
         add:                                                'agregar',
@@ -227,7 +231,8 @@ const MESSAGES: any = {
         goToSignIn:                                         'ir a iniciar sesión',
         goToSignUp:                                         'ir a registrarse',
         leaveAMessage:                                      'deja un mensaje',
-        egBreadMilkOrEggs:                                  'por ejemplo, pan, leche o huevos'
+        egBreadMilkOrEggs:                                  'por ejemplo, pan, leche o huevos',
+        yourRequestHasNotYetBeenApproved:                   'su solicitud aún no ha sido aprobada'
     },
     default: en
 };
