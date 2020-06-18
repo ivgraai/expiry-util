@@ -9,14 +9,21 @@ export const styles = StyleSheet.create({
     },
     imageView: {
         flex: 3,
-        aspectRatio: 1,
         alignSelf: "center",
+        justifyContent: "space-around"
+    },
+    image: {
+        aspectRatio: 1,
+        width: Layout.width,
         borderColor: Layout.borderColor,
         borderWidth: Layout.borderWidth,
         borderRadius: Layout.borderRadius
     },
     dataView: {
-        flex: 2
+        flex: 2,
+        width: Layout.width,
+        alignSelf: "center",
+        justifyContent: "space-around"
     },
     warnText: {
         textAlign: "center",

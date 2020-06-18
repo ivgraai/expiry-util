@@ -5,5 +5,6 @@ export default {
     borderColor: Colors.backgroundColor,
     borderRadius: 20,
     innerBorderRadiusDifference: -2,
-    letterSpacing: 3
+    letterSpacing: 3,
+    width: "85%"
 };

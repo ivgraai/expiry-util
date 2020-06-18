@@ -2,8 +2,6 @@ import { StyleSheet } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
-const width: string = "85%";
-
 export const styles = StyleSheet.create({
     mainView: {
         flex: 1,
@@ -20,7 +18,7 @@ export const styles = StyleSheet.create({
         borderColor: Layout.borderColor,
         borderWidth: Layout.borderWidth,
         height: "85%",
-        width: width,
+        width: Layout.width,
         borderRadius: Layout.borderRadius
     },
     photoImage: {
@@ -42,7 +40,7 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     dataPerishableGoodsTextInputWrapper: {
-        width,
+        width: Layout.width,
         height: "10%"
     },
     dataPerishableGoodsTextInput: {
@@ -57,7 +55,7 @@ export const styles = StyleSheet.create({
         marginTop: -15
     },
     dataExpirationDateDateTimePicker: {
-        width: width,
+        width: Layout.width,
         height: 200
     },
     dataLocationCheckBoxContainer: {
@@ -71,7 +69,7 @@ export const styles = StyleSheet.create({
     },
     addView: {
         flex: 2,
-        width: width,
+        width: Layout.width,
         flexDirection: "column",
         justifyContent: "center"
     },
