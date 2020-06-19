@@ -107,7 +107,7 @@ export default class UserScreen extends React.Component<IProps, IState> {
                 <View style={styles.buttonsView}>
                     <View style={styles.buttonWrapper}><StyledButton onPress={() => this.signUp()}>{i18n.signUp.toUpperCase()}</StyledButton></View>
                     <Text style={styles.orText}>{i18n.or.toUpperCase()}</Text>
-                    <View style={styles.buttonWrapper}><StyledButton onPress={() => this.setState({switched: false})}>{i18n.goToSignIn.toUpperCase()}</StyledButton></View>
+                    <View style={styles.buttonWrapper}><StyledButton onPress={() => this.setState({switched: false})} inverted={true}>{i18n.goToSignIn.toUpperCase()}</StyledButton></View>
                 </View>
             </> : <>
                 <View style={styles.inputsAndValidationResultView}>
@@ -120,7 +120,7 @@ export default class UserScreen extends React.Component<IProps, IState> {
                 <View style={styles.buttonsView}>
                     <View style={styles.buttonWrapper}><StyledButton onPress={() => this.signIn()} testID="signInButton">{i18n.signIn.toUpperCase()}</StyledButton></View>
                     <Text style={styles.orText}>{i18n.or.toUpperCase()}</Text>
-                    <View style={styles.buttonWrapper}><StyledButton onPress={() => this.setState({switched: true})}>{i18n.goToSignUp.toUpperCase()}</StyledButton></View>
+                    <View style={styles.buttonWrapper}><StyledButton onPress={() => this.setState({switched: true})} inverted={true}>{i18n.goToSignUp.toUpperCase()}</StyledButton></View>
                 </View>
             </>;
         return (
