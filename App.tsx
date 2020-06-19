@@ -4,6 +4,7 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { AppearanceProvider } from 'react-native-appearance';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
@@ -34,12 +35,14 @@ export default function App(props) {
   } else {
     return (
 // To bind a React or React Native application with Redux, you do it with the high ordered component Provider. It basically passes the store down to the rest of the application.
-      <Provider store={store}>
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </View>
-      </Provider>
+      <AppearanceProvider>
+        <Provider store={store}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
+        </Provider>
+      </AppearanceProvider>
     );
   }
 }
