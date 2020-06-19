@@ -10,5 +10,6 @@ export default {
     innerBorderRadiusDifference: -2,
     letterSpacing: 3,
     widthPercentageAsString: width + '%',
-    widthPercentageAsNumber: width
+    widthPercentageAsNumber: width,
+    margin: PixelRatio.getPixelSizeForLayoutSize(2.5)
 };

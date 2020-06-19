@@ -1,11 +1,13 @@
 import React from "react";
-import { Text, FlatList, Button } from "react-native";
+import { Text, FlatList, View } from "react-native";
 import Dialog from "../components/Dialog";
 import { i18n } from "../constants/Dictionary";
 import Utility from "../common/Utility";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import * as Dtos from "../constants/Dtos";
+import { styles } from "../constants/styles/ApprovalScreen";
+import StyledButton from "../components/StyledButton";
 
 interface IProps {
     navigation: any
@@ -14,7 +16,7 @@ interface IProps {
 interface IState {
     allRequests: undefined | Dtos.RequestAllResponse,
     showModal: boolean,
-    beneficiary: string | undefined
+    beneficiary: number | undefined
 }
 
 export default class ApprovalScreen extends React.Component<IProps, IState> {
@@ -42,7 +44,7 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
         if (undefined != state.allRequests && null != state.allRequests.accepted) {
             let value = state.allRequests.datas.find(
                     (item: { id: number; }) => item.id == state.allRequests.accepted
-                ).username;
+                ).id;
             state = Utility.assignChildState("beneficiary", value, state);
         }
         this.setState(state);
@@ -62,24 +64,31 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
     }
 
     render() {
+        var emptyLine = <Text />;
         var onPress = (item: Dtos.RequestData) => {
             this.requestId = item.id;
             this.updateState({showModal: true});
         };
         return <>
             <Dialog visible={this.state.showModal} onClose={msg => this.acceptRequest(msg)} />
-            {this.state.beneficiary &&
-                <Text>{i18n.youAlreadyApprovedTheFollowingApplicantRequest.capitalize() + ": " + this.state.beneficiary}</Text>}
             <FlatList
                 data={this.state.allRequests?.datas}
                 keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => <>
-                    <Text>{item.username}</Text>
-                    <Text>{item.datetime.toLocaleString()}</Text>
-                    <Text>{item.message}</Text>
-                    {(null == this.state.allRequests!.accepted) &&
-                        <Button title={i18n.approve.capitalize()} onPress={() => onPress(item)} />}
-                </>}
+                renderItem={({ item }) => <View style={styles.itemView}>
+                    <View style={styles.requestDataSection}>
+                        <Text style={styles.usernameText}>{item.username}</Text>
+                        <Text>{item.datetime.toLocaleString()}</Text>
+                        {emptyLine}
+                        <Text>{item.message}</Text>
+                    </View>
+                    {(!this.state.allRequests!.accepted || item.id == this.state.beneficiary) &&
+                        <StyledButton
+                            onPress={() => onPress(item)}
+                            style={styles.approveButton}
+                            disabled={null != this.state.allRequests!.accepted}>
+                                {(item.id != this.state.beneficiary ? i18n.approve : i18n.approved).capitalize()}
+                        </StyledButton>}
+                </View>}
             />
         </>;
     }

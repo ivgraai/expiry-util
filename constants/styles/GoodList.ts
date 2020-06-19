@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         height: PixelRatio.getPixelSizeForLayoutSize(75),
         borderWidth: Layout.borderWidth,
         borderColor: Layout.borderColor,
-        margin: PixelRatio.getPixelSizeForLayoutSize(2.5),
+        margin: Layout.margin,
         borderRadius: Layout.borderRadius
     },
     leftChild: {
