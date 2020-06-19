@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
         paddingLeft: padding
     },
     approveButton: {
-        flex: 5,
+        flex: 8,
         alignSelf: "center",
         alignItems: "flex-end",
         paddingRight: padding

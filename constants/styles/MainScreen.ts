@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
     },
     dataExpirationDateDateTimePicker: {
         width: Layout.widthPercentageAsString,
-        height: PixelRatio.getPixelSizeForLayoutSize(100)
+        height: 200
     },
     dataLocationCheckBoxContainer: {
         backgroundColor: "transparent",
