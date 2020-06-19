@@ -4,7 +4,7 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { AppearanceProvider } from 'react-native-appearance';
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
@@ -23,6 +23,7 @@ const store = createStore(reducer);
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const colorScheme = useColorScheme();
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -39,7 +40,7 @@ export default function App(props) {
         <Provider store={store}>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
+            <AppNavigator theme={colorScheme} />
           </View>
         </Provider>
       </AppearanceProvider>

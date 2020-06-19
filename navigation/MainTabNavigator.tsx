@@ -25,7 +25,7 @@ const config = Platform.select({
       }
     },
     cardStyle: {
-      backgroundColor: Colors.appColor
+      backgroundColor: Colors.bodyColor
     }
   },
 });

@@ -1,13 +1,10 @@
 import { Appearance } from 'react-native-appearance';
+import { ThemeColors } from 'react-navigation';
 
 const tintColor = '#556B2F';
 const backgroundColor = '#AED59E';
 
-/* let colorScheme = Appearance.getColorScheme();
-let subscription = Appearance.addChangeListener(({ colorScheme }) => {
-  ...
-});
-subscription.remove(); */
+let themeColors = ('light' === Appearance.getColorScheme()) ? ThemeColors['light'] : ThemeColors['dark'];
 
 export default {
   tintColor,
@@ -15,5 +12,6 @@ export default {
   header: tintColor,
   errorText: '#FF6666',
   errorBackground: '#FFCCCC',
-  appColor: ('light' === Appearance.getColorScheme()) ? 'white' : 'black'
+  bodyColor: themeColors.body,
+  labelColor: themeColors.label
 };

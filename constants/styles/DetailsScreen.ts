@@ -34,7 +34,8 @@ export const styles = StyleSheet.create({
         marginTop: margin * 3.5
     },
     dataText: {
-        alignSelf: "center"
+        alignSelf: "center",
+        color: Colors.labelColor
     },
     styledComponent: {
         marginTop: margin

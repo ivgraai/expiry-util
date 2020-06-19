@@ -25,5 +25,8 @@ export const styles = StyleSheet.create({
     usernameText: {
         fontWeight: "bold",
         color: Colors.tintColor
+    },
+    datetimeAndMessageTexts: {
+        color: Colors.labelColor
     }
 });

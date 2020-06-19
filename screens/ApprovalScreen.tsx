@@ -80,9 +80,9 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
                 renderItem={({ item }) => <View style={styles.itemView}>
                     <View style={styles.requestDataSection}>
                         <Text style={styles.usernameText}>{item.username}</Text>
-                        <Text>{item.datetime.toLocaleString()}</Text>
+                        <Text style={styles.datetimeAndMessageTexts}>{item.datetime.toLocaleString()}</Text>
                         {emptyLine}
-                        <Text>{item.message}</Text>
+                        <Text style={styles.datetimeAndMessageTexts}>{item.message}</Text>
                     </View>
                     {(!this.state.allRequests!.accepted || item.id == this.state.beneficiary) &&
                         <StyledButton

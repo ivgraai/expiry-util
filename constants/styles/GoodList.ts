@@ -49,6 +49,7 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
     },
     grandChildBodyText: {
-        textAlign: "center"
+        textAlign: "center",
+        color: Colors.labelColor
     }
 });
