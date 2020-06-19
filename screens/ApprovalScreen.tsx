@@ -35,7 +35,10 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
     componentDidMount() {
         UserManager.getToken().then(token => {
             HttpClient.findAllRequest(token!, this.goodId)
-                .then(allRequests => this.updateState({allRequests}))
+                .then(allRequests => {
+                    allRequests.datas = allRequests.datas.sort((item1, item2) => item1.datetime.getTime() - item2.datetime.getTime());
+                    this.updateState({allRequests});
+                })
                 .catch(HttpClient.ERROR_HANDLER);
         });
     }
@@ -85,8 +88,9 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
                         <StyledButton
                             onPress={() => onPress(item)}
                             style={styles.approveButton}
-                            disabled={null != this.state.allRequests!.accepted}>
-                                {(item.id != this.state.beneficiary ? i18n.approve : i18n.approved).capitalize()}
+                            disabled={null != this.state.allRequests!.accepted}
+                            inverted={item.id == this.state.beneficiary}>
+                                {(item.id == this.state.beneficiary ? i18n.approved : i18n.approve).toUpperCase()}
                         </StyledButton>}
                 </View>}
             />

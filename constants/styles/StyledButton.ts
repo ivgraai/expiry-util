@@ -8,16 +8,27 @@ export const styles = StyleSheet.create({
     touchableOpacity: {
         paddingTop: padding,
         paddingBottom: padding,
-        backgroundColor: Colors.tintColor,
         borderRadius: Layout.borderRadius,
-        borderWidth: Layout.borderWidth,
+        borderWidth: Layout.borderWidth
+    },
+    touchableOpacityColors: {
+        backgroundColor: Colors.tintColor,
         borderColor: Layout.borderColor
     },
+    invertedTouchableOpacityColors: {
+        backgroundColor: Colors.backgroundColor,
+        borderColor: Colors.tintColor
+    },
     text: {
-        color: Colors.backgroundColor,
         textAlign: "center",
         paddingLeft: padding,
         paddingRight: padding,
         letterSpacing: Layout.letterSpacing
+    },
+    textColors: {
+        color: Colors.backgroundColor
+    },
+    invertedTextColors: {
+        color: Colors.tintColor
     }
 });
