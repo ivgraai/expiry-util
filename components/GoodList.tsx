@@ -9,31 +9,31 @@ class GoodList extends React.PureComponent {
     static contextType = ThemeContext;
     render() {
         const theme = this.context;
-        const isDark = 'dark' === theme;
+        const withStyle = styles('dark' === theme);
         let {innerRef, dataSource, height, customNodesForTheItem} = this.props;
         return (
           <FlatList ref={innerRef}
             data={dataSource}
             keyExtractor={item => item.id.toString()}
             renderItem={({item}) => (
-              <View style={styles(isDark).parent}>
-                <View style={styles(isDark).leftChild}>
+              <View style={withStyle.parent}>
+                <View style={withStyle.leftChild}>
                   <CachedImage
                     source={{ uri: item.image }}
-                    style={styles(isDark).leftChildImage}
+                    style={withStyle.leftChildImage}
                     onDownloaded={(uri: string) => DbHelper.newImage(uri, true)}
                   />
                 </View>
                 <View
-                  style={styles(isDark).rightChild}
+                  style={withStyle.rightChild}
                 >
-                  <View style={styles(isDark).grandChildHeader}>
-                    <Text style={styles(isDark).grandChildHeaderText}>
+                  <View style={withStyle.grandChildHeader}>
+                    <Text style={withStyle.grandChildHeaderText}>
                       {item.name.toUpperCase()}
                     </Text>
                   </View>
-                  <View style={styles(isDark).grandChildBody}>
-                    <Text style={styles(isDark).grandChildBodyText}>
+                  <View style={withStyle.grandChildBody}>
+                    <Text style={withStyle.grandChildBodyText}>
                       {item.expiry.toLocaleDateString()}
                     </Text>
                     { customNodesForTheItem ?
