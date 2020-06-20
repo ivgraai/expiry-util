@@ -1,35 +1,39 @@
 import React from "react";
 import { FlatList, View, Text } from "react-native";
+import { ThemeContext } from "react-navigation";
 import CachedImage from "../components/CachedImage";
 import DbHelper from "../services/DbHelper";
 import { styles } from "../constants/styles/GoodList";
 
 class GoodList extends React.PureComponent {
+    static contextType = ThemeContext;
     render() {
+        const theme = this.context;
+        const withStyle = styles('dark' === theme);
         let {innerRef, dataSource, height, customNodesForTheItem} = this.props;
         return (
           <FlatList ref={innerRef}
             data={dataSource}
             keyExtractor={item => item.id.toString()}
             renderItem={({item}) => (
-              <View style={styles.parent}>
-                <View style={styles.leftChild}>
+              <View style={withStyle.parent}>
+                <View style={withStyle.leftChild}>
                   <CachedImage
                     source={{ uri: item.image }}
-                    style={styles.leftChildImage}
+                    style={withStyle.leftChildImage}
                     onDownloaded={(uri: string) => DbHelper.newImage(uri, true)}
                   />
                 </View>
                 <View
-                  style={styles.rightChild}
+                  style={withStyle.rightChild}
                 >
-                  <View style={styles.grandChildHeader}>
-                    <Text style={styles.grandChildHeaderText}>
+                  <View style={withStyle.grandChildHeader}>
+                    <Text style={withStyle.grandChildHeaderText}>
                       {item.name.toUpperCase()}
                     </Text>
                   </View>
-                  <View style={styles.grandChildBody}>
-                    <Text style={styles.grandChildBodyText}>
+                  <View style={withStyle.grandChildBody}>
+                    <Text style={withStyle.grandChildBodyText}>
                       {item.expiry.toLocaleDateString()}
                     </Text>
                     { customNodesForTheItem ?

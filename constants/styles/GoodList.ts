@@ -2,7 +2,7 @@ import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
-export const styles = StyleSheet.create({
+export const styles = (isDark: boolean) => StyleSheet.create({
     parent: {
         flexDirection: "row",
         height: PixelRatio.getPixelSizeForLayoutSize(75),
@@ -49,6 +49,7 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
     },
     grandChildBodyText: {
-        textAlign: "center"
+        textAlign: "center",
+        color: isDark ? Colors.labelDarkColor : Colors.labelLightColor
     }
 });

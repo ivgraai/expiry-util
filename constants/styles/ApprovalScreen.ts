@@ -4,7 +4,7 @@ import Colors from "../Colors";
 
 const padding: number = PixelRatio.getPixelSizeForLayoutSize(5);
 
-export const styles = StyleSheet.create({
+export const styles = (isDark: boolean) => StyleSheet.create({
     itemView: {
         margin: Layout.margin,
         borderColor: Layout.borderColor,
@@ -25,5 +25,8 @@ export const styles = StyleSheet.create({
     usernameText: {
         fontWeight: "bold",
         color: Colors.tintColor
+    },
+    datetimeAndMessageTexts: {
+        color: isDark ? Colors.labelDarkColor : Colors.labelLightColor
     }
 });

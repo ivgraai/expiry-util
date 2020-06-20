@@ -1,3 +1,5 @@
+import { ThemeColors } from 'react-navigation';
+
 const tintColor = '#556B2F';
 const backgroundColor = '#AED59E';
 
@@ -6,5 +8,7 @@ export default {
   backgroundColor,
   header: tintColor,
   errorText: '#FF6666',
-  errorBackground: '#FFCCCC'
+  errorBackground: '#FFCCCC',
+  labelLightColor: ThemeColors['light'].label,
+  labelDarkColor: ThemeColors['dark'].label
 };

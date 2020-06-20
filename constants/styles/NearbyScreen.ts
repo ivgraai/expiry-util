@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
 import Colors from "../Colors";
 
-export const styles = StyleSheet.create({
+export const styles = (isDark: boolean) => StyleSheet.create({
     distanceText: {
-        textAlign: "center"
+        textAlign: "center",
+        color: isDark ? Colors.labelDarkColor : Colors.labelLightColor
     },
     loadingText: {
         color: Colors.tintColor

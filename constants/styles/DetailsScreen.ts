@@ -4,7 +4,7 @@ import Layout from "../Layout";
 
 const margin: number = PixelRatio.getPixelSizeForLayoutSize(2.5);
 
-export const styles = StyleSheet.create({
+export const styles = (isDark: boolean) => StyleSheet.create({
     rootView: {
         flex: 1
     },
@@ -34,7 +34,8 @@ export const styles = StyleSheet.create({
         marginTop: margin * 3.5
     },
     dataText: {
-        alignSelf: "center"
+        alignSelf: "center",
+        color: isDark ? Colors.labelDarkColor : Colors.labelLightColor
     },
     styledComponent: {
         marginTop: margin

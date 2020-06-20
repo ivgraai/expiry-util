@@ -7,7 +7,7 @@ import * as Location from "expo-location";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
-import { StackActions } from "react-navigation";
+import { StackActions, ThemeContext } from "react-navigation";
 import Dialog from "../components/Dialog";
 import Colors from "../constants/Colors";
 import { styles } from "../constants/styles/NearbyScreen";
@@ -16,6 +16,7 @@ export default class NearbyScreen extends React.Component {
     static navigationOptions = {
       title: i18n.nearby
     };
+    static contextType = ThemeContext;
     private readonly DEFAULT_TUPLE_VALUE = {
         token: '',
         goodId: 0
@@ -68,10 +69,10 @@ export default class NearbyScreen extends React.Component {
         }
     }
 
-    renderDistanceAndRequest(item: Dtos.GoodNearbyResponse) {
+    renderDistanceAndRequest(item: Dtos.GoodNearbyResponse, withStyle: any) {
         return <View>
             <Dialog visible={this.state.dialogVisible} onClose={msg => this.onRequestClose(msg)} />
-            <Text style={styles.distanceText}>{item.distance} {i18n.meter}</Text>
+            <Text style={withStyle.distanceText}>{item.distance} {i18n.meter}</Text>
             <Button title={item.isRequestedByMe ? i18n.statusOfMyRequest.toUpperCase() : i18n.showMyNeed.toUpperCase()} color={Colors.tintColor} onPress={
                 () => this.handleOnPress(item.id, item.isRequestedByMe)
             }/>
@@ -79,10 +80,12 @@ export default class NearbyScreen extends React.Component {
     }
 
     render() {
-        var temporary: React.ReactNode = (item: any) => this.renderDistanceAndRequest(item);
+        const theme = this.context;
+        const withStyle = styles('dark' === theme);
+        var temporary: React.ReactNode = (item: any) => this.renderDistanceAndRequest(item, withStyle);
         return <>{
             this.state.loading ?
-                <Text style={styles.loadingText}>{i18n.loading.capitalize()}...</Text> :
+                <Text style={withStyle.loadingText}>{i18n.loading.capitalize()}...</Text> :
                 <GoodList dataSource={this.state.ds} customNodesForTheItem={temporary}></GoodList>
         }</>;
     }

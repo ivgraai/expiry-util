@@ -11,6 +11,7 @@ import UserManager from "../services/UserManager";
 import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
 import Colors from "../constants/Colors";
+import { styles } from "../constants/styles/AllScreen";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
@@ -34,7 +35,7 @@ export default class AllScreen extends React.Component {
   render() {
     var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.view}>
         <NavigationEvents
           onWillFocus={payload => {
 
