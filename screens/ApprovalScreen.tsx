@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, FlatList, View } from "react-native";
+import { ThemeContext } from "react-navigation";
 import Dialog from "../components/Dialog";
 import { i18n } from "../constants/Dictionary";
 import Utility from "../common/Utility";
@@ -20,6 +21,7 @@ interface IState {
 }
 
 export default class ApprovalScreen extends React.Component<IProps, IState> {
+    static contextType = ThemeContext;
     private readonly goodId: number = this.props.navigation.getParam("goodId");
 
     constructor(props: IProps) {
@@ -67,6 +69,8 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
     }
 
     render() {
+        const theme = this.context;
+        const withStyle = styles('dark' === theme);
         var emptyLine = <Text />;
         var onPress = (item: Dtos.RequestData) => {
             this.requestId = item.id;
@@ -77,17 +81,17 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
             <FlatList
                 data={this.state.allRequests?.datas}
                 keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => <View style={styles.itemView}>
-                    <View style={styles.requestDataSection}>
-                        <Text style={styles.usernameText}>{item.username}</Text>
-                        <Text style={styles.datetimeAndMessageTexts}>{item.datetime.toLocaleString()}</Text>
+                renderItem={({ item }) => <View style={withStyle.itemView}>
+                    <View style={withStyle.requestDataSection}>
+                        <Text style={withStyle.usernameText}>{item.username}</Text>
+                        <Text style={withStyle.datetimeAndMessageTexts}>{item.datetime.toLocaleString()}</Text>
                         {emptyLine}
-                        <Text style={styles.datetimeAndMessageTexts}>{item.message}</Text>
+                        <Text style={withStyle.datetimeAndMessageTexts}>{item.message}</Text>
                     </View>
                     {(!this.state.allRequests!.accepted || item.id == this.state.beneficiary) &&
                         <StyledButton
                             onPress={() => onPress(item)}
-                            style={styles.approveButton}
+                            style={withStyle.approveButton}
                             disabled={null != this.state.allRequests!.accepted}
                             inverted={item.id == this.state.beneficiary}>
                                 {(item.id == this.state.beneficiary ? i18n.approved : i18n.approve).toUpperCase()}

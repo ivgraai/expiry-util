@@ -23,10 +23,8 @@ const config = Platform.select({
       headerStyle: {
         backgroundColor: Colors.backgroundColor
       }
-    },
-    cardStyle: {
-      backgroundColor: Colors.bodyColor
     }
+    // , cardStyle: { backgroundColor: Colors.bodyColor }
   },
 });
 

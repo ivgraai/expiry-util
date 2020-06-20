@@ -13,13 +13,13 @@ export const styles = StyleSheet.create({
       },
     modalView: {
         margin: PixelRatio.getPixelSizeForLayoutSize(10),
-        backgroundColor: Colors.bodyColor,
+        // backgroundColor: Colors.bodyColor,
         borderRadius: Layout.borderRadius,
         borderWidth: Layout.borderWidth,
         borderColor: borderColor,
         padding: PixelRatio.getPixelSizeForLayoutSize(5),
         alignItems: "center",
-        shadowColor: Colors.labelColor,
+        // shadowColor: Colors.labelColor,
         shadowOffset: {
             width: 0,
             height: 2
@@ -35,8 +35,8 @@ export const styles = StyleSheet.create({
         flex: 0.75,
         textAlign: "center",
         marginBottom: PixelRatio.getPixelSizeForLayoutSize(5),
-        aspectRatio: 1.75,
-        backgroundColor: Colors.bodyColor
+        aspectRatio: 1.75
+        // , backgroundColor: Colors.bodyColor
     },
     modalTextInputWrapper: {
       flexDirection: "row"

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView } from "react-native";
+import { useTheme } from "react-navigation";
 import CachedImage from "../components/CachedImage";
 import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
@@ -28,32 +29,34 @@ export default function DetailsScreen(props: IProps) {
         });
     }, []);
 
+    const theme = useTheme();
+    const withStyle = styles('dark' === theme);
     return (
         <ScrollView scrollEnabled={response?.isAccepted}>
-            <View style={styles.imageView}>
+            <View style={withStyle.imageView}>
                 <CachedImage
                     source={{ uri: Utility.remoteURI("", id, Dtos.SizeRequest.large) }}
-                    style={styles.image}
+                    style={withStyle.image}
                     onDownloaded={(uri: string) => DbHelper.newImage(uri, false)}
                 />
             </View>
-            <View style={styles.dataView}>
-                <StyledComponent header={response?.name.toUpperCase()} style={styles.styledComponent}>
-                    <Text style={styles.dataText}>{response?.expiry.toLocaleDateString()}</Text>
-                    <View style={styles.hrView} />
-                    <Text style={styles.dataText}>{response?.myMessage}</Text>
+            <View style={withStyle.dataView}>
+                <StyledComponent header={response?.name.toUpperCase()} style={withStyle.styledComponent}>
+                    <Text style={withStyle.dataText}>{response?.expiry.toLocaleDateString()}</Text>
+                    <View style={withStyle.hrView} />
+                    <Text style={withStyle.dataText}>{response?.myMessage}</Text>
                 </StyledComponent>
-                <Text style={styles.warnText}>{(response?.isAccepted ? i18n.yourRequestHasAlreadyBeenApproved.capitalize() : i18n.yourRequestHasNotYetBeenApproved.capitalize()) + '!'}</Text>
+                <Text style={withStyle.warnText}>{(response?.isAccepted ? i18n.yourRequestHasAlreadyBeenApproved.capitalize() : i18n.yourRequestHasNotYetBeenApproved.capitalize()) + '!'}</Text>
                 {
                     (response?.isAccepted) ? <>
-                    <StyledComponent header={i18n.username.toUpperCase()} style={styles.styledComponent}>
-                        <Text style={styles.dataText}>{response?.username}</Text>
+                    <StyledComponent header={i18n.username.toUpperCase()} style={withStyle.styledComponent}>
+                        <Text style={withStyle.dataText}>{response?.username}</Text>
                     </StyledComponent>
-                    <StyledComponent header={i18n.address.toUpperCase()} style={styles.styledComponent}>
-                        <Text style={styles.dataText}>{Utility.formatAddress(response?.address)}</Text>
+                    <StyledComponent header={i18n.address.toUpperCase()} style={withStyle.styledComponent}>
+                        <Text style={withStyle.dataText}>{Utility.formatAddress(response?.address)}</Text>
                     </StyledComponent>
-                    <StyledComponent header={i18n.reply.toUpperCase()} style={[styles.styledComponent, styles.marginBottom]}>
-                        <Text style={styles.dataText}>{response?.replyMessage}</Text>
+                    <StyledComponent header={i18n.reply.toUpperCase()} style={[withStyle.styledComponent, withStyle.marginBottom]}>
+                        <Text style={withStyle.dataText}>{response?.replyMessage}</Text>
                     </StyledComponent>
                 </> :
                     null

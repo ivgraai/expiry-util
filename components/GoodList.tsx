@@ -1,35 +1,39 @@
 import React from "react";
 import { FlatList, View, Text } from "react-native";
+import { ThemeContext } from "react-navigation";
 import CachedImage from "../components/CachedImage";
 import DbHelper from "../services/DbHelper";
 import { styles } from "../constants/styles/GoodList";
 
 class GoodList extends React.PureComponent {
+    static contextType = ThemeContext;
     render() {
+        const theme = this.context;
+        const isDark = 'dark' === theme;
         let {innerRef, dataSource, height, customNodesForTheItem} = this.props;
         return (
           <FlatList ref={innerRef}
             data={dataSource}
             keyExtractor={item => item.id.toString()}
             renderItem={({item}) => (
-              <View style={styles.parent}>
-                <View style={styles.leftChild}>
+              <View style={styles(isDark).parent}>
+                <View style={styles(isDark).leftChild}>
                   <CachedImage
                     source={{ uri: item.image }}
-                    style={styles.leftChildImage}
+                    style={styles(isDark).leftChildImage}
                     onDownloaded={(uri: string) => DbHelper.newImage(uri, true)}
                   />
                 </View>
                 <View
-                  style={styles.rightChild}
+                  style={styles(isDark).rightChild}
                 >
-                  <View style={styles.grandChildHeader}>
-                    <Text style={styles.grandChildHeaderText}>
+                  <View style={styles(isDark).grandChildHeader}>
+                    <Text style={styles(isDark).grandChildHeaderText}>
                       {item.name.toUpperCase()}
                     </Text>
                   </View>
-                  <View style={styles.grandChildBody}>
-                    <Text style={styles.grandChildBodyText}>
+                  <View style={styles(isDark).grandChildBody}>
+                    <Text style={styles(isDark).grandChildBodyText}>
                       {item.expiry.toLocaleDateString()}
                     </Text>
                     { customNodesForTheItem ?
