@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -41,7 +41,7 @@ const MainStack = createStackNavigator(
 );
 
 MainStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (<TabBarLabel focused={focused}>{i18n.new}</TabBarLabel>),
+  tabBarLabel: ({ focused }) => (<View style={{ alignItems: "center" }}><TabBarLabel focused={focused} style={{}}>{i18n.new}</TabBarLabel></View>),
   tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'} size={26} style={{ marginBottom: -3 }} color={Colors.tintColor} />
 };
 
@@ -56,7 +56,7 @@ const AllStack = createStackNavigator(
 );
 
 AllStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (<TabBarLabel focused={focused}>{i18n.all}</TabBarLabel>),
+  tabBarLabel: ({ focused }) => (<View style={{ alignItems: "center" }}><TabBarLabel focused={focused} style={{}}>{i18n.all}</TabBarLabel></View>),
   tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'} size={26} style={{ marginBottom: -3 }} color={Colors.tintColor} />
 };
 
@@ -72,7 +72,7 @@ const NearbyStack = createStackNavigator(
 );
 
 NearbyStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (<TabBarLabel focused={focused}>{i18n.nearby}</TabBarLabel>),
+  tabBarLabel: ({ focused }) => (<View style={{ alignItems: "center" }}><TabBarLabel focused={focused} style={{}}>{i18n.nearby}</TabBarLabel></View>),
   tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-globe' : 'md-globe'} size={26} style={{ marginBottom: -3 }} color={Colors.tintColor} />
 };
 
