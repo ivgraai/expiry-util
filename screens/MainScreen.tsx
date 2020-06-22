@@ -5,12 +5,13 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  Button
+  Platform
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { CheckBox } from "react-native-elements";
 import { Notifications } from "expo";
 import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import { i18n } from "../constants/Dictionary";
 import UserManager from "../services/UserManager";
@@ -180,60 +181,73 @@ class MainScreen extends React.Component<IProps, IState> {
   }
 
   render() {
-    const theme = this.context;
+    const isDark = ('dark' === this.context);
+    const withStyle = styles(isDark);
     let { photo } = this.state;
     return (
       <View
-        style={styles.mainView}
+        style={withStyle.mainView}
       >
         <View
-          style={styles.photoView}
+          style={withStyle.photoView}
         >
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={this.buttonPick}
-            style={styles.photoTouchableOpacity}
+            style={withStyle.photoTouchableOpacity}
           >
             {this.props.isChosen ? (
               <Image
                 source={{ uri: photo }}
-                style={styles.photoImage}
+                style={withStyle.photoImage}
               />
             ) : (
-              <View style={styles.photoTextWrapper}>
-                <Text style={styles.photoText}>{(i18n.chooseAPhoto.toUpperCase())}</Text>
+              <View style={withStyle.photoTextWrapper}>
+                <Text style={withStyle.photoText}>{(i18n.chooseAPhoto.toUpperCase())}</Text>
               </View>
             )}
           </TouchableOpacity>
         </View>
-        <View style={styles.dataView}>
-          <View style={styles.dataPerishableGoodsTextInputWrapper}>
+        <View style={withStyle.dataView}>
+          <View style={withStyle.dataPerishableGoodsTextInputWrapper}>
             <StyledTextInput
               selectTextOnFocus={true}
-              style={styles.dataPerishableGoodsTextInput}
+              style={withStyle.dataPerishableGoodsTextInput}
               onChangeText={(goods: string) => this.props.setStateGoods(goods)}
               header={i18n.perishableGoods.toUpperCase()}
               placeholder={i18n.egBreadMilkOrEggs.capitalize()}
               placeholderTextColor={Colors.backgroundColor}
             />
           </View>
-          <StyledComponent style={styles.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>
-            <View style={styles.dataExpirationDateView}>
-              <Button title="Pick a date" onPress={() => this.setState({ showDatePicker: true })} />
+          <StyledComponent style={withStyle.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>
+            <View style={withStyle.dataExpirationDateView}>
+              <View style={withStyle.dataExpirationDateValue}>
+                <Ionicons
+                  name={Platform.OS === 'ios' ? 'ios-calendar' : 'md-calendar'}
+                  style={withStyle.dataExpirationDateValueIcon}
+                  color={isDark ? Colors.labelDarkColor : Colors.labelLightColor}
+                />
+                <Text style={withStyle.dataExpirationDateValueText} onPress={() => this.setState({ showDatePicker: true })}>
+                  {this.state.expiry.toLocaleDateString()}
+                </Text>
+              </View>
               <DateTimePickerModal
                 isVisible={this.state.showDatePicker}
                 mode="date"
                 onConfirm={date => this.setState({ expiry: date, showDatePicker: false })}
                 onCancel={() => this.setState({ showDatePicker: false })}
-                isDarkModeEnabled={'dark' === theme}
+                isDarkModeEnabled={isDark}
                 date={this.state.expiry}
                 // is24Hour -> locale="en_GB"
+                headerTextIOS={i18n.pickADate.capitalize()}
+                confirmTextIOS={i18n.confirm.capitalize()}
+                cancelTextIOS={i18n.cancel.capitalize()}
               />
             </View>
           </StyledComponent>
           <CheckBox
-            containerStyle={styles.dataLocationCheckBoxContainer}
-            textStyle={styles.dataLocationCheckBoxText}
+            containerStyle={withStyle.dataLocationCheckBoxContainer}
+            textStyle={withStyle.dataLocationCheckBoxText}
             checked={this.props.available}
             title={this.state.label}
             onPress={() => this.props.available ? this.props.checkAvailable() : this.navigate()}
@@ -241,9 +255,9 @@ class MainScreen extends React.Component<IProps, IState> {
             uncheckedColor={Colors.tintColor}
           />
           <View
-            style={styles.addView}
+            style={withStyle.addView}
           >
-            <StyledButton style={styles.addStyledButton} onPress={() => this.buttonAdd(this.state)}>
+            <StyledButton style={withStyle.addStyledButton} onPress={() => this.buttonAdd(this.state)}>
               {i18n.add.toUpperCase()}
             </StyledButton>
           </View>

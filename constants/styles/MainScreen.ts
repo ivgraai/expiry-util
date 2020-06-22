@@ -2,7 +2,7 @@ import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
-export const styles = StyleSheet.create({
+export const styles = (isDark: boolean) => StyleSheet.create({
     mainView: {
         flex: 1,
         flexDirection: "column",
@@ -47,16 +47,21 @@ export const styles = StyleSheet.create({
         textAlign: "center"
     },
     dataExpirationDateWrapper: {
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5)
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5),
+        width: Layout.widthPercentageAsString
     },
     dataExpirationDateView: {
         flexDirection: "row",
-        justifyContent: "center",
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5) * -1
+        justifyContent: "center"
     },
-    dataExpirationDateDateTimePicker: {
-        width: Layout.widthPercentageAsString,
-        height: 200
+    dataExpirationDateValue: {
+        flexDirection: "row"
+    },
+    dataExpirationDateValueIcon: {
+        marginRight: PixelRatio.getPixelSizeForLayoutSize(1.5)
+    },
+    dataExpirationDateValueText: {
+        color: isDark ? Colors.labelDarkColor : Colors.labelLightColor
     },
     dataLocationCheckBoxContainer: {
         backgroundColor: "transparent",
