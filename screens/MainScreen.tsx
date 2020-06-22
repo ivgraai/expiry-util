@@ -17,6 +17,7 @@ import { i18n } from "../constants/Dictionary";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
+import { dateTimePickerHeader, dateTimePickerConfirmButton, dateTimePickerCancelButton } from "../components/DateTimePickerModal";
 import { StackActions, ThemeContext } from "react-navigation";
 import { styles } from "../constants/styles/MainScreen";
 import Colors from "../constants/Colors";
@@ -242,6 +243,9 @@ class MainScreen extends React.Component<IProps, IState> {
                 headerTextIOS={i18n.pickADate.capitalize()}
                 confirmTextIOS={i18n.confirm.capitalize()}
                 cancelTextIOS={i18n.cancel.capitalize()}
+                customHeaderIOS={dateTimePickerHeader}
+                customConfirmButtonIOS={dateTimePickerConfirmButton}
+                customCancelButtonIOS={dateTimePickerCancelButton}
               />
             </View>
           </StyledComponent>
