@@ -10,5 +10,7 @@ export default {
   errorText: '#FF6666',
   errorBackground: '#FFCCCC',
   labelLightColor: ThemeColors['light'].label,
-  labelDarkColor: ThemeColors['dark'].label
+  labelDarkColor: ThemeColors['dark'].label,
+  bodyLightColor: ThemeColors['light'].body,
+  bodyDarkColor: ThemeColors['dark'].body
 };

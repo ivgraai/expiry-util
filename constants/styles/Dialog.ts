@@ -4,7 +4,7 @@ import Layout from "../Layout";
 
 const borderColor = Colors.tintColor;
 
-export const styles = StyleSheet.create({
+export const styles = (isDark: boolean) => StyleSheet.create({
     centeredView: {
         flex: 1,
         justifyContent: "center",
@@ -13,13 +13,13 @@ export const styles = StyleSheet.create({
       },
     modalView: {
         margin: PixelRatio.getPixelSizeForLayoutSize(10),
-        // backgroundColor: Colors.bodyColor,
+        backgroundColor: isDark ? Colors.bodyDarkColor : Colors.bodyLightColor,
         borderRadius: Layout.borderRadius,
         borderWidth: Layout.borderWidth,
         borderColor: borderColor,
         padding: PixelRatio.getPixelSizeForLayoutSize(5),
         alignItems: "center",
-        // shadowColor: Colors.labelColor,
+        shadowColor: isDark ? Colors.bodyLightColor : Colors.bodyDarkColor,
         shadowOffset: {
             width: 0,
             height: 2
