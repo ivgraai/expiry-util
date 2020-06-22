@@ -9,7 +9,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         justifyContent: "space-around"
     },
     photoView: {
-        flex: 1,
+        flex: 6,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center"
@@ -36,7 +36,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         letterSpacing: Layout.letterSpacing
     },
     dataView: {
-        flex: 2,
+        flex: 5,
         alignItems: "center"
     },
     dataPerishableGoodsTextInputWrapper: {
@@ -47,7 +47,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         textAlign: "center"
     },
     dataExpirationDateWrapper: {
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5),
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(15),
         width: Layout.widthPercentageAsString
     },
     dataExpirationDateView: {
