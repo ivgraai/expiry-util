@@ -2,14 +2,14 @@ import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
-export const styles = StyleSheet.create({
+export const styles = (isDark: boolean) => StyleSheet.create({
     mainView: {
         flex: 1,
         flexDirection: "column",
         justifyContent: "space-around"
     },
     photoView: {
-        flex: 1,
+        flex: 6,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center"
@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
         letterSpacing: Layout.letterSpacing
     },
     dataView: {
-        flex: 2,
+        flex: 5,
         alignItems: "center"
     },
     dataPerishableGoodsTextInputWrapper: {
@@ -47,16 +47,21 @@ export const styles = StyleSheet.create({
         textAlign: "center"
     },
     dataExpirationDateWrapper: {
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5)
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(15),
+        width: Layout.widthPercentageAsString
     },
     dataExpirationDateView: {
         flexDirection: "row",
-        justifyContent: "center",
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5) * -1
+        justifyContent: "center"
     },
-    dataExpirationDateDateTimePicker: {
-        width: Layout.widthPercentageAsString,
-        height: 200
+    dataExpirationDateValue: {
+        flexDirection: "row"
+    },
+    dataExpirationDateValueIcon: {
+        marginRight: PixelRatio.getPixelSizeForLayoutSize(1.5)
+    },
+    dataExpirationDateValueText: {
+        color: isDark ? Colors.labelDarkColor : Colors.labelLightColor
     },
     dataLocationCheckBoxContainer: {
         backgroundColor: "transparent",

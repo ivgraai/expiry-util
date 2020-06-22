@@ -49,7 +49,9 @@ type TYPE = {
     username: string,
     address: string,
     reply: string,
-    approved: string
+    approved: string,
+    pickADate: string,
+    confirm: string
 };
 
 const en = {
@@ -100,7 +102,9 @@ const en = {
         username:                                           'username',
         address:                                            'address',
         reply:                                              'reply',
-        approved:                                           'approved'
+        approved:                                           'approved',
+        pickADate:                                          'pick a date',
+        confirm:                                            'confirm'
 };
 const MESSAGES: any = {
     en: en,
@@ -142,17 +146,19 @@ const MESSAGES: any = {
         loading:                                            'töltés',
         inOrderToShowYourNeedYouHaveToSignIn:               'be kell jelentkeznie, hogy jelezze az igényét',
         lookWhoRequestedThis:                               'valaki igényelte ezt',
-        approve:                                            'jóváhagy',
+        approve:                                            'elfogad',
         goToSignIn:                                         'ugrás a bejelentkezésre',
         goToSignUp:                                         'ugrás a regisztrációra',
         leaveAMessage:                                      'hagyjon egy üzenetet',
         egBreadMilkOrEggs:                                  'pl. kenyér, tej vagy tojás',
-        yourRequestHasNotYetBeenApproved:                   'kérését még nem hagyták jóvá',
-        yourRequestHasAlreadyBeenApproved:                  'kérését már jóváhagyták',
+        yourRequestHasNotYetBeenApproved:                   'kérését még nem fogadták el',
+        yourRequestHasAlreadyBeenApproved:                  'kérését már elfogadták',
         username:                                           'felhasználónév',
         address:                                            'cím',
         reply:                                              'válasz',
-        approved:                                           'jóváhagyva'
+        approved:                                           'elfogadva',
+        pickADate:                                          'válasszon egy dátumot',
+        confirm:                                            'jóváhagy'
     },
     fr: {
         add:                                                'ajouter',
@@ -202,7 +208,9 @@ const MESSAGES: any = {
         username:                                           'nom d\'utilisateur',
         address:                                            'adresse',
         reply:                                              'réponse',
-        approved:                                           'approuvée'
+        approved:                                           'approuvée',
+        pickADate:                                          'choisis une date',
+        confirm:                                            'confirmer'
     },
     es: {
         add:                                                'agregar',
@@ -252,7 +260,9 @@ const MESSAGES: any = {
         username:                                           'nombre de usuario',
         address:                                            'dirección',
         reply:                                              'respuesta',
-        approved:                                           'aprobada'
+        approved:                                           'aprobada',
+        pickADate:                                          'selecciona una fecha',
+        confirm:                                            'confirmar'
     },
     default: en
 };
