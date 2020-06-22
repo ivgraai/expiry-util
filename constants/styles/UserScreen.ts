@@ -50,11 +50,11 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     inputsAndValidationResultView: {
-        flex: 5,
+        flex: 10,
         justifyContent: "space-between"
     },
     buttonsView: {
-        flex: 2,
+        flex: 5,
         justifyContent: "center"
     },
     inputsView: {

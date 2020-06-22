@@ -1,4 +1,4 @@
-import { StyleSheet, PixelRatio } from "react-native";
+import { StyleSheet, PixelRatio, Platform } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
@@ -44,7 +44,8 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         height: "10%"
     },
     dataPerishableGoodsTextInput: {
-        textAlign: "center"
+        textAlign: "center",
+        paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(5) : 0
     },
     dataExpirationDateWrapper: {
         marginTop: PixelRatio.getPixelSizeForLayoutSize(15),
