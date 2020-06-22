@@ -4,9 +4,10 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Alert
+  Alert,
+  Button
 } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { CheckBox } from "react-native-elements";
 import { Notifications } from "expo";
 import * as ImagePicker from "expo-image-picker";
@@ -15,7 +16,7 @@ import { i18n } from "../constants/Dictionary";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
-import { StackActions } from "react-navigation";
+import { StackActions, ThemeContext } from "react-navigation";
 import { styles } from "../constants/styles/MainScreen";
 import Colors from "../constants/Colors";
 import StyledTextInput from "../components/StyledTextInput";
@@ -40,12 +41,14 @@ interface IState {
   expiry: Date;
   photo: string | undefined;
   label: string;
+  showDatePicker: boolean;
 }
 
 class MainScreen extends React.Component<IProps, IState> {
   static navigationOptions = {
     title: i18n.new
   };
+  static contextType = ThemeContext;
   dayOffset = 24 * 60 * 60 * 1000;
   multiplier = [-3, 2, 1];
   _unsubscribe: any;
@@ -55,7 +58,8 @@ class MainScreen extends React.Component<IProps, IState> {
     this.state = {
       expiry: new Date(),
       photo: undefined,
-      label: i18n.setLocation.toUpperCase()
+      label: i18n.setLocation.toUpperCase(),
+      showDatePicker: false
     };
   }
 
@@ -176,6 +180,7 @@ class MainScreen extends React.Component<IProps, IState> {
   }
 
   render() {
+    const theme = this.context;
     let { photo } = this.state;
     return (
       <View
@@ -214,19 +219,15 @@ class MainScreen extends React.Component<IProps, IState> {
           </View>
           <StyledComponent style={styles.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>
             <View style={styles.dataExpirationDateView}>
-              <DateTimePicker
-                style={styles.dataExpirationDateDateTimePicker}
-                testID="dateTimePicker"
-                timeZoneOffsetInMinutes={0}
-                value={this.state.expiry}
-                mode={"date"}
-                is24Hour={true}
-                display="default"
-                onChange={(_, date) => {
-                  if (date) {
-                    this.setState({ expiry: date });
-                  }
-                }}
+              <Button title="Pick a date" onPress={() => this.setState({ showDatePicker: true })} />
+              <DateTimePickerModal
+                isVisible={this.state.showDatePicker}
+                mode="date"
+                onConfirm={date => this.setState({ expiry: date, showDatePicker: false })}
+                onCancel={() => this.setState({ showDatePicker: false })}
+                isDarkModeEnabled={'dark' === theme}
+                date={this.state.expiry}
+                // is24Hour -> locale="en_GB"
               />
             </View>
           </StyledComponent>
