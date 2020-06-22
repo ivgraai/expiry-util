@@ -3,7 +3,7 @@ import Layout from "../Layout";
 import Colors from "../Colors";
 
 const backgroundColor = "transparent";
-const fontSize = PixelRatio.getFontScale() * Layout.biggerFontSize;
+const fontSize = PixelRatio.getFontScale() * Layout.largerFontSize;
 const buttonHeight = PixelRatio.getPixelSizeForLayoutSize(23.5);
 const buttonFontWeight = "normal";
 
@@ -38,7 +38,7 @@ export const styles: any = (isDark: boolean) => StyleSheet.create({
         height: buttonHeight,
         marginBottom: 0,
         justifyContent: "center",
-        backgroundColor: isDark ? Colors.bodyDarkColor : Colors.bodyLightColor
+        backgroundColor: isDark ? "#0E0E0E" : "white"
     },
     cancelText: {
         padding: PixelRatio.getPixelSizeForLayoutSize(5),

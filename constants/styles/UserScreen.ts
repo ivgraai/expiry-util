@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         letterSpacing: Layout.letterSpacing
     },
     messageText: {
-        fontSize: PixelRatio.getFontScale() * Layout.biggerFontSize,
+        fontSize: PixelRatio.getFontScale() * Layout.largerFontSize,
         color: Colors.errorText,
         textAlign: "center",
         flex: 9

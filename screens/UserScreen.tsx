@@ -63,7 +63,7 @@ export default class UserScreen extends React.Component<IProps, IState> {
         HttpClient.register(this.name, this.email, this.password)
             .then(response => {
                 if (response.ok) {
-                    Alert.alert(i18n.youHaveSuccessfullysignedUp.toUpperCase(), '', [{
+                    Alert.alert(i18n.youHaveSuccessfullysignedUp.capitalize() + '!', '', [{
                         text: i18n.signIn.toUpperCase(), onPress: () => this.setState({switched: false})
                     }]);
                 } else {

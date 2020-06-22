@@ -14,7 +14,7 @@ export const dateTimePickerHeader: HeaderComponent = ({ label }) => {
 const dateTimePickerButton = (buttonStyle: string, textStyle: string) => (({ isDarkModeEnabled, onPress, label }: { isDarkModeEnabled: boolean, onPress: () => void, label: string }) => (
     <TouchableHighlight
         style={styles(isDarkModeEnabled)[buttonStyle]}
-        underlayColor={isDarkModeEnabled ? Colors.bodyDarkColor : Colors.bodyLightColor}
+        underlayColor={isDarkModeEnabled ? "#0E0E0E" : "white"}
         onPress={onPress}
     >
         <Text style={styles(isDarkModeEnabled)[textStyle]}>{label}</Text>

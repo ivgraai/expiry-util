@@ -30,7 +30,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
     warnText: {
         textAlign: "center",
         color: Colors.tintColor,
-        fontSize: PixelRatio.getFontScale() * Layout.biggerFontSize,
+        fontSize: PixelRatio.getFontScale() * Layout.largerFontSize,
         marginTop: margin * 3.5
     },
     dataText: {
