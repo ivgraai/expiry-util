@@ -26,15 +26,15 @@ export const styles = StyleSheet.create({
     orText: {
         textAlign: "center",
         color: Colors.tintColor,
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(5),
-        marginBottom: PixelRatio.getPixelSizeForLayoutSize(5),
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(2.5),
+        marginBottom: PixelRatio.getPixelSizeForLayoutSize(2.5),
         letterSpacing: Layout.letterSpacing
     },
     messageText: {
-        fontSize: PixelRatio.getFontScale() * 20,
+        fontSize: PixelRatio.getFontScale() * Layout.biggerFontSize,
         color: Colors.errorText,
         textAlign: "center",
-        flex: 1
+        flex: 9
     },
     signUpInText: {
         fontStyle: "italic"
@@ -50,11 +50,11 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     inputsAndValidationResultView: {
-        flex: 10,
+        flex: 40,
         justifyContent: "space-between"
     },
     buttonsView: {
-        flex: 5,
+        flex: 18,
         justifyContent: "center"
     },
     inputsView: {

@@ -11,5 +11,6 @@ export default {
     letterSpacing: 3,
     widthPercentageAsString: width + '%',
     widthPercentageAsNumber: width,
-    margin: PixelRatio.getPixelSizeForLayoutSize(2.5)
+    margin: PixelRatio.getPixelSizeForLayoutSize(2.5),
+    biggerFontSize: 18
 };

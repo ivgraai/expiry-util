@@ -3,7 +3,7 @@ import Layout from "../Layout";
 import Colors from "../Colors";
 
 const backgroundColor = "transparent";
-const fontSize = PixelRatio.getFontScale() * 20;
+const fontSize = PixelRatio.getFontScale() * Layout.biggerFontSize;
 const buttonHeight = PixelRatio.getPixelSizeForLayoutSize(23.5);
 const buttonFontWeight = "normal";
 

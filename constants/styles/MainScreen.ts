@@ -45,7 +45,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
     },
     dataPerishableGoodsTextInput: {
         textAlign: "center",
-        paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(5) : 0
+        paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0
     },
     dataExpirationDateWrapper: {
         marginTop: PixelRatio.getPixelSizeForLayoutSize(15),
