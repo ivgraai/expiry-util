@@ -28,25 +28,25 @@ import StyledComponent from "../components/StyledComponent";
 import { connect } from "react-redux";
 import * as conn from "../constants/redux/Connecting";
 
-interface IProps {
+interface IComponentProps {
   navigation: any;
   isChosen: boolean;
+  imageUri: string | undefined;
   goods: string;
   available: boolean;
   location: {lat: number, lng: number};
-  chooseImage: () => void;
+  chooseImage: (uri: string) => void;
   setStateGoods: (name: string) => void;
   checkAvailable: () => void;
   pickLocation: (location: {lat: number, lng: number}) => void;
 }
-interface IState {
+interface IComponentState {
   expiry: Date;
-  photo: string | undefined;
   label: string;
   showDatePicker: boolean;
 }
 
-class MainScreen extends React.Component<IProps, IState> {
+class MainScreen extends React.Component<IComponentProps, IComponentState> {
   static navigationOptions = {
     title: i18n.new
   };
@@ -55,11 +55,10 @@ class MainScreen extends React.Component<IProps, IState> {
   multiplier = [-3, 2, 1];
   _unsubscribe: any;
 
-  constructor(props: IProps) {
+  constructor(props: IComponentProps) {
     super(props);
     this.state = {
       expiry: new Date(),
-      photo: undefined,
       label: i18n.setLocation.toUpperCase(),
       showDatePicker: false
     };
@@ -103,11 +102,12 @@ class MainScreen extends React.Component<IProps, IState> {
     );
   }
 
-  buttonAdd(object: IState) {
+  buttonAdd(object: IComponentState) {
     var now: Date = new Date();
     let temp = object.expiry;
     temp.setHours(0, 0, 0, 0);
     var objectGoods = this.props.goods;
+    var objectPhoto = this.props.imageUri;
 
     let promises: Array<Promise<String | Number>> = [];
     for (var i = 0; i < this.multiplier.length; i++) {
@@ -143,7 +143,7 @@ class MainScreen extends React.Component<IProps, IState> {
             !available ? null : this.props.location.lat,
             !available ? null : this.props.location.lng,
             available,
-            Utility.convertImageToDto(object.photo!)
+            Utility.convertImageToDto(objectPhoto!)
           );
         }
       });
@@ -160,8 +160,7 @@ class MainScreen extends React.Component<IProps, IState> {
     });
 
     if (!image.cancelled) {
-      this.setState({ photo: image.uri });
-      this.props.chooseImage();
+      this.props.chooseImage(image.uri);
     }
   };
 
@@ -184,7 +183,7 @@ class MainScreen extends React.Component<IProps, IState> {
   render() {
     const isDark = ('dark' === this.context);
     const withStyle = styles(isDark);
-    let { photo } = this.state;
+    let photo = this.props.imageUri;
     return (
       <View
         style={withStyle.mainView}
