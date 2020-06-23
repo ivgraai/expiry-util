@@ -41,6 +41,7 @@ interface IComponentProps {
   setExpiry: (expiry: Date) => void;
   checkAvailable: () => void;
   pickLocation: (location: {lat: number, lng: number}) => void;
+  initializeState: () => void;
 }
 interface IComponentState {
   label: string;
@@ -88,15 +89,19 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
   }
 
   showDialog() {
+    let onPress: (value?: string) => void = () => {
+      this.props.initializeState();
+    };
     Alert.alert(
       i18n.successfullyAdded.capitalize(),
       i18n.letsContinueWithOtherPerishableGood.capitalize() + "!",
       [
         {
           text: i18n.cancel.capitalize(),
-          style: "cancel"
+          style: "cancel",
+          onPress
         },
-        { text: i18n.okay, onPress: () => {} }
+        { text: i18n.okay, onPress }
       ],
       { cancelable: false }
     );

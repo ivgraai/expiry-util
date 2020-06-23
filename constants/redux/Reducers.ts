@@ -1,4 +1,4 @@
-import { CHOOSE_IMAGE, EDIT_GOOD, SET_EXPIRY, CHECK_AVAILABLE, PICK_LOCATION } from './Types';
+import { CHOOSE_IMAGE, EDIT_GOOD, SET_EXPIRY, CHECK_AVAILABLE, PICK_LOCATION, RESET_ALL } from './Types';
 
 // In Redux, the state of the whole application is represented by one JavaScript object.
 
@@ -15,7 +15,7 @@ export type IState = {
     location: ILocation
 };
 
-const initialState: IState = {
+const defaultState: IState = {
     isChosen: false,
     imageUri: undefined,
     good: undefined,
@@ -26,6 +26,7 @@ const initialState: IState = {
         lng: null
     }
 };
+const initialState = defaultState;
 
 function applyChooseImage(state: IState, uri: string) {
     return {
@@ -63,6 +64,10 @@ function applyPickLocation(state: IState, location: ILocation) {
     };
 }
 
+function applyResetAll(state: IState) {
+    return defaultState;
+}
+
 // The receiver of the action is known as a reducer. Whenever an action is triggered, the state of the application changes. The handling of the application’s state is done by the reducers.
 // A reducer is a pure function that calculates the next state based on the initial or previous state. It always produces the same output if the state is unchanged.
 
@@ -78,6 +83,8 @@ function reducer(state = initialState, action: any) {
             return applyCheckAvailable(state);
         case PICK_LOCATION:
             return applyPickLocation(state, action.location);
+        case RESET_ALL:
+            return applyResetAll(state);
         default:
             return state;
     }

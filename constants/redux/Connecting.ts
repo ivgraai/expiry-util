@@ -24,6 +24,7 @@ export function mapDispatchToProps(dispatch: any) {
         setStateGoods: bindActionCreators(actions.editGood, dispatch),
         setExpiry: bindActionCreators(actions.setExpiry, dispatch),
         checkAvailable: bindActionCreators(actions.checkAvailable, dispatch),
-        pickLocation: bindActionCreators(actions.pickLocation, dispatch)
+        pickLocation: bindActionCreators(actions.pickLocation, dispatch),
+        initializeState: bindActionCreators(actions.resetAll, dispatch)
     };
 }

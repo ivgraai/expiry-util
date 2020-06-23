@@ -1,4 +1,4 @@
-import { CHOOSE_IMAGE, EDIT_GOOD, SET_EXPIRY, CHECK_AVAILABLE, PICK_LOCATION } from './Types';
+import { CHOOSE_IMAGE, EDIT_GOOD, SET_EXPIRY, CHECK_AVAILABLE, PICK_LOCATION, RESET_ALL } from './Types';
 
 // Think of the state as read-only, since we cannot make changes to this object (which is represented in the form of a tree) directly. We need actions to do so.
 // Actions are like events in Redux. The nature of each event mentioned is mutable. An action is a JavaScript object.
@@ -37,6 +37,12 @@ function pickLocation(location: any) {
     };
 }
 
+function resetAll() {
+    return {
+        type: RESET_ALL
+    };
+}
+
 // Action Creators are functions that create actions.
 
 const actionCreators = {
@@ -44,7 +50,8 @@ const actionCreators = {
     editGood,
     setExpiry,
     checkAvailable,
-    pickLocation
+    pickLocation,
+    resetAll
 };
 
 export { actionCreators };
