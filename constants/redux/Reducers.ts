@@ -1,4 +1,4 @@
-import { CHOOSE_IMAGE, EDIT_GOOD, CHECK_AVAILABLE, PICK_LOCATION } from './Types';
+import { CHOOSE_IMAGE, EDIT_GOOD, SET_EXPIRY, CHECK_AVAILABLE, PICK_LOCATION } from './Types';
 
 // In Redux, the state of the whole application is represented by one JavaScript object.
 
@@ -10,6 +10,7 @@ export type IState = {
     isChosen: boolean,
     imageUri: string | undefined,
     good: string | undefined,
+    expiry: Date,
     available: boolean,
     location: ILocation
 };
@@ -18,6 +19,7 @@ const initialState: IState = {
     isChosen: false,
     imageUri: undefined,
     good: undefined,
+    expiry: new Date(),
     available: false,
     location: {
         lat: null,
@@ -37,6 +39,13 @@ function applyEditGood(state: IState, good: string) {
     return {
         ...state,
         good
+    };
+}
+
+function applySetExpiry(state: IState, expiry: Date) {
+    return {
+        ...state,
+        expiry
     };
 }
 
@@ -63,6 +72,8 @@ function reducer(state = initialState, action: any) {
             return applyChooseImage(state, action.uri);
         case EDIT_GOOD:
             return applyEditGood(state, action.parameter);
+        case SET_EXPIRY:
+            return applySetExpiry(state, action.expiry);
         case CHECK_AVAILABLE:
             return applyCheckAvailable(state);
         case PICK_LOCATION:

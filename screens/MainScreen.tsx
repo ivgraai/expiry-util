@@ -33,15 +33,16 @@ interface IComponentProps {
   isChosen: boolean;
   imageUri: string | undefined;
   goods: string;
+  expiry: Date;
   available: boolean;
   location: {lat: number, lng: number};
   chooseImage: (uri: string) => void;
   setStateGoods: (name: string) => void;
+  setExpiry: (expiry: Date) => void;
   checkAvailable: () => void;
   pickLocation: (location: {lat: number, lng: number}) => void;
 }
 interface IComponentState {
-  expiry: Date;
   label: string;
   showDatePicker: boolean;
 }
@@ -58,7 +59,6 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
   constructor(props: IComponentProps) {
     super(props);
     this.state = {
-      expiry: new Date(),
       label: i18n.setLocation.toUpperCase(),
       showDatePicker: false
     };
@@ -104,7 +104,8 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
 
   buttonAdd(object: IComponentState) {
     var now: Date = new Date();
-    let temp = object.expiry;
+    var objectExpiry = this.props.expiry;
+    let temp = objectExpiry;
     temp.setHours(0, 0, 0, 0);
     var objectGoods = this.props.goods;
     var objectPhoto = this.props.imageUri;
@@ -118,7 +119,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
       promises.push(Notifications.scheduleLocalNotificationAsync(
         {
           title: objectGoods.toUpperCase(),
-          body: i18n.bestBefore.capitalize() + ": " + object.expiry.toLocaleDateString()
+          body: i18n.bestBefore.capitalize() + ": " + objectExpiry.toLocaleDateString()
         },
         { time: temp.getTime() }
       ));
@@ -228,16 +229,16 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
                   color={isDark ? Colors.labelDarkColor : Colors.labelLightColor}
                 />
                 <Text style={withStyle.dataExpirationDateValueText} onPress={() => this.setState({ showDatePicker: true })}>
-                  {this.state.expiry.toLocaleDateString()}
+                  {this.props.expiry.toLocaleDateString()}
                 </Text>
               </View>
               <DateTimePickerModal
                 isVisible={this.state.showDatePicker}
                 mode="date"
-                onConfirm={date => this.setState({ expiry: date, showDatePicker: false })}
+                onConfirm={date => { this.props.setExpiry(date); this.setState({ showDatePicker: false }); }}
                 onCancel={() => this.setState({ showDatePicker: false })}
                 isDarkModeEnabled={isDark}
-                date={this.state.expiry}
+                date={this.props.expiry}
                 // is24Hour -> locale="en_GB"
                 headerTextIOS={i18n.pickADate.capitalize()}
                 confirmTextIOS={i18n.confirm.capitalize()}

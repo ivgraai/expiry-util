@@ -1,4 +1,4 @@
-import { CHOOSE_IMAGE, EDIT_GOOD, CHECK_AVAILABLE, PICK_LOCATION } from './Types';
+import { CHOOSE_IMAGE, EDIT_GOOD, SET_EXPIRY, CHECK_AVAILABLE, PICK_LOCATION } from './Types';
 
 // Think of the state as read-only, since we cannot make changes to this object (which is represented in the form of a tree) directly. We need actions to do so.
 // Actions are like events in Redux. The nature of each event mentioned is mutable. An action is a JavaScript object.
@@ -15,6 +15,13 @@ function editGood(name: string) {
         type: EDIT_GOOD,
         parameter: name
     };
+}
+
+function setExpiry(expiry: Date) {
+    return {
+        type: SET_EXPIRY,
+        expiry
+    }
 }
 
 function checkAvailable() {
@@ -35,6 +42,7 @@ function pickLocation(location: any) {
 const actionCreators = {
     chooseImage,
     editGood,
+    setExpiry,
     checkAvailable,
     pickLocation
 };

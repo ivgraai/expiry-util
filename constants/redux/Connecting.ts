@@ -7,11 +7,12 @@ import { IState } from './Reducers';
 
 // mapStateToProps is an object that lives in the store whose keys are passed down to the component as props.
 export function mapStateToProps(state: IState) {
-    const { isChosen, imageUri, good, available, location } = state;
+    const { isChosen, imageUri, good, expiry, available, location } = state;
     return {
         isChosen,
         imageUri,
         goods: good,
+        expiry,
         available,
         location
     };
@@ -21,6 +22,7 @@ export function mapDispatchToProps(dispatch: any) {
     return {
         chooseImage: bindActionCreators(actions.chooseImage, dispatch),
         setStateGoods: bindActionCreators(actions.editGood, dispatch),
+        setExpiry: bindActionCreators(actions.setExpiry, dispatch),
         checkAvailable: bindActionCreators(actions.checkAvailable, dispatch),
         pickLocation: bindActionCreators(actions.pickLocation, dispatch)
     };
