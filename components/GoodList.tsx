@@ -11,9 +11,10 @@ class GoodList extends React.PureComponent {
         const theme = this.context;
         const withStyle = styles('dark' === theme);
         let {innerRef, dataSource, height, customNodesForTheItem} = this.props;
+        let now = new Date().getTime();
         return (
           <FlatList ref={innerRef}
-            data={dataSource}
+            data={dataSource.filter((item: {expiry: Date}) => (now <= item.expiry.getTime()))}
             keyExtractor={item => item.id.toString()}
             renderItem={({item}) => (
               <View style={withStyle.parent}>
