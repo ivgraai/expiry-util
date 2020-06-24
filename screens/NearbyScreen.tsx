@@ -31,6 +31,8 @@ export default class NearbyScreen extends React.Component {
 
     onRequestClose(message: string): void {
         HttpClient.requestTheGood(this.tuple.token, this.tuple.goodId, message).then(_emptyResponse => {
+            let object: any = this.state.ds.find((item: {id: number}) => (this.tuple.goodId == item.id));
+            object!.isRequestedByMe = true;
             this.tuple = this.DEFAULT_TUPLE_VALUE;
             this.setState({dialogVisible: false});
         });
