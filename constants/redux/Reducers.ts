@@ -1,4 +1,4 @@
-import { CHOOSE_IMAGE, EDIT_GOOD, SET_EXPIRY, CHECK_AVAILABLE, PICK_LOCATION, RESET_ALL } from './Types';
+import { CHOOSE_IMAGE, CANCEL_CHOSEN_IMAGE, EDIT_GOOD, SET_EXPIRY, CHECK_AVAILABLE, PICK_LOCATION, RESET_ALL } from './Types';
 
 // In Redux, the state of the whole application is represented by one JavaScript object.
 
@@ -34,6 +34,13 @@ function applyChooseImage(state: IState, uri: string) {
         isChosen: true,
         imageUri: uri
     };
+}
+
+function applyCancelChosenImage(state: IState) {
+    return {
+        ...state,
+        isChosen: false
+    }
 }
 
 function applyEditGood(state: IState, good: string) {
@@ -75,6 +82,8 @@ function reducer(state = initialState, action: any) {
     switch (action.type) {
         case CHOOSE_IMAGE:
             return applyChooseImage(state, action.uri);
+        case CANCEL_CHOSEN_IMAGE:
+            return applyCancelChosenImage(state);
         case EDIT_GOOD:
             return applyEditGood(state, action.parameter);
         case SET_EXPIRY:

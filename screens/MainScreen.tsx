@@ -37,6 +37,7 @@ interface IComponentProps {
   available: boolean;
   location: {lat: number, lng: number};
   chooseImage: (uri: string) => void;
+  cancelImage: () => void;
   setStateGoods: (name: string) => void;
   setExpiry: (expiry: Date) => void;
   checkAvailable: () => void;
@@ -167,6 +168,8 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
 
     if (!image.cancelled) {
       this.props.chooseImage(image.uri);
+    } else {
+      this.props.cancelImage();
     }
   };
 
@@ -223,6 +226,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
               header={i18n.perishableGoods.toUpperCase()}
               placeholder={i18n.egBreadMilkOrEggs.capitalize()}
               placeholderTextColor={Colors.backgroundColor}
+              value={this.props.goods}
             />
           </View>
           <StyledComponent style={withStyle.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>

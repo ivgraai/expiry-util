@@ -21,6 +21,7 @@ export function mapStateToProps(state: IState) {
 export function mapDispatchToProps(dispatch: any) {
     return {
         chooseImage: bindActionCreators(actions.chooseImage, dispatch),
+        cancelImage: bindActionCreators(actions.cancelChosenImage, dispatch),
         setStateGoods: bindActionCreators(actions.editGood, dispatch),
         setExpiry: bindActionCreators(actions.setExpiry, dispatch),
         checkAvailable: bindActionCreators(actions.checkAvailable, dispatch),
