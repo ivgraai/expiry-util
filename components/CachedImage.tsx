@@ -12,12 +12,11 @@ export default class CachedImage extends Component {
     const filesystemURI = await this.getImageFilesystemKey(this.props.source.uri);
     await this.loadImage(filesystemURI, this.props.source.uri);
   }
-  async componentDidUpdate() {
-    const filesystemURI = await this.getImageFilesystemKey(this.props.source.uri);
-    if (this.props.source.uri === this.state.imgURI ||
-      filesystemURI === this.state.imgURI) {
-      return null;
+  async componentDidUpdate(prevProps) {
+    if (this.props.source.uri === prevProps.source.uri) {
+      return;
     }
+    const filesystemURI = await this.getImageFilesystemKey(this.props.source.uri);
     await this.loadImage(filesystemURI, this.props.source.uri);
   }
   async getImageFilesystemKey(remoteURI) {
