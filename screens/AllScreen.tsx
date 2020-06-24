@@ -1,8 +1,7 @@
 import React from "react";
 import {
-  View, Button
+  Button, Text
 } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import GoodList from "../components/GoodList";
 import { i18n } from "../constants/Dictionary";
 import HttpClient from "../services/HttpClient";
@@ -21,8 +20,25 @@ export default class AllScreen extends React.Component {
   constructor() {
     super();
     this.state = {
-      dataSource: [ ]
+      dataSource: [ ],
+      loading: true
     };
+  }
+
+  componentDidMount() {
+    UserManager.getToken().then(token => {
+      HttpClient.listAllGood(token)
+        .then(result => {
+          this.setState({
+            dataSource:
+              result.map(a => {
+                  return { ...a, image: Utility.remoteURI('', a.id, SizeRequest.small) };
+                })
+                .sort((a, b) => a.expiry.getTime() - b.expiry.getTime()),
+            loading: false
+          });
+        });
+    });
   }
 
   renderIsRequested(id: number, isRequestedByOther: boolean) {
@@ -34,29 +50,9 @@ export default class AllScreen extends React.Component {
 
   render() {
     var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
-    return (
-      <View style={styles.view}>
-        <NavigationEvents
-          onWillFocus={payload => {
-
-            UserManager.getToken().then(token => {
-              HttpClient.listAllGood(token)
-                .then(result => {
-                  this.setState({
-                    dataSource:
-                      result.map(a => {
-                          return { ...a, image: Utility.remoteURI('', a.id, SizeRequest.small) };
-                        })
-                        .sort((a, b) => a.expiry.getTime() - b.expiry.getTime())
-                  });
-                });
-            });
-            this.refs._scrollView.scrollToOffset({ offset: 0 });
-
-          }}
-        />
-          <GoodList ref="_scrollView" dataSource={this.state.dataSource} customNodesForTheItem={temporary} />
-      </View>
-    );
+    return (this.state.loading ?
+        <Text style={styles.text}>{i18n.loading.capitalize()}...</Text> :
+        <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />
+      );
   }
 }

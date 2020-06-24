@@ -7,7 +7,7 @@ import * as Location from "expo-location";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
-import { StackActions, ThemeContext } from "react-navigation";
+import { StackActions, ThemeContext, NavigationEvents } from "react-navigation";
 import Dialog from "../components/Dialog";
 import Colors from "../constants/Colors";
 import { styles } from "../constants/styles/NearbyScreen";
@@ -28,20 +28,6 @@ export default class NearbyScreen extends React.Component {
         dialogVisible: false
     };
     private tuple = this.DEFAULT_TUPLE_VALUE;
-
-    async componentDidMount(): Promise<void> {
-        let location: Location.LocationData = await Location.getCurrentPositionAsync({});
-        let token: string | null = await UserManager.getToken();
-        HttpClient.listNearbyGood(token, location.coords.latitude, location.coords.longitude)
-            .then(result => {
-                this.setState({loading: false,
-                    ds: result.map(item => ({
-                        ...item,
-                        image: Utility.remoteURI('', item.id, Dtos.SizeRequest.small)
-                    }))
-                    .sort((item1, item2) => item1.distance - item2.distance)});
-            });
-    }
 
     onRequestClose(message: string): void {
         HttpClient.requestTheGood(this.tuple.token, this.tuple.goodId, message).then(_emptyResponse => {
@@ -83,10 +69,31 @@ export default class NearbyScreen extends React.Component {
         const theme = this.context;
         const withStyle = styles('dark' === theme);
         var temporary: React.ReactNode = (item: any) => this.renderDistanceAndRequest(item, withStyle);
-        return <>{
-            this.state.loading ?
+        return <View style={withStyle.listView}>
+            <NavigationEvents
+                onWillFocus={async payload => {
+
+                let location: Location.LocationData = await Location.getCurrentPositionAsync({});
+                let token: string | null = await UserManager.getToken();
+                HttpClient.listNearbyGood(token, location.coords.latitude, location.coords.longitude)
+                    .then(result => {
+                        this.setState({loading: false,
+                            ds: result.map(item => ({
+                                ...item,
+                                image: Utility.remoteURI('', item.id, Dtos.SizeRequest.small)
+                            }))
+                            .sort((item1, item2) => item1.distance - item2.distance)});
+                    });
+                if (undefined != this.refs._scrollView) {
+                    this.refs._scrollView.scrollToOffset({ offset: 0 });
+                }
+
+                }}
+            />
+            {this.state.loading ?
                 <Text style={withStyle.loadingText}>{i18n.loading.capitalize()}...</Text> :
-                <GoodList dataSource={this.state.ds} customNodesForTheItem={temporary}></GoodList>
-        }</>;
+                <GoodList ref="_scrollView" dataSource={this.state.ds} customNodesForTheItem={temporary}></GoodList>
+            }
+        </View>;
     }
 }
