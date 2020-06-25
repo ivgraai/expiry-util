@@ -13,13 +13,15 @@ interface IProps {
 
 class Dialog extends React.PureComponent<IProps> {
     static contextType = ThemeContext;
-    private message: string | undefined = undefined;
+    private message: string | undefined;
 
     modalOnClose() {
         if (!this.message) {
             return;
         }
-        this.props.onClose(this.message);
+        const temp = this.message;
+        this.message = undefined;
+        this.props.onClose(temp);
     }
 
     // static getDerivedStateFromProps(props, state) { empty method }
