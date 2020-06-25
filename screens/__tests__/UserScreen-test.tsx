@@ -1,5 +1,6 @@
 import React from "react";
-import { render, fireEvent, waitFor } from "react-native-testing-library";
+import { fireEvent, waitFor } from "react-native-testing-library";
+import { renderWithRedux } from "../../services/TestHelper";
 import UserScreen from "../UserScreen";
 import HttpClient from "../../services/HttpClient";
 import UserManager from "../../services/UserManager";
@@ -28,7 +29,7 @@ it("signIn", async () => {
     spy.mockReturnValue(new Promise(resolve =>
         resolve("14aad09f-08f6-45cc-9109-b417856d2ff5a")
     ));
-    const { getByTestId } = render(<UserScreen {...props} />);
+    const { getByTestId } = renderWithRedux(<UserScreen {...props} />, {initialState: {}});
     fireEvent.changeText(getByTestId("signInUsername"), "username");
     fireEvent.changeText(getByTestId("signInPassword"), "password");
     fireEvent.press(getByTestId("signInButton"));

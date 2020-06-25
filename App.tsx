@@ -21,7 +21,7 @@ import reducer from './constants/redux/Reducers';
 // A store is an object that brings actions and reducers together. It provides and holds state at the application level instead of individual components.
 const store = createStore(reducer);
 
-export default function App(props) {
+export default function App(props: any) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   const colorScheme = useColorScheme();
 
@@ -91,7 +91,7 @@ function handleLoadingError(error: Error) {
   console.warn(error);
 }
 
-function handleFinishLoading(setLoadingComplete) {
+function handleFinishLoading(setLoadingComplete: (loadingComplete: boolean) => void) {
   setLoadingComplete(true);
 }
 

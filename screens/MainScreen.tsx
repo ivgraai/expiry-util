@@ -26,7 +26,7 @@ import StyledButton from "../components/StyledButton";
 import StyledComponent from "../components/StyledComponent";
 
 import { connect } from "react-redux";
-import * as conn from "../constants/redux/Connecting";
+import * as conn from "../constants/redux/Connection_Main";
 
 interface IComponentProps {
   navigation: any;

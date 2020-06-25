@@ -10,6 +10,9 @@ import { styles } from '../constants/styles/UserScreen';
 import validate from 'validate.js';
 import constraints from '../constants/validation/UserConstraint';
 
+import { connect } from "react-redux";
+import * as conn from "../constants/redux/Connection_User";
+
 interface IProps {
     navigation: any;
 }
@@ -27,7 +30,7 @@ function Errors(props: any) {
       );
 }
 
-export default class UserScreen extends React.Component<IProps, IState> {
+class UserScreen extends React.Component<IProps, IState> {
     private name!: string;
     private email!: string;
     private password!: string;
@@ -131,3 +134,5 @@ export default class UserScreen extends React.Component<IProps, IState> {
         );
     }
 }
+
+export default connect(conn.mapStateToProps, conn.mapDispatchToProps)(UserScreen);

@@ -72,7 +72,7 @@ export default class NearbyScreen extends React.Component {
         var temporary: React.ReactNode = (item: any) => this.renderDistanceAndRequest(item, withStyle);
         return <View style={withStyle.listView}>
             <NavigationEvents
-                onWillFocus={async payload => {
+                onWillFocus={async _payload => {
 
                 let position = await Utility.currentLocation();
                 let token: string | null = await UserManager.getToken();
