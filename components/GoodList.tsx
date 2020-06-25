@@ -10,7 +10,7 @@ class GoodList extends React.PureComponent {
     render() {
         const theme = this.context;
         const withStyle = styles('dark' === theme);
-        let {innerRef, dataSource, height, customNodesForTheItem} = this.props;
+        let {innerRef, dataSource, customNodesForTheItem} = this.props;
         let now = new Date().getTime();
         return (
           <FlatList ref={innerRef}

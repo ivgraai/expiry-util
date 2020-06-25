@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, TouchableHighlight } from "react-native";
 import { HeaderComponent, ConfirmButtonComponent, CancelButtonComponent } from "react-native-modal-datetime-picker";
 import { styles } from "../constants/styles/DateTimePickerModal";
-import Colors from "../constants/Colors";
 
 export const dateTimePickerHeader: HeaderComponent = ({ label }) => {
     let isDarkModeEnabled = false;

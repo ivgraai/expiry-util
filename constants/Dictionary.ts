@@ -121,7 +121,7 @@ const MESSAGES: any = {
         chooseAPhoto:                                       'válasszon egy fényképet',
         expirationDate:                                     'lejárat',
         pickedLocation:                                     'kiválasztott helyzet',
-        all:                                                'Enyéim',
+        all:                                                'Saját',
         signUp:                                             'regisztráció',
         name:                                               'név',
         emailAddress:                                       'email cím',

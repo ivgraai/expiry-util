@@ -39,7 +39,8 @@ function applyChooseImage(state: IState, uri: string) {
 function applyCancelChosenImage(state: IState) {
     return {
         ...state,
-        isChosen: false
+        isChosen: false,
+        imageUri: undefined
     }
 }
 
@@ -71,7 +72,7 @@ function applyPickLocation(state: IState, location: ILocation) {
     };
 }
 
-function applyResetAll(state: IState) {
+function applyResetAll(_: IState) {
     return defaultState;
 }
 
