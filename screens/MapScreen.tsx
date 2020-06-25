@@ -1,33 +1,35 @@
 import React from "react";
 import { View } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker, MapEvent } from "react-native-maps";
+import { HeaderBackButton, NavigationScreenProp, NavigationRoute } from "react-navigation";
+import Utility from "../common/Utility";
 import { i18n } from "../constants/Dictionary";
-import { HeaderBackButton } from "react-navigation";
 import Colors from "../constants/Colors";
 import { styles } from "../constants/styles/MapScreen";
 
 class MapScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
-        headerLeft: <HeaderBackButton backTitleVisible={true} onPress={()=>this.goBack(navigation)} title={i18n.okay} tintColor={Colors.header} />
+        headerLeft: <HeaderBackButton backTitleVisible={true} onPress={()=>MapScreen.goBack(navigation)} title={i18n.okay} tintColor={Colors.header} />
       });
 
-    constructor(props) {
+    constructor(props: {}) {
         super(props);
-        this.state = {
-            region: MapScreen.location
-        };
+        this.state = { region: MapScreen.location };
+        if (!MapScreen.location) {
+            Utility.currentLocation().then(location => {
+                this.setState({ region: location });
+                MapScreen.location = location;
+            });
+        }
     }
 
-    static goBack(nav) {
+    static goBack(nav: NavigationScreenProp<NavigationRoute>) {
         nav.navigate("Main", {"latitude": MapScreen.location.latitude, "longitude": MapScreen.location.longitude});
     }
 
-    static location = {
-        latitude: 47.49801,
-        longitude: 19.03991
-    };
+    static location: any = undefined;
 
-    onDragEnd(e) {
+    onDragEnd(e: MapEvent) {
         MapScreen.location = e.nativeEvent.coordinate;
     }
 
@@ -36,12 +38,14 @@ class MapScreen extends React.Component {
             <View style={styles.container}>
                 <MapView
                   style={styles.mapStyle}
-                  showsUserLocation={true}>
-                    <MapView.Marker
-                      coordinate={{ "latitude": this.state.region.latitude, "longitude": this.state.region.longitude }}
-                      title={i18n.pickedLocation.toCamelCase()}
-                      onDragEnd={this.onDragEnd}
-                      draggable />
+                  showsUserLocation={false}>
+                    {
+                      !this.state.region ? null : <Marker
+                        coordinate={{ "latitude": this.state.region.latitude, "longitude": this.state.region.longitude }}
+                        title={i18n.pickedLocation.toCamelCase()}
+                        onDragEnd={this.onDragEnd}
+                        draggable />
+                    }
                 </MapView>
             </View>
         );

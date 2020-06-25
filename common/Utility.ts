@@ -1,4 +1,5 @@
 import Constants from "expo-constants";
+import * as Location from "expo-location";
 import { ImageRequest, SizeRequest, Address } from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
 
@@ -45,5 +46,10 @@ export default class Utility {
 
     static formatAddress(address: Address): string {
         return address.postalCode + ' ' + address.country + Utility.LINE_SEPARATOR + address.region + ", " + address.city + Utility.LINE_SEPARATOR + address.street + Utility.LINE_SEPARATOR + address.name;
+    }
+
+    static async currentLocation(): Promise<{latitude: number, longitude: number}> {
+        var result: Location.LocationData = await Location.getCurrentPositionAsync({});
+        return {latitude: result.coords.latitude, longitude: result.coords.longitude};
     }
 }

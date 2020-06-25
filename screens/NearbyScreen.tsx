@@ -3,7 +3,6 @@ import { Text, View, Button } from "react-native";
 import { i18n } from "../constants/Dictionary";
 import GoodList from "../components/GoodList";
 import * as Dtos from "../constants/Dtos";
-import * as Location from "expo-location";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
@@ -75,9 +74,9 @@ export default class NearbyScreen extends React.Component {
             <NavigationEvents
                 onWillFocus={async payload => {
 
-                let location: Location.LocationData = await Location.getCurrentPositionAsync({});
+                let position = await Utility.currentLocation();
                 let token: string | null = await UserManager.getToken();
-                HttpClient.listNearbyGood(token, location.coords.latitude, location.coords.longitude)
+                HttpClient.listNearbyGood(token, position.latitude, position.longitude)
                     .then(result => {
                         this.setState({loading: false,
                             ds: result.map(item => ({
