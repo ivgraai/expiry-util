@@ -5,7 +5,7 @@ import CachedImage from "../components/CachedImage";
 import DbHelper from "../services/DbHelper";
 import { styles } from "../constants/styles/GoodList";
 
-class GoodList extends React.PureComponent {
+class GoodList extends React.Component {
     static contextType = ThemeContext;
     render() {
         const theme = this.context;

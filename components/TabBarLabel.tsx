@@ -3,7 +3,7 @@ import { Text, PixelRatio } from 'react-native';
 
 import Colors from '../constants/Colors';
 
-export default function TabBarLabel(props: any) {
+export default React.memo(function TabBarLabel(props: any) {
   return <Text style={{
       fontWeight: props.focused ? 'bold' : 'normal',
       color: Colors.tintColor,
@@ -11,4 +11,4 @@ export default function TabBarLabel(props: any) {
     }}>
       {props.children}
     </Text>;
-}
+})
