@@ -52,7 +52,8 @@ type TYPE = {
     approved: string,
     pickADate: string,
     confirm: string,
-    unsupportedStatus: string
+    unsupportedStatus: string,
+    unsupportedContent: string
 };
 
 const en = {
@@ -106,7 +107,8 @@ const en = {
         approved:                                           'approved',
         pickADate:                                          'pick a date',
         confirm:                                            'confirm',
-        unsupportedStatus:                                  'unsupported status'
+        unsupportedStatus:                                  'unsupported status',
+        unsupportedContent:                                 'unsupported content'
 };
 const MESSAGES: any = {
     en: en,
@@ -161,7 +163,8 @@ const MESSAGES: any = {
         approved:                                           'elfogadva',
         pickADate:                                          'válasszon egy dátumot',
         confirm:                                            'jóváhagy',
-        unsupportedStatus:                                  'nem támogatott státusz'
+        unsupportedStatus:                                  'nem támogatott státusz',
+        unsupportedContent:                                 'nem támogatott tartalom'
     },
     fr: {
         add:                                                'ajouter',
@@ -214,7 +217,8 @@ const MESSAGES: any = {
         approved:                                           'approuvée',
         pickADate:                                          'choisis une date',
         confirm:                                            'confirmer',
-        unsupportedStatus:                                  'statut non pris en charge'
+        unsupportedStatus:                                  'statut non pris en charge',
+        unsupportedContent:                                 'contenu non pris en charge'
     },
     es: {
         add:                                                'agregar',
@@ -267,7 +271,8 @@ const MESSAGES: any = {
         approved:                                           'aprobada',
         pickADate:                                          'selecciona una fecha',
         confirm:                                            'confirmar',
-        unsupportedStatus:                                  'estado no soportado'
+        unsupportedStatus:                                  'estado no soportado',
+        unsupportedContent:                                 'contenido no soportado'
     },
     default: en
 };

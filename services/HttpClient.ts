@@ -3,12 +3,14 @@ import * as Dtos from '../constants/Dtos';
 import { Platform } from 'react-native';
 import moment from 'moment';
 import UnsupportedStatusException from '../common/errors/UnsupportedStatusException';
+import UnsupportedContentException from '../common/errors/UnsupportedContentException';
 
 const BASE_URL: string = Constants.manifest.extra.serverUrl;
 
 export default class HttpClient {
 
     public static ERROR_HANDLER = (e: any) => console.warn(e);
+    private static SUPPORTED_CONTENT_TYPES = ["application/json"];
     private static DEFAULT_RADIUS: number = 3000;
 
     public static login(name: string, password: string): Promise<void | string> {
@@ -62,7 +64,7 @@ export default class HttpClient {
             payload.append("location.longitude", longitude);
         }
         payload.append("available", available);
-        return HttpClient.makeRequest('good/add', false, {
+        return HttpClient.request('good/add', false, {
             method: 'POST',
             headers: this.createHeaderWithToken(token),
             body: payload
@@ -164,17 +166,21 @@ export default class HttpClient {
         .catch(this.ERROR_HANDLER);
     }
 
-    private static makeRequest(urlSuffix: string, needToParse: boolean, options?: RequestInit | undefined) {
+    private static request(urlSuffix: string, needToParse: boolean, options?: RequestInit | undefined) {
         return new Promise((resolve, reject) => {
             fetch(BASE_URL + urlSuffix, options)
                 .then(response => HttpClient.parse(response, needToParse))
                 .then(response => {
                     const statusCode = response.status;
-                    const isGoodStatus = statusCode < 400;
-                    if (response.ok && isGoodStatus) {
-                        return resolve(response.json);
+                    let isGoodStatus = statusCode < 400;
+                    let isGoodContent = HttpClient.SUPPORTED_CONTENT_TYPES.includes(response.contentType!);
+                    if (response.ok && isGoodStatus && isGoodContent) {
+                        return resolve(response.body);
                     }
-                    return reject(!response.json.meta ? new UnsupportedStatusException(statusCode) : new Error(response.json.meta.error));
+                    return reject(
+                        !isGoodStatus ? new UnsupportedStatusException(statusCode) : (
+                        !isGoodContent ? new UnsupportedContentException(response.contentType) : new Error(response.body.meta.error)
+                    ));
                 })
                 .catch(error => reject(error));
         });
@@ -187,12 +193,13 @@ export default class HttpClient {
         return retval;
     }
 
-    private static parse(response: Response, needToParse: boolean): Promise<{ok: boolean, status: number, json: any}> {
+    private static parse(response: Response, needToParse: boolean): Promise<{ok: boolean, status: number, contentType: string | null, body: any}> {
         return new Promise(resolve => (needToParse ? response.json() : response.text())
-            .then(json => resolve({
-                ok:     response.ok,
-                status: response.status,
-                        json
+            .then(body => resolve({
+                ok:             response.ok,
+                status:         response.status,
+                contentType:    response.headers.get("Content-Type"),
+                                body
                 })
             )
         );
