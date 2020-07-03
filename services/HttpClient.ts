@@ -2,6 +2,7 @@ import Constants from 'expo-constants';
 import * as Dtos from '../constants/Dtos';
 import { Platform } from 'react-native';
 import moment from 'moment';
+import UnsupportedStatusException from '../common/errors/UnsupportedStatusException';
 
 const BASE_URL: string = Constants.manifest.extra.serverUrl;
 
@@ -61,7 +62,7 @@ export default class HttpClient {
             payload.append("location.longitude", longitude);
         }
         payload.append("available", available);
-        return fetch(BASE_URL + 'good/add', {
+        return HttpClient.makeRequest('good/add', {
             method: 'POST',
             headers: this.createHeaderWithToken(token),
             body: payload
@@ -163,11 +164,38 @@ export default class HttpClient {
         .catch(this.ERROR_HANDLER);
     }
 
+    private static makeRequest(urlSuffix: string, options?: RequestInit | undefined) {
+        return new Promise((resolve, reject) => {
+            fetch(BASE_URL + urlSuffix, options)
+                .then(HttpClient.parseJSON)
+                .then(response => {
+                    const statusCode = response.status;
+                    const isGoodStatus = statusCode < 400;
+                    if (response.ok && isGoodStatus) {
+                        return resolve(response.json);
+                    }
+                    return reject(!response.json.meta ? new UnsupportedStatusException(statusCode) : new Error(response.json.meta.error));
+                })
+                .catch(error => reject(error));
+        });
+    }
+
     private static createHeaderWithToken(value: string | null): Headers {
         let retval: any = {
             token: !value ? undefined : value
         };
         return retval;
+    }
+
+    private static parseJSON(response: Response): Promise<{ok: boolean, status: number, json: any}> {
+        return new Promise(resolve => response.json()
+            .then(json => resolve({
+                ok:     response.ok,
+                status: response.status,
+                        json
+                })
+            )
+        );
     }
 
     private static convertDate(value: Date): string {

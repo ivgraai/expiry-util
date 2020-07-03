@@ -51,7 +51,8 @@ type TYPE = {
     reply: string,
     approved: string,
     pickADate: string,
-    confirm: string
+    confirm: string,
+    unsupportedStatus: string
 };
 
 const en = {
@@ -104,7 +105,8 @@ const en = {
         reply:                                              'reply',
         approved:                                           'approved',
         pickADate:                                          'pick a date',
-        confirm:                                            'confirm'
+        confirm:                                            'confirm',
+        unsupportedStatus:                                  'unsupported status'
 };
 const MESSAGES: any = {
     en: en,
@@ -158,7 +160,8 @@ const MESSAGES: any = {
         reply:                                              'válasz',
         approved:                                           'elfogadva',
         pickADate:                                          'válasszon egy dátumot',
-        confirm:                                            'jóváhagy'
+        confirm:                                            'jóváhagy',
+        unsupportedStatus:                                  'nem támogatott státusz'
     },
     fr: {
         add:                                                'ajouter',
@@ -210,7 +213,8 @@ const MESSAGES: any = {
         reply:                                              'réponse',
         approved:                                           'approuvée',
         pickADate:                                          'choisis une date',
-        confirm:                                            'confirmer'
+        confirm:                                            'confirmer',
+        unsupportedStatus:                                  'statut non pris en charge'
     },
     es: {
         add:                                                'agregar',
@@ -262,7 +266,8 @@ const MESSAGES: any = {
         reply:                                              'respuesta',
         approved:                                           'aprobada',
         pickADate:                                          'selecciona una fecha',
-        confirm:                                            'confirmar'
+        confirm:                                            'confirmar',
+        unsupportedStatus:                                  'estado no soportado'
     },
     default: en
 };
