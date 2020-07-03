@@ -18,6 +18,7 @@ import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
 import { dateTimePickerHeader, dateTimePickerConfirmButton, dateTimePickerCancelButton } from "../components/DateTimePickerModal";
+import * as ErrorAlert from "../components/ErrorAlert";
 import { StackActions, ThemeContext } from "react-navigation";
 import { styles } from "../constants/styles/MainScreen";
 import Colors from "../constants/Colors";
@@ -150,11 +151,12 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
             !available ? null : this.props.location.lat,
             !available ? null : this.props.location.lng,
             available,
-            Utility.convertImageToDto(objectPhoto!)
-          );
+            objectPhoto ? Utility.convertImageToDto(objectPhoto) : null
+          )
+          .then(_value => this.showDialog())
+          .catch(reason => ErrorAlert.alert(reason));
         }
       });
-      this.showDialog();
 
     });
   }

@@ -45,7 +45,7 @@ export default class HttpClient {
           .catch(this.ERROR_HANDLER);
     }
 
-    public static addGood(token: string, name: string, expiry: Date, latitude: number | null, longitude: number | null, available: boolean, image: Dtos.ImageRequest | null): Promise<void | Response> {
+    public static addGood(token: string, name: string, expiry: Date, latitude: number | null, longitude: number | null, available: boolean, image: Dtos.ImageRequest | null): Promise<Response> {
         const payload = new FormData();
         if (null != image) {
             payload.append("image", {
@@ -66,8 +66,7 @@ export default class HttpClient {
             headers: this.createHeaderWithToken(token),
             body: payload
         })
-        .then()
-        .catch(this.ERROR_HANDLER);
+        .then();
     }
 
     public static findImageURL(goodId: number, size: Dtos.SizeRequest, ...params: [{key: string, value: string}]): string {
