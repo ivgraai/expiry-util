@@ -62,7 +62,7 @@ export default class HttpClient {
             payload.append("location.longitude", longitude);
         }
         payload.append("available", available);
-        return HttpClient.makeRequest('good/add', {
+        return HttpClient.makeRequest('good/add', false, {
             method: 'POST',
             headers: this.createHeaderWithToken(token),
             body: payload
@@ -164,10 +164,10 @@ export default class HttpClient {
         .catch(this.ERROR_HANDLER);
     }
 
-    private static makeRequest(urlSuffix: string, options?: RequestInit | undefined) {
+    private static makeRequest(urlSuffix: string, needToParse: boolean, options?: RequestInit | undefined) {
         return new Promise((resolve, reject) => {
             fetch(BASE_URL + urlSuffix, options)
-                .then(HttpClient.parseJSON)
+                .then(response => HttpClient.parse(response, needToParse))
                 .then(response => {
                     const statusCode = response.status;
                     const isGoodStatus = statusCode < 400;
@@ -187,8 +187,8 @@ export default class HttpClient {
         return retval;
     }
 
-    private static parseJSON(response: Response): Promise<{ok: boolean, status: number, json: any}> {
-        return new Promise(resolve => response.json()
+    private static parse(response: Response, needToParse: boolean): Promise<{ok: boolean, status: number, json: any}> {
+        return new Promise(resolve => (needToParse ? response.json() : response.text())
             .then(json => resolve({
                 ok:     response.ok,
                 status: response.status,

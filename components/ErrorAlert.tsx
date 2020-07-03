@@ -14,6 +14,6 @@ export const alert = (exception: Error) => {
     if (exception instanceof UnsupportedStatusException) {
         internalAlert(i18n.unsupportedStatus.capitalize() + " (" + exception.getStatusCode() + ')');
     } else {
-        internalAlert(exception.name + ": " + exception.message);
+        internalAlert(exception.message);
     }
 };
