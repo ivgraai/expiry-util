@@ -7,10 +7,10 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
     },
     image: {
-        width: "40%",
-        height: "40%",
+        width: "30%",
+        height: "30%",
         alignSelf: "center",
-        aspectRatio: 1
+        aspectRatio: 1.4
     },
     text: {
         color: Colors.alternativeColor,
