@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Alert } from 'react-native';
+import * as ErrorAlert from "../components/ErrorAlert";
 import StyledTextInput from '../components/StyledTextInput';
 import StyledButton from '../components/StyledButton';
 import { i18n } from '../constants/Dictionary';
@@ -73,7 +74,7 @@ class UserScreen extends React.Component<IProps, IState> {
                     Alert.alert(i18n.aProblemOccurredWhileCommunicatingWithTheServer.toUpperCase());
                 }
             })
-            .catch(HttpClient.ERROR_HANDLER);
+            .catch(reason => ErrorAlert.alert(reason));
     }
 
     signIn() {
@@ -88,7 +89,8 @@ class UserScreen extends React.Component<IProps, IState> {
                     let action = this.props.navigation.getParam('stackAction');
                     this.props.navigation.dispatch(action);
                 }
-            });
+            })
+            .catch(reason => ErrorAlert.alert(reason));
     }
 
     getErrorStyle(property: string) {

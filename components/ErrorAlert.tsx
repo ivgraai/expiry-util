@@ -3,20 +3,23 @@ import { i18n } from "../constants/Dictionary";
 import UnsupportedStatusException from "../common/errors/UnsupportedStatusException";
 import UnsupportedContentException from "../common/errors/UnsupportedContentException";
 
-const internalAlert = (message: string) => Alert.alert(
+const internalAlert = (message: string, onPress?: () => void) => Alert.alert(
     i18n.aProblemOccurredWhileCommunicatingWithTheServer.capitalize(),
     message,
     [{
-        text: i18n.okay
+        text: i18n.okay,
+        onPress
     }]
 );
 
-export const alert = (exception: Error) => {
+export const alert = (exception: Error, onPress?: () => void) => {
+    var message: string;
     if (exception instanceof UnsupportedStatusException) {
-        internalAlert(i18n.unsupportedStatus.capitalize() + " (" + exception.getStatusCode() + ')');
+        message = i18n.unsupportedStatus.capitalize() + " (" + exception.getStatusCode() + ')';
     } else if (exception instanceof UnsupportedContentException) {
-        internalAlert(i18n.unsupportedContent.capitalize() + " (" + exception.getContentType() + ')');
+        message = i18n.unsupportedContent.capitalize() + " (" + exception.getContentType() + ')';
     } else {
-        internalAlert(exception.message);
+        message = exception.message;
     }
+    internalAlert(message, onPress);
 };

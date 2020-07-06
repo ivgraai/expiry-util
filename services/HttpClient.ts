@@ -10,7 +10,7 @@ const BASE_URL: string = Constants.manifest.extra.serverUrl;
 export default class HttpClient {
 
     public static ERROR_HANDLER = (e: any) => console.warn(e);
-    private static SUPPORTED_CONTENT_TYPES = ["application/json"];
+    private static SUPPORTED_CONTENT_TYPES = ["application/json", "application/problem+json"];
     private static DEFAULT_RADIUS: number = 3000;
 
     public static login(name: string, password: string): Promise<void | string> {
@@ -20,8 +20,7 @@ export default class HttpClient {
                 Accept: 'application/json'
             }
           })
-          .then(response => response.text())
-          .catch(this.ERROR_HANDLER);
+          .then(response => response.text());
     }
 
     public static register(name: string, email: string, password: string): Promise<Response> {
