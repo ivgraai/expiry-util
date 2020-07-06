@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { useTheme } from "react-navigation";
 import CachedImage from "../components/CachedImage";
+import * as ErrorAlert from "../components/ErrorAlert";
 import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
@@ -26,6 +27,7 @@ export default function DetailsScreen(props: IProps) {
                     setResponse(response);
                 }
             })
+            .catch(reason => ErrorAlert.alert(reason, () => props.navigation.goBack()))
         });
     }, []);
 

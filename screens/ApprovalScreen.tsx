@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, FlatList, View } from "react-native";
 import { ThemeContext } from "react-navigation";
+import * as ErrorAlert from "../components/ErrorAlert";
 import Dialog from "../components/Dialog";
 import { i18n } from "../constants/Dictionary";
 import Utility from "../common/Utility";
@@ -41,7 +42,7 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
                     allRequests.datas = allRequests.datas.sort((item1, item2) => item1.datetime.getTime() - item2.datetime.getTime());
                     this.updateState({allRequests});
                 })
-                .catch(HttpClient.ERROR_HANDLER);
+                .catch(reason => ErrorAlert.alert(reason, () => this.props.navigation.goBack()));
         });
     }
 
@@ -64,6 +65,10 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
                         datas: this.state.allRequests!.datas
                     },
                     showModal: false
+                }))
+                .catch(reason => ErrorAlert.alert(reason, () => {
+                    this.updateState({showModal: false});
+                    this.requestId = 0;
                 }));
         });
     }

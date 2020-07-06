@@ -2,27 +2,29 @@ import Constants from 'expo-constants';
 import * as Dtos from '../constants/Dtos';
 import { Platform } from 'react-native';
 import moment from 'moment';
+import UnsupportedStatusException from '../common/errors/UnsupportedStatusException';
+import UnsupportedContentException from '../common/errors/UnsupportedContentException';
 
 const BASE_URL: string = Constants.manifest.extra.serverUrl;
 
 export default class HttpClient {
 
     public static ERROR_HANDLER = (e: any) => console.warn(e);
+    private static SUPPORTED_CONTENT_TYPES = ["application/json", "application/problem+json"];
     private static DEFAULT_RADIUS: number = 3000;
 
-    public static login(name: string, password: string): Promise<void | string> {
-        return fetch(BASE_URL + `user?name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}`, {
+    public static login(name: string, password: string): Promise<string> {
+        return HttpClient.request(`user?name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}`, false, {
             method: 'GET',
             headers: {
                 Accept: 'application/json'
             }
           })
-          .then(response => response.text())
-          .catch(this.ERROR_HANDLER);
+          .then();
     }
 
     public static register(name: string, email: string, password: string): Promise<Response> {
-        return fetch(BASE_URL + 'user', {
+        return HttpClient.request('user', false, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,16 +38,15 @@ export default class HttpClient {
           .then();
     }
 
-    public static unregister(token: string): Promise<void | Response> {
-        return fetch(BASE_URL + 'user', {
+    public static unregister(token: string): Promise<Response> {
+        return HttpClient.request('user', false, {
             method: 'DELETE',
             headers: this.createHeaderWithToken(token)
           })
-          .then()
-          .catch(this.ERROR_HANDLER);
+          .then();
     }
 
-    public static addGood(token: string, name: string, expiry: Date, latitude: number | null, longitude: number | null, available: boolean, image: Dtos.ImageRequest | null): Promise<void | Response> {
+    public static addGood(token: string, name: string, expiry: Date, latitude: number | null, longitude: number | null, available: boolean, image: Dtos.ImageRequest | null): Promise<Response> {
         const payload = new FormData();
         if (null != image) {
             payload.append("image", {
@@ -61,13 +62,12 @@ export default class HttpClient {
             payload.append("location.longitude", longitude);
         }
         payload.append("available", available);
-        return fetch(BASE_URL + 'good/add', {
+        return HttpClient.request('good/add', false, {
             method: 'POST',
             headers: this.createHeaderWithToken(token),
             body: payload
         })
-        .then()
-        .catch(this.ERROR_HANDLER);
+        .then();
     }
 
     public static findImageURL(goodId: number, size: Dtos.SizeRequest, ...params: [{key: string, value: string}]): string {
@@ -79,20 +79,18 @@ export default class HttpClient {
     }
 
     public static listAllGood(token: string): Promise<Dtos.GoodAllResponse[]> {
-        return fetch(BASE_URL + 'good/all', {
+        return HttpClient.request('good/all', true, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
                 token // createHeaderWithToken
             }
         })
-        .then(response => response.json())
-        .then(response => response.map((good: any) => new Dtos.GoodAllResponse()
+        .then((response: any) => response.map((good: any) => new Dtos.GoodAllResponse()
             .setName(good.name)
             .setExpiry(this.parseDate(good.expiry))
             .setIsRequestedByOther(good.isRequestedByOther)
-            .setId(good.id)))
-        .catch(this.ERROR_HANDLER);
+            .setId(good.id)));
     }
 
     public static listNearbyGood(token: string | null, latitude: number, longitude: number, radius?: number): Promise<Dtos.GoodNearbyResponse[]> {
@@ -100,20 +98,18 @@ export default class HttpClient {
             radius = this.DEFAULT_RADIUS;
         }
         let headers = this.createHeaderWithToken(token);
-        return fetch(BASE_URL + `good/nearby?location.latitude=${encodeURIComponent(latitude)}&location.longitude=${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`, {
+        return HttpClient.request(`good/nearby?location.latitude=${encodeURIComponent(latitude)}&location.longitude=${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`, true, {
             method: 'GET',
             headers: {
                 ...headers,
                 Accept: 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(response => response.map((good: any) => new Dtos.GoodNearbyResponse(good, this.parseDate)))
-        .catch(this.ERROR_HANDLER);
+        .then((response: any) => response.map((good: any) => new Dtos.GoodNearbyResponse(good, this.parseDate)));
     }
 
-    public static requestTheGood(token: string, goodId: number, message: string): Promise<void | Response> {
-        return fetch(BASE_URL + 'good/need', {
+    public static requestTheGood(token: string, goodId: number, message: string): Promise<Response> {
+        return HttpClient.request('good/need', false, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -124,44 +120,59 @@ export default class HttpClient {
                 message
             })
         })
-        .then()
-        .catch(this.ERROR_HANDLER);
+        .then();
     }
 
-    public static checkStatus(token: string | null, goodId: number): Promise<void | Dtos.GoodResponse> {
-        return fetch(BASE_URL + `good/${encodeURIComponent(goodId)}`, {
+    public static checkStatus(token: string | null, goodId: number): Promise<Dtos.GoodResponse> {
+        return HttpClient.request(`good/${encodeURIComponent(goodId)}`, true, {
             method: 'GET',
             headers: this.createHeaderWithToken(token)
         })
-        .then(response => response.json())
-        .then(response => new Dtos.GoodResponse(response, this.parseDate))
-        .catch(this.ERROR_HANDLER);
+        .then(response => new Dtos.GoodResponse(response, this.parseDate));
     }
 
     public static findAllRequest(token: string, goodId: number | null): Promise<Dtos.RequestAllResponse> {
-        let url: string = BASE_URL + 'request/all';
+        let url: string = 'request/all';
         if (undefined != goodId) {
             url += `?goodId=${encodeURIComponent(goodId)}`;
         }
-        return fetch(url, {
+        return HttpClient.request(url, true, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
                 token
             }
         })
-        .then(response => response.json())
         .then(response => new Dtos.RequestAllResponse(response, this.parseDateTime))
     }
 
-    public static approveRequest(token: string, requestId: number, message: string): Promise<void | Response> {
-        return fetch(BASE_URL + `request/${encodeURIComponent(requestId)}`, {
+    public static approveRequest(token: string, requestId: number, message: string): Promise<Response> {
+        return HttpClient.request(`request/${encodeURIComponent(requestId)}`, false, {
             method: 'PUT',
             headers: this.createHeaderWithToken(token),
             body: message
         })
-        .then()
-        .catch(this.ERROR_HANDLER);
+        .then();
+    }
+
+    private static request(urlSuffix: string, needToParse: boolean, options?: RequestInit | undefined) {
+        return new Promise((resolve, reject) => {
+            fetch(BASE_URL + urlSuffix, options)
+                .then(response => HttpClient.parse(response, needToParse))
+                .then(response => {
+                    const statusCode = response.status;
+                    let isGoodStatus = statusCode < 400;
+                    let isGoodContent = HttpClient.SUPPORTED_CONTENT_TYPES.includes(response.contentType!);
+                    if (response.ok && isGoodStatus && isGoodContent) {
+                        return resolve(response.body);
+                    }
+                    return reject(
+                        !isGoodStatus ? new UnsupportedStatusException(statusCode) : (
+                        !isGoodContent ? new UnsupportedContentException(response.contentType) : new Error(response.body.meta.error)
+                    ));
+                })
+                .catch(error => reject(error));
+        });
     }
 
     private static createHeaderWithToken(value: string | null): Headers {
@@ -169,6 +180,18 @@ export default class HttpClient {
             token: !value ? undefined : value
         };
         return retval;
+    }
+
+    private static parse(response: Response, needToParse: boolean): Promise<{ok: boolean, status: number, contentType: string | null, body: any}> {
+        return new Promise(resolve => (needToParse ? response.json() : response.text())
+            .then(body => resolve({
+                ok:             response.ok,
+                status:         response.status,
+                contentType:    response.headers.get("Content-Type"),
+                                body
+                })
+            )
+        );
     }
 
     private static convertDate(value: Date): string {

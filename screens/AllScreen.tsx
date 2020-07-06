@@ -1,8 +1,9 @@
 import React from "react";
 import {
-  Button, Text
+  Button, Text, View
 } from "react-native";
 import GoodList from "../components/GoodList";
+import * as ErrorAlert from "../components/ErrorAlert";
 import { i18n } from "../constants/Dictionary";
 import HttpClient from "../services/HttpClient";
 import { SizeRequest } from "../constants/Dtos";
@@ -37,7 +38,8 @@ export default class AllScreen extends React.Component {
                 .sort((a, b) => a.expiry.getTime() - b.expiry.getTime()),
             loading: false
           });
-        });
+        })
+        .catch(reason => ErrorAlert.alert(reason));
     });
   }
 
@@ -51,7 +53,7 @@ export default class AllScreen extends React.Component {
   render() {
     var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
     return (this.state.loading ?
-        <Text style={styles.text}>{i18n.loading.capitalize()}...</Text> :
+        <View style={styles.view}><Text style={styles.text}>{i18n.loading.capitalize()}...</Text></View> :
         <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />
       );
   }

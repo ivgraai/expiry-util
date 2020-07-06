@@ -7,6 +7,7 @@ import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
 import { StackActions, ThemeContext, NavigationEvents } from "react-navigation";
+import * as ErrorAlert from "../components/ErrorAlert";
 import Dialog from "../components/Dialog";
 import Colors from "../constants/Colors";
 import { styles } from "../constants/styles/NearbyScreen";
@@ -29,12 +30,16 @@ export default class NearbyScreen extends React.Component {
     private tuple = this.DEFAULT_TUPLE_VALUE;
 
     onRequestClose(message: string): void {
+        var onComplete = () => {
+            this.tuple = this.DEFAULT_TUPLE_VALUE;
+            this.setState({dialogVisible: false});
+        };
         HttpClient.requestTheGood(this.tuple.token, this.tuple.goodId, message).then(_emptyResponse => {
             let object: any = this.state.ds.find((item: {id: number}) => (this.tuple.goodId == item.id));
             object!.isRequestedByMe = true;
-            this.tuple = this.DEFAULT_TUPLE_VALUE;
-            this.setState({dialogVisible: false});
-        });
+            onComplete();
+        })
+        .catch(reason => ErrorAlert.alert(reason, onComplete));
     }
 
     handleOnPress(id: number, isRequestedByMe: boolean) {
@@ -84,7 +89,8 @@ export default class NearbyScreen extends React.Component {
                                 image: Utility.remoteURI('', item.id, Dtos.SizeRequest.small)
                             }))
                             .sort((item1, item2) => item1.distance - item2.distance)});
-                    });
+                    })
+                    .catch(reason => ErrorAlert.alert(reason, () => this.setState({loading: true, ds: []})));
                 if (undefined != this.refs._scrollView) {
                     this.refs._scrollView.scrollToOffset({ offset: 0 });
                 }
@@ -92,7 +98,7 @@ export default class NearbyScreen extends React.Component {
                 }}
             />
             {this.state.loading ?
-                <Text style={withStyle.loadingText}>{i18n.loading.capitalize()}...</Text> :
+                <View style={withStyle.loadingView}><Text style={withStyle.loadingText}>{i18n.loading.capitalize()}...</Text></View> :
                 <GoodList ref="_scrollView" dataSource={this.state.ds} customNodesForTheItem={temporary}></GoodList>
             }
         </View>;

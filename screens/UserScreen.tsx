@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Alert } from 'react-native';
+import * as ErrorAlert from "../components/ErrorAlert";
 import StyledTextInput from '../components/StyledTextInput';
 import StyledButton from '../components/StyledButton';
 import { i18n } from '../constants/Dictionary';
@@ -64,16 +65,12 @@ class UserScreen extends React.Component<IProps, IState> {
             return;
         }
         HttpClient.register(this.name, this.email, this.password)
-            .then(response => {
-                if (response.ok) {
-                    Alert.alert(i18n.youHaveSuccessfullysignedUp.capitalize() + '!', '', [{
-                        text: i18n.signIn.toUpperCase(), onPress: () => this.setState({switched: false})
-                    }]);
-                } else {
-                    Alert.alert(i18n.aProblemOccurredWhileCommunicatingWithTheServer.toUpperCase());
-                }
+            .then(_ => {
+                Alert.alert(i18n.youHaveSuccessfullysignedUp.capitalize() + '!', '', [{
+                    text: i18n.signIn.toUpperCase(), onPress: () => this.setState({switched: false})
+                }]);
             })
-            .catch(HttpClient.ERROR_HANDLER);
+            .catch(reason => ErrorAlert.alert(reason));
     }
 
     signIn() {
@@ -88,7 +85,8 @@ class UserScreen extends React.Component<IProps, IState> {
                     let action = this.props.navigation.getParam('stackAction');
                     this.props.navigation.dispatch(action);
                 }
-            });
+            })
+            .catch(reason => ErrorAlert.alert(reason));
     }
 
     getErrorStyle(property: string) {
