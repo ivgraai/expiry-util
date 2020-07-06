@@ -38,13 +38,12 @@ export default class HttpClient {
           .then();
     }
 
-    public static unregister(token: string): Promise<void | Response> {
-        return fetch(BASE_URL + 'user', {
+    public static unregister(token: string): Promise<Response> {
+        return HttpClient.request('user', false, {
             method: 'DELETE',
             headers: this.createHeaderWithToken(token)
           })
-          .then()
-          .catch(this.ERROR_HANDLER);
+          .then();
     }
 
     public static addGood(token: string, name: string, expiry: Date, latitude: number | null, longitude: number | null, available: boolean, image: Dtos.ImageRequest | null): Promise<Response> {
@@ -80,20 +79,18 @@ export default class HttpClient {
     }
 
     public static listAllGood(token: string): Promise<Dtos.GoodAllResponse[]> {
-        return fetch(BASE_URL + 'good/all', {
+        return HttpClient.request('good/all', true, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
                 token // createHeaderWithToken
             }
         })
-        .then(response => response.json())
-        .then(response => response.map((good: any) => new Dtos.GoodAllResponse()
+        .then((response: any) => response.map((good: any) => new Dtos.GoodAllResponse()
             .setName(good.name)
             .setExpiry(this.parseDate(good.expiry))
             .setIsRequestedByOther(good.isRequestedByOther)
-            .setId(good.id)))
-        .catch(this.ERROR_HANDLER);
+            .setId(good.id)));
     }
 
     public static listNearbyGood(token: string | null, latitude: number, longitude: number, radius?: number): Promise<Dtos.GoodNearbyResponse[]> {
@@ -101,20 +98,18 @@ export default class HttpClient {
             radius = this.DEFAULT_RADIUS;
         }
         let headers = this.createHeaderWithToken(token);
-        return fetch(BASE_URL + `good/nearby?location.latitude=${encodeURIComponent(latitude)}&location.longitude=${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`, {
+        return HttpClient.request(`good/nearby?location.latitude=${encodeURIComponent(latitude)}&location.longitude=${encodeURIComponent(longitude)}&radius=${encodeURIComponent(radius)}`, true, {
             method: 'GET',
             headers: {
                 ...headers,
                 Accept: 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(response => response.map((good: any) => new Dtos.GoodNearbyResponse(good, this.parseDate)))
-        .catch(this.ERROR_HANDLER);
+        .then((response: any) => response.map((good: any) => new Dtos.GoodNearbyResponse(good, this.parseDate)));
     }
 
-    public static requestTheGood(token: string, goodId: number, message: string): Promise<void | Response> {
-        return fetch(BASE_URL + 'good/need', {
+    public static requestTheGood(token: string, goodId: number, message: string): Promise<Response> {
+        return HttpClient.request('good/need', false, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -125,8 +120,7 @@ export default class HttpClient {
                 message
             })
         })
-        .then()
-        .catch(this.ERROR_HANDLER);
+        .then();
     }
 
     public static checkStatus(token: string | null, goodId: number): Promise<Dtos.GoodResponse> {

@@ -3,6 +3,7 @@ import {
   Button, Text, View
 } from "react-native";
 import GoodList from "../components/GoodList";
+import * as ErrorAlert from "../components/ErrorAlert";
 import { i18n } from "../constants/Dictionary";
 import HttpClient from "../services/HttpClient";
 import { SizeRequest } from "../constants/Dtos";
@@ -37,7 +38,8 @@ export default class AllScreen extends React.Component {
                 .sort((a, b) => a.expiry.getTime() - b.expiry.getTime()),
             loading: false
           });
-        });
+        })
+        .catch(reason => ErrorAlert.alert(reason));
     });
   }
 
