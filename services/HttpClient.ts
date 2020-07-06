@@ -138,29 +138,27 @@ export default class HttpClient {
     }
 
     public static findAllRequest(token: string, goodId: number | null): Promise<Dtos.RequestAllResponse> {
-        let url: string = BASE_URL + 'request/all';
+        let url: string = 'request/all';
         if (undefined != goodId) {
             url += `?goodId=${encodeURIComponent(goodId)}`;
         }
-        return fetch(url, {
+        return HttpClient.request(url, true, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
                 token
             }
         })
-        .then(response => response.json())
         .then(response => new Dtos.RequestAllResponse(response, this.parseDateTime))
     }
 
-    public static approveRequest(token: string, requestId: number, message: string): Promise<void | Response> {
-        return fetch(BASE_URL + `request/${encodeURIComponent(requestId)}`, {
+    public static approveRequest(token: string, requestId: number, message: string): Promise<Response> {
+        return HttpClient.request(`request/${encodeURIComponent(requestId)}`, false, {
             method: 'PUT',
             headers: this.createHeaderWithToken(token),
             body: message
         })
-        .then()
-        .catch(this.ERROR_HANDLER);
+        .then();
     }
 
     private static request(urlSuffix: string, needToParse: boolean, options?: RequestInit | undefined) {
