@@ -54,7 +54,8 @@ type TYPE = {
     confirm: string,
     unsupportedStatus: string,
     unsupportedContent: string,
-    yourGoodsAreNotFound: string
+    yourGoodsAreNotFound: string,
+    noGoodsAreAvailable: string
 };
 
 const en = {
@@ -110,7 +111,8 @@ const en = {
         confirm:                                            'confirm',
         unsupportedStatus:                                  'unsupported status',
         unsupportedContent:                                 'unsupported content',
-        yourGoodsAreNotFound:                               'your goods are not found'
+        yourGoodsAreNotFound:                               'your goods are not found',
+        noGoodsAreAvailable:                                'no goods are available'
 };
 const MESSAGES: any = {
     en: en,
@@ -167,7 +169,8 @@ const MESSAGES: any = {
         confirm:                                            'jóváhagy',
         unsupportedStatus:                                  'nem támogatott státusz',
         unsupportedContent:                                 'nem támogatott tartalom',
-        yourGoodsAreNotFound:                               'az áruid nem találhatók'
+        yourGoodsAreNotFound:                               'az áruid nem találhatóak',
+        noGoodsAreAvailable:                                'nem érhetőek el áruk'
     },
     fr: {
         add:                                                'ajouter',
@@ -222,7 +225,8 @@ const MESSAGES: any = {
         confirm:                                            'confirmer',
         unsupportedStatus:                                  'statut non pris en charge',
         unsupportedContent:                                 'contenu non pris en charge',
-        yourGoodsAreNotFound:                               'vos biens sont pas trouvés'
+        yourGoodsAreNotFound:                               'vos biens sont pas trouvés',
+        noGoodsAreAvailable:                                'aucune marchandise n\'est disponible'
     },
     es: {
         add:                                                'agregar',
@@ -277,7 +281,8 @@ const MESSAGES: any = {
         confirm:                                            'confirmar',
         unsupportedStatus:                                  'estado no soportado',
         unsupportedContent:                                 'contenido no soportado',
-        yourGoodsAreNotFound:                               'sus bienes no se encuentran'
+        yourGoodsAreNotFound:                               'sus bienes no se encuentran',
+        noGoodsAreAvailable:                                'no hay bienes disponibles'
     },
     default: en
 };

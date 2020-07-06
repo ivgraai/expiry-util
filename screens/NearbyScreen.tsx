@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, Button } from "react-native";
 import { i18n } from "../constants/Dictionary";
 import GoodList from "../components/GoodList";
+import PlaceHolder from "../components/PlaceHolder";
 import * as Dtos from "../constants/Dtos";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
@@ -98,7 +99,7 @@ export default class NearbyScreen extends React.Component {
                 }}
             />
             {this.state.loading ?
-                <View style={withStyle.loadingView}><Text style={withStyle.loadingText}>{i18n.loading.capitalize()}...</Text></View> :
+                <PlaceHolder text={i18n.noGoodsAreAvailable.capitalize()} /> :
                 <GoodList ref="_scrollView" dataSource={this.state.ds} customNodesForTheItem={temporary}></GoodList>
             }
         </View>;
