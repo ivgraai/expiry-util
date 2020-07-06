@@ -6,6 +6,7 @@ const backgroundColor = '#AED59E';
 export default {
   tintColor,
   backgroundColor,
+  alternativeColor: 'gray',
   header: tintColor,
   errorText: '#FF6666',
   errorBackground: '#FFCCCC',

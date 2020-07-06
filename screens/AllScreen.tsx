@@ -1,8 +1,9 @@
 import React from "react";
 import {
-  Button, Text, View
+  Button
 } from "react-native";
 import GoodList from "../components/GoodList";
+import PlaceHolder from "../components/PlaceHolder";
 import * as ErrorAlert from "../components/ErrorAlert";
 import { i18n } from "../constants/Dictionary";
 import HttpClient from "../services/HttpClient";
@@ -11,7 +12,6 @@ import UserManager from "../services/UserManager";
 import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
 import Colors from "../constants/Colors";
-import { styles } from "../constants/styles/AllScreen";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
@@ -53,7 +53,7 @@ export default class AllScreen extends React.Component {
   render() {
     var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
     return (this.state.loading ?
-        <View style={styles.view}><Text style={styles.text}>{i18n.loading.capitalize()}...</Text></View> :
+        <PlaceHolder text={i18n.yourGoodsAreNotFound.capitalize()} /> :
         <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />
       );
   }
