@@ -135,8 +135,7 @@ export default class HttpClient {
             headers: this.createHeaderWithToken(token)
         })
         .then(response => response.json())
-        .then(response => new Dtos.GoodResponse(response, this.parseDate))
-        .catch(this.ERROR_HANDLER);
+        .then(response => new Dtos.GoodResponse(response, this.parseDate));
     }
 
     public static findAllRequest(token: string, goodId: number | null): Promise<Dtos.RequestAllResponse> {

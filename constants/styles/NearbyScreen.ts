@@ -9,7 +9,12 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         textAlign: "center",
         color: isDark ? Colors.labelDarkColor : Colors.labelLightColor
     },
+    loadingView: {
+        flex: 1,
+        justifyContent: "center"
+    },
     loadingText: {
-        color: Colors.tintColor
+        color: Colors.tintColor,
+        textAlign: "center"
     }
 });

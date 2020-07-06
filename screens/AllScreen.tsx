@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Button, Text
+  Button, Text, View
 } from "react-native";
 import GoodList from "../components/GoodList";
 import { i18n } from "../constants/Dictionary";
@@ -51,7 +51,7 @@ export default class AllScreen extends React.Component {
   render() {
     var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
     return (this.state.loading ?
-        <Text style={styles.text}>{i18n.loading.capitalize()}...</Text> :
+        <View style={styles.view}><Text style={styles.text}>{i18n.loading.capitalize()}...</Text></View> :
         <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />
       );
   }

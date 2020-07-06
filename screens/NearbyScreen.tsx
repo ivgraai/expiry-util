@@ -92,7 +92,7 @@ export default class NearbyScreen extends React.Component {
                 }}
             />
             {this.state.loading ?
-                <Text style={withStyle.loadingText}>{i18n.loading.capitalize()}...</Text> :
+                <View style={withStyle.loadingView}><Text style={withStyle.loadingText}>{i18n.loading.capitalize()}...</Text></View> :
                 <GoodList ref="_scrollView" dataSource={this.state.ds} customNodesForTheItem={temporary}></GoodList>
             }
         </View>;
