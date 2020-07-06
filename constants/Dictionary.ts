@@ -53,7 +53,8 @@ type TYPE = {
     pickADate: string,
     confirm: string,
     unsupportedStatus: string,
-    unsupportedContent: string
+    unsupportedContent: string,
+    yourGoodsAreNotFound: string
 };
 
 const en = {
@@ -108,7 +109,8 @@ const en = {
         pickADate:                                          'pick a date',
         confirm:                                            'confirm',
         unsupportedStatus:                                  'unsupported status',
-        unsupportedContent:                                 'unsupported content'
+        unsupportedContent:                                 'unsupported content',
+        yourGoodsAreNotFound:                               'your goods are not found'
 };
 const MESSAGES: any = {
     en: en,
@@ -164,7 +166,8 @@ const MESSAGES: any = {
         pickADate:                                          'válasszon egy dátumot',
         confirm:                                            'jóváhagy',
         unsupportedStatus:                                  'nem támogatott státusz',
-        unsupportedContent:                                 'nem támogatott tartalom'
+        unsupportedContent:                                 'nem támogatott tartalom',
+        yourGoodsAreNotFound:                               'az áruid nem találhatók'
     },
     fr: {
         add:                                                'ajouter',
@@ -218,7 +221,8 @@ const MESSAGES: any = {
         pickADate:                                          'choisis une date',
         confirm:                                            'confirmer',
         unsupportedStatus:                                  'statut non pris en charge',
-        unsupportedContent:                                 'contenu non pris en charge'
+        unsupportedContent:                                 'contenu non pris en charge',
+        yourGoodsAreNotFound:                               'vos biens sont pas trouvés'
     },
     es: {
         add:                                                'agregar',
@@ -272,7 +276,8 @@ const MESSAGES: any = {
         pickADate:                                          'selecciona una fecha',
         confirm:                                            'confirmar',
         unsupportedStatus:                                  'estado no soportado',
-        unsupportedContent:                                 'contenido no soportado'
+        unsupportedContent:                                 'contenido no soportado',
+        yourGoodsAreNotFound:                               'sus bienes no se encuentran'
     },
     default: en
 };

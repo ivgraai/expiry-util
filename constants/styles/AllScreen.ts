@@ -6,8 +6,14 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center"
     },
+    image: {
+        width: "40%",
+        height: "40%",
+        alignSelf: "center",
+        aspectRatio: 1
+    },
     text: {
-        color: Colors.tintColor,
+        color: Colors.alternativeColor,
         textAlign: "center"
     }
 });

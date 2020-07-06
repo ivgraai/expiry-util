@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Button, Text, View
+  Button, Text, View, Image
 } from "react-native";
 import GoodList from "../components/GoodList";
 import * as ErrorAlert from "../components/ErrorAlert";
@@ -53,7 +53,10 @@ export default class AllScreen extends React.Component {
   render() {
     var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
     return (this.state.loading ?
-        <View style={styles.view}><Text style={styles.text}>{i18n.loading.capitalize()}...</Text></View> :
+        <View style={styles.view}>
+          <Image source={require('../assets/images/placeholder.png')} style={styles.image} />
+          <Text style={styles.text}>{i18n.yourGoodsAreNotFound.capitalize()}</Text>
+        </View> :
         <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />
       );
   }
