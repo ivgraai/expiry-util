@@ -65,14 +65,10 @@ class UserScreen extends React.Component<IProps, IState> {
             return;
         }
         HttpClient.register(this.name, this.email, this.password)
-            .then(response => {
-                if (response.ok) {
-                    Alert.alert(i18n.youHaveSuccessfullysignedUp.capitalize() + '!', '', [{
-                        text: i18n.signIn.toUpperCase(), onPress: () => this.setState({switched: false})
-                    }]);
-                } else {
-                    Alert.alert(i18n.aProblemOccurredWhileCommunicatingWithTheServer.toUpperCase());
-                }
+            .then(_ => {
+                Alert.alert(i18n.youHaveSuccessfullysignedUp.capitalize() + '!', '', [{
+                    text: i18n.signIn.toUpperCase(), onPress: () => this.setState({switched: false})
+                }]);
             })
             .catch(reason => ErrorAlert.alert(reason));
     }

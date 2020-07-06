@@ -13,18 +13,18 @@ export default class HttpClient {
     private static SUPPORTED_CONTENT_TYPES = ["application/json", "application/problem+json"];
     private static DEFAULT_RADIUS: number = 3000;
 
-    public static login(name: string, password: string): Promise<void | string> {
-        return fetch(BASE_URL + `user?name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}`, {
+    public static login(name: string, password: string): Promise<string> {
+        return HttpClient.request(`user?name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}`, false, {
             method: 'GET',
             headers: {
                 Accept: 'application/json'
             }
           })
-          .then(response => response.text());
+          .then();
     }
 
     public static register(name: string, email: string, password: string): Promise<Response> {
-        return fetch(BASE_URL + 'user', {
+        return HttpClient.request('user', false, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -129,12 +129,11 @@ export default class HttpClient {
         .catch(this.ERROR_HANDLER);
     }
 
-    public static checkStatus(token: string | null, goodId: number): Promise<void | Dtos.GoodResponse> {
-        return fetch(BASE_URL + `good/${encodeURIComponent(goodId)}`, {
+    public static checkStatus(token: string | null, goodId: number): Promise<Dtos.GoodResponse> {
+        return HttpClient.request(`good/${encodeURIComponent(goodId)}`, true, {
             method: 'GET',
             headers: this.createHeaderWithToken(token)
         })
-        .then(response => response.json())
         .then(response => new Dtos.GoodResponse(response, this.parseDate));
     }
 
