@@ -11,6 +11,7 @@ import { SizeRequest } from "../constants/Dtos";
 import UserManager from "../services/UserManager";
 import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
+import DbHelper from "../services/DbHelper";
 import Colors from "../constants/Colors";
 
 export default class AllScreen extends React.Component {
@@ -27,20 +28,21 @@ export default class AllScreen extends React.Component {
   }
 
   componentDidMount() {
-    UserManager.getToken().then(token => {
-      HttpClient.listAllGood(token)
+    DbHelper.selectGoods()
+    /* UserManager.getToken().then(token => {
+      HttpClient.listAllGood(token) */
         .then(result => {
           this.setState({
             dataSource:
               result.map(a => {
-                  return { ...a, image: Utility.remoteURI('', a.id, SizeRequest.small) };
+                  return { ...a, expiry: new Date(a.expiry) /* image: Utility.remoteURI('', a.id, SizeRequest.small) */ };
                 })
                 .sort((a, b) => a.expiry.getTime() - b.expiry.getTime()),
             loading: false
           });
         })
-        .catch(reason => ErrorAlert.alert(reason));
-    });
+        /* .catch(reason => ErrorAlert.alert(reason));
+    }); */
   }
 
   renderIsRequested(id: number, isRequestedByOther: boolean) {

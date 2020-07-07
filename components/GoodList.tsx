@@ -13,7 +13,7 @@ function GoodList(props: any) {
   return (
     <FlatList ref={innerRef}
       data={dataSource.filter((item: {expiry: Date}) => (now <= item.expiry.getTime()))}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={(item, index) => (item.id ? item.id : index).toString()}
       renderItem={({item}) => (
         <View style={withStyle.parent}>
           <View style={withStyle.leftChild}>
