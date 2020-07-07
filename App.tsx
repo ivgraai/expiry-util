@@ -58,7 +58,8 @@ Permissions.askAsync(Permissions.LOCATION);
 
 if (Constants.manifest.extra.init) {
   Notifications.cancelAllScheduledNotificationsAsync();
-  DbHelper.deleteGoods();
+  DbHelper.deleteMyGoods();
+  DbHelper.deleteNearbyGood();
   DbHelper.selectImages().then(list => {
     list.forEach(fileUri => FileSystem.deleteAsync(fileUri, {idempotent: true}));
     DbHelper.deleteDownloads();

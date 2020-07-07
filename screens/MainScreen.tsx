@@ -16,6 +16,7 @@ import * as Location from "expo-location";
 import { i18n } from "../constants/Dictionary";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
+import DbHelper from "../services/DbHelper";
 import Utility from "../common/Utility";
 import { dateTimePickerHeader, dateTimePickerConfirmButton, dateTimePickerCancelButton } from "../components/DateTimePickerModal";
 import * as ErrorAlert from "../components/ErrorAlert";
@@ -140,7 +141,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
           /* DbHelper.insertGood({
             name: objectGoods,
             expiry: temp,
-            image: object.photo,
+            image: objectPhoto,
             notifications: localNotificationIds.toString()
           }); */
         } else {

@@ -43,18 +43,23 @@ export class GoodAllResponse {
 }
 
 export class GoodNearbyResponse {
-    name: string;
-    expiry: Date;
-    distance: number;
-    id: number;
-    isRequestedByMe: boolean;
+    name!: string;
+    expiry!: Date;
+    distance!: number;
+    id!: number;
+    isRequestedByMe!: boolean;
 
-    constructor(response: any, lambda: (value: string) => Date) {
-        this.name = response.name;
-        this.expiry = lambda(response.expiry);
-        this.distance = response.distance;
-        this.id = response.id;
-        this.isRequestedByMe = response.isRequestedByMe;
+    buildFromObject(response: any, lambda: (value: string) => Date): GoodNearbyResponse {
+        return this.buildFromValues(response.name, lambda(response.expiry), response.distance, response.id, response.isRequestedByMe);
+    }
+
+    buildFromValues(name: string, expiry: Date, distance: number, id: number, isRequestedByMe: boolean): GoodNearbyResponse {
+        this.name = name;
+        this.expiry = expiry;
+        this.distance = distance;
+        this.id = id;
+        this.isRequestedByMe = isRequestedByMe;
+        return this;
     }
 }
 

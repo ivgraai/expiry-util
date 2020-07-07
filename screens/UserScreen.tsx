@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, Alert } from 'react-native';
-import * as ErrorAlert from "../components/ErrorAlert";
+import * as ErrorAlert from '../components/ErrorAlert';
 import StyledTextInput from '../components/StyledTextInput';
 import StyledButton from '../components/StyledButton';
 import { i18n } from '../constants/Dictionary';
 import HttpClient from '../services/HttpClient';
 import UserManager from '../services/UserManager';
+import DbHelper from '../services/DbHelper';
 import Utility from '../common/Utility';
 import { styles } from '../constants/styles/UserScreen';
 import validate from 'validate.js';
@@ -81,6 +82,7 @@ class UserScreen extends React.Component<IProps, IState> {
         HttpClient.login(this.name, this.password)
             .then(response => {
                 if (typeof response === 'string') {
+                    // DbHelper.deleteMyGoods();
                     UserManager.setToken(response);
                     let action = this.props.navigation.getParam('stackAction');
                     this.props.navigation.dispatch(action);

@@ -4,7 +4,7 @@ import { ImageRequest, SizeRequest, Address } from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
 
 export default class Utility {
-    private static readonly EVICTION_FREQUENCY: string = Constants.manifest.extra.imageCacheEvictionFrequency;
+    private static readonly EVICTION_FREQUENCY: string = Constants.manifest.extra.cache.imageEvictionFrequency;
     public static readonly LINE_SEPARATOR: string = '\n';
 
     static convertImageToDto(uri: string): ImageRequest {

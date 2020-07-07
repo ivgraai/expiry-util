@@ -7,17 +7,22 @@ import * as Dtos from "../constants/Dtos";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
 import Utility from "../common/Utility";
+import Constants from "expo-constants";
 import { StackActions, ThemeContext, NavigationEvents } from "react-navigation";
 import * as ErrorAlert from "../components/ErrorAlert";
 import Dialog from "../components/Dialog";
 import Colors from "../constants/Colors";
 import { styles } from "../constants/styles/NearbyScreen";
+import DbHelper from "../services/DbHelper";
+import EmptyResultException from "../common/errors/EmptyResultException";
 
 export default class NearbyScreen extends React.Component {
     static navigationOptions = {
       title: i18n.nearby
     };
     static contextType = ThemeContext;
+    private static readonly LATITUDE_THRESHOLD: number = Constants.manifest.extra.cache.latitudeThreshold;
+    private static readonly LONGITUDE_THRESHOLD: number = Constants.manifest.extra.cache.longitudeThreshold;
     private readonly DEFAULT_TUPLE_VALUE = {
         token: '',
         goodId: 0
@@ -72,17 +77,39 @@ export default class NearbyScreen extends React.Component {
         </View>;
     }
 
+    getNearbyGood(): Promise<Dtos.GoodNearbyResponse[]> {
+        return new Promise(async (resolve, reject) => {
+            let position = await Utility.currentLocation();
+            let token: string | null = await UserManager.getToken();
+            var result: Dtos.GoodNearbyResponse[] = [];
+            try {
+                result = await HttpClient.listNearbyGood(token, position.latitude, position.longitude);
+                DbHelper.newNearbyGood(result, position.latitude, position.longitude);
+            } catch(e) {
+                let cache = await DbHelper.fetchNearbyGood(
+                    position.latitude - NearbyScreen.LATITUDE_THRESHOLD,
+                    position.longitude - NearbyScreen.LONGITUDE_THRESHOLD,
+                    position.latitude + NearbyScreen.LATITUDE_THRESHOLD,
+                    position.longitude + NearbyScreen.LONGITUDE_THRESHOLD
+                );
+                result = cache.map(row => new Dtos.GoodNearbyResponse().buildFromValues(row.name, new Date(row.expiry), row.distance, row.id, 0 != row.isRequestedByMe));
+            }
+            if (0 == result.length) {
+                reject(new EmptyResultException());
+            }
+            resolve(result);
+        });
+    }
+
     render() {
         const theme = this.context;
         const withStyle = styles('dark' === theme);
         var temporary: React.ReactNode = (item: any) => this.renderDistanceAndRequest(item, withStyle);
         return <View style={withStyle.listView}>
             <NavigationEvents
-                onWillFocus={async _payload => {
+                onWillFocus={_payload => {
 
-                let position = await Utility.currentLocation();
-                let token: string | null = await UserManager.getToken();
-                HttpClient.listNearbyGood(token, position.latitude, position.longitude)
+                this.getNearbyGood()
                     .then(result => {
                         this.setState({loading: false,
                             ds: result.map(item => ({

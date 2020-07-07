@@ -7,6 +7,7 @@ export default class DbHelper {
         DbHelper.db.transaction(tx => {
             tx.executeSql("CREATE TABLE IF NOT EXISTS goods(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(32), expiry DATE, image TEXT, notifications BLOB)", []);
             tx.executeSql("CREATE TABLE IF NOT EXISTS downloads(id INTEGER PRIMARY KEY AUTOINCREMENT, type VARCHAR(16), uri TEXT, foreign_key INTEGER)");
+            tx.executeSql("CREATE TABLE IF NOT EXISTS nearby_datas(name VARCHAR(32), expiry DATE, distance REAL, id INTEGER, is_requested_by_me INTEGER, latitude REAL, longitude REAL)");
         });
     }
 
@@ -26,7 +27,7 @@ export default class DbHelper {
         });
     }
 
-    static deleteGoods() {
+    static deleteMyGoods() {
         DbHelper.db.exec([{sql: "DROP TABLE goods", args: []}], false, () => {});
     }
 
@@ -44,5 +45,28 @@ export default class DbHelper {
 
     static deleteDownloads() {
         DbHelper.db.exec([{sql: "DELETE FROM downloads", args: []}], false, () => {});
+    }
+
+    static newNearbyGood(response: Array<{name: string, expiry: Date, distance: number, id: number, isRequestedByMe: boolean}>, latitude: number, longitude: number) {
+        DbHelper.deleteNearbyGood(() =>
+            DbHelper.db.transaction(tx => {response.forEach(good =>
+                tx.executeSql("INSERT into nearby_datas(name, expiry, distance, id, is_requested_by_me, latitude, longitude) values(?, ?, ?, ?, ?, ?, ?)", [good.name, good.expiry.toISOString(), good.distance, good.id, good.isRequestedByMe ? 1 : 0, latitude, longitude], () => {}, () => true )
+            )})
+        );
+    }
+
+    static deleteNearbyGood(callback?: SQLite.SQLiteCallback) {
+        if (undefined == callback) {
+            callback = () => {};
+        }
+        DbHelper.db.exec([{sql: "DELETE FROM nearby_datas", args: []}], false, callback);
+    }
+
+    static fetchNearbyGood(lowerLatitude: number, lowerLongitude: number, upperLatitude: number, upperLongitude: number): Promise<Array<{name: string, expiry: Date, distance: number, id: number, isRequestedByMe: number}>> {
+        return new Promise(resolve => {
+            DbHelper.db.transaction(tx => tx.executeSql("SELECT name, expiry, distance, id, is_requested_by_me as isRequestedByMe FROM nearby_datas where ? <= latitude and latitude <= ? and ? <= longitude and longitude <= ?", [lowerLatitude, upperLatitude, lowerLongitude, upperLongitude], (_, { rows }) =>
+                resolve(rows._array)
+            ));
+        });
     }
 }
