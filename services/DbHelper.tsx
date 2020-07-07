@@ -11,12 +11,16 @@ export default class DbHelper {
         });
     }
 
+    private static fromBoolean(value: boolean): number {
+        return value ? 1 : 0;
+    }
+
     static select1FromDual() {
         DbHelper.db.transaction(tx => tx.executeSql("SELECT * FROM sqlite_master WHERE type = 'table'", [], (_tr, { rows }) => console.log(rows)));
     }
 
     static insertGood(entity: any) {
-        DbHelper.db.transaction(tx => tx.executeSql("INSERT into goods(name, expiry, image, notifications) values(?, ?, ?, ?)", [entity.name, entity.expiry.toISOString(), entity.image, entity.notifications], () => {}, _error => { return true; }));
+        DbHelper.db.transaction(tx => tx.executeSql("INSERT INTO goods(name, expiry, image, notifications) values(?, ?, ?, ?)", [entity.name, entity.expiry.toISOString(), entity.image, entity.notifications], () => {}, _error => { return true; }));
     }
 
     static selectGoods() {
@@ -32,7 +36,7 @@ export default class DbHelper {
     }
 
     static newImage(uri: string, isSmall: boolean) {
-        DbHelper.db.transaction(tx => tx.executeSql("INSERT into downloads(type, uri) values(?, ?)", ["image-" + (isSmall ? "small" : "large"), uri], () => {}, () => true ));
+        DbHelper.db.transaction(tx => tx.executeSql("INSERT INTO downloads(type, uri) values(?, ?)", ["image-" + (isSmall ? "small" : "large"), uri], () => {}, () => true ));
     }
 
     static selectImages(): Promise<string[]> {
@@ -50,8 +54,14 @@ export default class DbHelper {
     static newNearbyGood(response: Array<{name: string, expiry: Date, distance: number, id: number, isRequestedByMe: boolean}>, latitude: number, longitude: number) {
         DbHelper.deleteNearbyGood(() =>
             DbHelper.db.transaction(tx => {response.forEach(good =>
-                tx.executeSql("INSERT into nearby_datas(name, expiry, distance, id, is_requested_by_me, latitude, longitude) values(?, ?, ?, ?, ?, ?, ?)", [good.name, good.expiry.toISOString(), good.distance, good.id, good.isRequestedByMe ? 1 : 0, latitude, longitude], () => {}, () => true )
+                tx.executeSql("INSERT INTO nearby_datas(name, expiry, distance, id, is_requested_by_me, latitude, longitude) values(?, ?, ?, ?, ?, ?, ?)", [good.name, good.expiry.toISOString(), good.distance, good.id, DbHelper.fromBoolean(good.isRequestedByMe), latitude, longitude], () => {}, () => true )
             )})
+        );
+    }
+
+    static updateNearbyGood(name: string, expiry: Date, distance: number, id: number, isRequestedByMe: boolean) {
+        DbHelper.db.transaction(tx =>
+            tx.executeSql("UPDATE nearby_datas SET name = ?, expiry = ?, distance = ?, is_requested_by_me = ? WHERE id = ?", [name, expiry.toISOString(), distance, DbHelper.fromBoolean(isRequestedByMe), id], () => {}, () => true )
         );
     }
 

@@ -43,6 +43,7 @@ export default class NearbyScreen extends React.Component {
         HttpClient.requestTheGood(this.tuple.token, this.tuple.goodId, message).then(_emptyResponse => {
             let object: any = this.state.ds.find((item: {id: number}) => (this.tuple.goodId == item.id));
             object!.isRequestedByMe = true;
+            DbHelper.updateNearbyGood(object.name, object.expiry, object.distance, object.id, object.isRequestedByMe);
             onComplete();
         })
         .catch(reason => ErrorAlert.alert(reason, onComplete));
@@ -82,10 +83,12 @@ export default class NearbyScreen extends React.Component {
             let position = await Utility.currentLocation();
             let token: string | null = await UserManager.getToken();
             var result: Dtos.GoodNearbyResponse[] = [];
+            var ex: Error = new EmptyResultException();
             try {
                 result = await HttpClient.listNearbyGood(token, position.latitude, position.longitude);
                 DbHelper.newNearbyGood(result, position.latitude, position.longitude);
             } catch(e) {
+                ex = e;
                 let cache = await DbHelper.fetchNearbyGood(
                     position.latitude - NearbyScreen.LATITUDE_THRESHOLD,
                     position.longitude - NearbyScreen.LONGITUDE_THRESHOLD,
@@ -95,7 +98,7 @@ export default class NearbyScreen extends React.Component {
                 result = cache.map(row => new Dtos.GoodNearbyResponse().buildFromValues(row.name, new Date(row.expiry), row.distance, row.id, 0 != row.isRequestedByMe));
             }
             if (0 == result.length) {
-                reject(new EmptyResultException());
+                reject(ex);
             }
             resolve(result);
         });
