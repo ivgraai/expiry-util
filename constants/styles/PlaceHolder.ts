@@ -1,5 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, PixelRatio } from "react-native";
 import Colors from "../Colors";
+import Layout from "../Layout";
 
 export const styles = StyleSheet.create({
     view: {
@@ -14,6 +15,7 @@ export const styles = StyleSheet.create({
     },
     text: {
         color: Colors.alternativeColor,
-        textAlign: "center"
+        textAlign: "center",
+        fontSize: PixelRatio.getFontScale() * Layout.largerFontSize
     }
 });
