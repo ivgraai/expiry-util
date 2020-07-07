@@ -5,7 +5,7 @@ export default class DbHelper {
 
     static initialize() {
         DbHelper.db.transaction(tx => {
-            tx.executeSql("CREATE TABLE IF NOT EXISTS goods(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(32), expiry DATE, image TEXT, notifications BLOB)", []);
+            tx.executeSql("CREATE TABLE IF NOT EXISTS goods(id INTEGER, name VARCHAR(32), expiry DATE, notifications BLOB, image TEXT)", []);
             tx.executeSql("CREATE TABLE IF NOT EXISTS downloads(id INTEGER PRIMARY KEY AUTOINCREMENT, type VARCHAR(16), uri TEXT, foreign_key INTEGER)");
             tx.executeSql("CREATE TABLE IF NOT EXISTS nearby_datas(name VARCHAR(32), expiry DATE, distance REAL, id INTEGER, is_requested_by_me INTEGER, latitude REAL, longitude REAL)");
         });
@@ -19,8 +19,8 @@ export default class DbHelper {
         DbHelper.db.transaction(tx => tx.executeSql("SELECT * FROM sqlite_master WHERE type = 'table'", [], (_tr, { rows }) => console.log(rows)));
     }
 
-    static insertGood(entity: any) {
-        DbHelper.db.transaction(tx => tx.executeSql("INSERT INTO goods(name, expiry, image, notifications) values(?, ?, ?, ?)", [entity.name, entity.expiry.toISOString(), entity.image, entity.notifications], () => {}, _error => { return true; }));
+    static insertGood(entity: any, callback?: () => void) {
+        DbHelper.db.transaction(tx => tx.executeSql("INSERT INTO goods(name, expiry, notifications, image) values(?, ?, ?, ?)", [entity.name, entity.expiry.toISOString(), entity.notifications, entity.image], () => {}, _error => { return true; }), undefined, callback);
     }
 
     static selectGoods() {
@@ -32,7 +32,7 @@ export default class DbHelper {
     }
 
     static deleteMyGoods() {
-        DbHelper.db.exec([{sql: "DROP TABLE goods", args: []}], false, () => {});
+        DbHelper.db.exec([{sql: "DELETE FROM goods", args: []}], false, () => {});
     }
 
     static newImage(uri: string, isSmall: boolean) {

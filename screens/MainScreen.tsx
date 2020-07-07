@@ -137,13 +137,14 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
 
       UserManager.getToken().then(token => {
         let available = this.props.available;
+        var caching = () => DbHelper.insertGood({
+          name: objectGoods,
+          expiry: temp,
+          notifications: localNotificationIds.toString(),
+          image: objectPhoto
+        }, () => this.showDialog());
         if (null == token) {
-          /* DbHelper.insertGood({
-            name: objectGoods,
-            expiry: temp,
-            image: objectPhoto,
-            notifications: localNotificationIds.toString()
-          }); */
+          caching();
         } else {
           HttpClient.addGood(
             token,
@@ -154,8 +155,8 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
             available,
             objectPhoto ? Utility.convertImageToDto(objectPhoto) : null
           )
-          .then(_value => this.showDialog())
-          .catch(reason => ErrorAlert.alert(reason));
+          .catch(reason => ErrorAlert.alert(reason))
+          .finally(caching);
         }
       });
 
