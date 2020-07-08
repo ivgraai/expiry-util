@@ -1,6 +1,7 @@
 import Constants from "expo-constants";
 import { AsyncStorage } from "react-native";
 import Utility from "../common/Utility";
+import DbHelper from "./DbHelper";
 
 export default class CacheHandler {
     private static readonly EVICTION_FREQUENCY: string = Constants.manifest.extra.cache.dataEvictionFrequency;
@@ -10,6 +11,8 @@ export default class CacheHandler {
     public static clear() {
         AsyncStorage.removeItem(CacheHandler.MINE_GOODS_DATE);
         AsyncStorage.removeItem(CacheHandler.NEARBY_GOODS_DATE);
+        DbHelper.deleteMyGoods(true);
+        DbHelper.deleteNearbyGood(true);
     }
 
     public static refreshMineGoods() {
@@ -33,7 +36,7 @@ export default class CacheHandler {
     }
 
     private static validate(now: Date, value: string | null): boolean {
-        return !value ? false :
+        return !value ? true :
             (Utility.calculateURLCacheValue(CacheHandler.EVICTION_FREQUENCY, now) ==
             Utility.calculateURLCacheValue(CacheHandler.EVICTION_FREQUENCY, new Date(value)));
     }

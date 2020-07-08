@@ -66,9 +66,11 @@ export default class AllScreen extends React.Component {
   }
 
   saveToCache(result: Dtos.GoodAllResponse[]) {
-    DbHelper.insertGoods(result.map(a =>
-      ({name: a.name, expiry: a.expiry, notifications: null, image: null, id: a.id, isRequestedByOther: a.isRequestedByOther})
-    ), () => CacheHandler.refreshMineGoods());
+    try {
+      DbHelper.insertGoods(result.map(a =>
+        ({name: a.name, expiry: a.expiry, notifications: null, image: null, id: a.id, isRequestedByOther: a.isRequestedByOther})
+      ), () => CacheHandler.refreshMineGoods());
+    } catch { }
   }
 
   renderIsRequested(id: number, isRequestedByOther: boolean) {

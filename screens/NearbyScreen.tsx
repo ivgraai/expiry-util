@@ -85,9 +85,9 @@ export default class NearbyScreen extends React.Component {
             let token: string | null = await UserManager.getToken();
             var result: Dtos.GoodNearbyResponse[] = [];
             var ex: Error = new EmptyResultException();
+            var cached: boolean = false;
             try {
                 result = await HttpClient.listNearbyGood(token, position.latitude, position.longitude);
-                DbHelper.newNearbyGood(result, position.latitude, position.longitude, () => CacheHandler.refreshNearbyGoods());
             } catch(e) {
                 ex = e;
                 if (await CacheHandler.isNearbyGoodsStillValid()) {
@@ -97,8 +97,12 @@ export default class NearbyScreen extends React.Component {
                         position.latitude + NearbyScreen.LATITUDE_THRESHOLD,
                         position.longitude + NearbyScreen.LONGITUDE_THRESHOLD
                     );
+                    cached = true;
                     result = cache.map(row => new Dtos.GoodNearbyResponse().buildFromValues(row.name, new Date(row.expiry), row.distance, row.id, 0 != row.isRequestedByMe));
                 }
+            }
+            if (!cached) {
+                DbHelper.newNearbyGood(result, position.latitude, position.longitude, () => CacheHandler.refreshNearbyGoods());
             }
             if (0 == result.length) {
                 reject(ex);
