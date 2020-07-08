@@ -43,12 +43,12 @@ export default class DbHelper {
         DbHelper.db.transaction(tx => DbHelper._insertGood(entity, tx), undefined, callback);
     }
 
-    static insertGoods(entities: Array<{name: string, expiry: Date, notifications: string | null, image: string | null, id: number, isRequestedByOther: boolean}>) {
+    static insertGoods(entities: Array<{name: string, expiry: Date, notifications: string | null, image: string | null, id: number, isRequestedByOther: boolean}>, callback?: () => void) {
         DbHelper.db.transaction(tx =>
             DbHelper._deleteMyGoods(false, () =>
                 entities.forEach(entity => DbHelper._insertGood(entity, tx)),
-            tx)
-        );
+            tx),
+        undefined, callback);
     }
 
     static selectGoods(): Promise<Array<{id: number, name: string, expiry: string, notifications: string | null, image: string | null, isRequestedByOther: number}>> {
@@ -83,12 +83,12 @@ export default class DbHelper {
         DbHelper.db.exec([{sql: "DROP TABLE downloads", args: []}], false, () => {});
     }
 
-    static newNearbyGood(response: Array<{name: string, expiry: Date, distance: number, id: number, isRequestedByMe: boolean}>, latitude: number, longitude: number) {
+    static newNearbyGood(response: Array<{name: string, expiry: Date, distance: number, id: number, isRequestedByMe: boolean}>, latitude: number, longitude: number, callback?: () => void) {
         DbHelper.db.transaction(tx => {
             DbHelper._deleteNearbyGood(false, () => response.forEach(good =>
                 tx.executeSql("INSERT INTO nearby_datas(name, expiry, distance, id, is_requested_by_me, latitude, longitude) VALUES(?, ?, ?, ?, ?, ?, ?)", [good.name, good.expiry.toISOString(), good.distance, good.id, DbHelper.fromBoolean(good.isRequestedByMe), latitude, longitude], () => {}, () => true ),
             ), tx)
-        });
+        }, undefined, callback);
     }
 
     static updateNearbyGood(name: string, expiry: Date, distance: number, id: number, isRequestedByMe: boolean) {

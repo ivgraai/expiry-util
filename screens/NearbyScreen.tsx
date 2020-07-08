@@ -15,6 +15,7 @@ import Colors from "../constants/Colors";
 import { styles } from "../constants/styles/NearbyScreen";
 import DbHelper from "../services/DbHelper";
 import EmptyResultException from "../common/errors/EmptyResultException";
+import CacheHandler from "../services/CacheHandler";
 
 export default class NearbyScreen extends React.Component {
     static navigationOptions = {
@@ -86,16 +87,18 @@ export default class NearbyScreen extends React.Component {
             var ex: Error = new EmptyResultException();
             try {
                 result = await HttpClient.listNearbyGood(token, position.latitude, position.longitude);
-                DbHelper.newNearbyGood(result, position.latitude, position.longitude);
+                DbHelper.newNearbyGood(result, position.latitude, position.longitude, () => CacheHandler.refreshNearbyGoods());
             } catch(e) {
                 ex = e;
-                let cache = await DbHelper.fetchNearbyGood(
-                    position.latitude - NearbyScreen.LATITUDE_THRESHOLD,
-                    position.longitude - NearbyScreen.LONGITUDE_THRESHOLD,
-                    position.latitude + NearbyScreen.LATITUDE_THRESHOLD,
-                    position.longitude + NearbyScreen.LONGITUDE_THRESHOLD
-                );
-                result = cache.map(row => new Dtos.GoodNearbyResponse().buildFromValues(row.name, new Date(row.expiry), row.distance, row.id, 0 != row.isRequestedByMe));
+                if (await CacheHandler.isNearbyGoodsStillValid()) {
+                    let cache = await DbHelper.fetchNearbyGood(
+                        position.latitude - NearbyScreen.LATITUDE_THRESHOLD,
+                        position.longitude - NearbyScreen.LONGITUDE_THRESHOLD,
+                        position.latitude + NearbyScreen.LATITUDE_THRESHOLD,
+                        position.longitude + NearbyScreen.LONGITUDE_THRESHOLD
+                    );
+                    result = cache.map(row => new Dtos.GoodNearbyResponse().buildFromValues(row.name, new Date(row.expiry), row.distance, row.id, 0 != row.isRequestedByMe));
+                }
             }
             if (0 == result.length) {
                 reject(ex);

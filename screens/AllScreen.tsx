@@ -13,6 +13,7 @@ import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
 import DbHelper from "../services/DbHelper";
 import Colors from "../constants/Colors";
+import CacheHandler from "../services/CacheHandler";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
@@ -53,17 +54,21 @@ export default class AllScreen extends React.Component {
   }
 
   retrieveFromCache() {
-    DbHelper.selectGoods().then(result =>
-      this.updateState(result.map(a => {
-          return { ...a, expiry: new Date(a.expiry), image: (a.id ? AllScreen.IMAGE_SOURCE_FUNCTION(a.id) : a.image) };
-        }))
-    );
+    CacheHandler.isMineGoodsStillValid().then(condition => {
+      if (condition) {
+        DbHelper.selectGoods().then(result =>
+          this.updateState(result.map(a => {
+              return { ...a, expiry: new Date(a.expiry), image: (a.id ? AllScreen.IMAGE_SOURCE_FUNCTION(a.id) : a.image) };
+            }))
+        );
+      }
+    });
   }
 
   saveToCache(result: Dtos.GoodAllResponse[]) {
     DbHelper.insertGoods(result.map(a =>
       ({name: a.name, expiry: a.expiry, notifications: null, image: null, id: a.id, isRequestedByOther: a.isRequestedByOther})
-    ));
+    ), () => CacheHandler.refreshMineGoods());
   }
 
   renderIsRequested(id: number, isRequestedByOther: boolean) {

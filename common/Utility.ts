@@ -2,6 +2,7 @@ import Constants from "expo-constants";
 import * as Location from "expo-location";
 import { ImageRequest, SizeRequest, Address } from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
+import moment from "moment";
 
 export default class Utility {
     private static readonly EVICTION_FREQUENCY: string = Constants.manifest.extra.cache.imageEvictionFrequency;
@@ -14,10 +15,11 @@ export default class Utility {
         return new ImageRequest(nameAndFormat, 'image/' + parts[1], uri);
     }
 
-    static calculateURLCacheValue(evictionFrequency: string): string {
-        var now = new Date();
+    static calculateURLCacheValue(evictionFrequency: string, now: Date = new Date()): string {
         switch (evictionFrequency) {
             case 'daily':   return now.toLocaleDateString();
+            case 'weekly':  return String(moment(now).week());
+            case 'monthly': return String(now.getMonth());
             case 'yearly':  return now.getFullYear().toString();
             default:        return now.toISOString();
         }

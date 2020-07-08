@@ -12,6 +12,7 @@ import * as FileSystem from 'expo-file-system';
 import AppNavigator from './navigation/AppNavigator';
 import DbHelper from './services/DbHelper';
 import UserManager from './services/UserManager';
+import CacheHandler from './services/CacheHandler';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -64,6 +65,7 @@ if (Constants.manifest.extra.init) {
     list.forEach(fileUri => FileSystem.deleteAsync(fileUri, {idempotent: true}));
     DbHelper.deleteDownloads();
   });
+  CacheHandler.clear();
   UserManager.removeToken();
 }
 
