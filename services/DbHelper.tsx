@@ -15,8 +15,12 @@ export default class DbHelper {
         return value ? 1 : 0;
     }
 
-    private static deleteOrDropTable(isDeletion: boolean, tableName: string, callback?: SQLite.SQLiteCallback) {
-        DbHelper.db.exec([{sql: (isDeletion ? "DELETE FROM " : "DROP TABLE ") + tableName, args: []}], false, !callback ? () => {} : callback);
+    private static deleteOrDropTable(isDeletion: boolean, tableName: string, callback?: () => void, transaction?: SQLTransaction) {
+        if (undefined == transaction) {
+            DbHelper.db.transaction(tx => tx.executeSql((isDeletion ? "DELETE FROM " : "DROP TABLE ") + tableName), undefined, callback);
+        } else {
+            DbHelper.db.exec([{sql: (isDeletion ? "DELETE FROM " : "DROP TABLE ") + tableName, args: []}], false, !callback ? () => {} : callback);
+        }
     }
 
     private static fromRowList(rows: SQLResultSetRowList): Array<any> {
@@ -31,20 +35,19 @@ export default class DbHelper {
         DbHelper.db.transaction(tx => tx.executeSql("SELECT * FROM sqlite_master WHERE type = 'table'", [], (_tr, { rows }) => console.log(rows)));
     }
 
-    static insertGood(entity: any, callback?: () => void, tx?: SQLTransaction) {
-        var consumer = (transaction: SQLTransaction) => transaction.executeSql("INSERT INTO goods(name, expiry, notifications, image, id, is_requested_by_other) VALUES(?, ?, ?, ?, ?, ?)", [entity.name, entity.expiry.toISOString(), entity.notifications, entity.image, entity.id, entity.isRequestedByOther], () => {}, _error => { return true; });
-        if (undefined == tx) {
-            DbHelper.db.transaction(tx => consumer(tx), undefined, callback);
-        } else {
-            consumer(tx);
-        }
+    private static _insertGood(entity: any, tx: SQLTransaction) {
+        tx.executeSql("INSERT INTO goods(name, expiry, notifications, image, id, is_requested_by_other) VALUES(?, ?, ?, ?, ?, ?)", [entity.name, entity.expiry.toISOString(), entity.notifications, entity.image, entity.id, entity.isRequestedByOther], () => {}, _error => { return true; });
+    }
+
+    static insertGood(entity: any, callback?: () => void) {
+        DbHelper.db.transaction(tx => DbHelper._insertGood(entity, tx), undefined, callback);
     }
 
     static insertGoods(entities: Array<{name: string, expiry: Date, notifications: string | null, image: string | null, id: number, isRequestedByOther: boolean}>) {
-        DbHelper.deleteMyGoods(false, () =>
-            DbHelper.db.transaction(tx =>
-                entities.forEach(entity => DbHelper.insertGood(entity, undefined, tx))
-            )
+        DbHelper.db.transaction(tx =>
+            DbHelper._deleteMyGoods(false, () =>
+                entities.forEach(entity => DbHelper._insertGood(entity, tx)),
+            tx)
         );
     }
 
@@ -56,8 +59,12 @@ export default class DbHelper {
         });
     }
 
-    static deleteMyGoods(asWellTheTable: boolean, callback?: SQLite.SQLiteCallback) {
-        DbHelper.deleteOrDropTable(!asWellTheTable, "goods", callback);
+    private static _deleteMyGoods(asWellTheTable: boolean, callback?: () => void, tx?: SQLTransaction) {
+        DbHelper.deleteOrDropTable(!asWellTheTable, "goods", callback, tx);
+    }
+
+    static deleteMyGoods(asWellTheTable: boolean, callback?: () => void) {
+        DbHelper._deleteMyGoods(asWellTheTable, callback);
     }
 
     static newImage(uri: string, isSmall: boolean) {
@@ -77,11 +84,11 @@ export default class DbHelper {
     }
 
     static newNearbyGood(response: Array<{name: string, expiry: Date, distance: number, id: number, isRequestedByMe: boolean}>, latitude: number, longitude: number) {
-        DbHelper.deleteNearbyGood(false, () =>
-            DbHelper.db.transaction(tx => {response.forEach(good =>
-                tx.executeSql("INSERT INTO nearby_datas(name, expiry, distance, id, is_requested_by_me, latitude, longitude) VALUES(?, ?, ?, ?, ?, ?, ?)", [good.name, good.expiry.toISOString(), good.distance, good.id, DbHelper.fromBoolean(good.isRequestedByMe), latitude, longitude], () => {}, () => true )
-            )})
-        );
+        DbHelper.db.transaction(tx => {
+            DbHelper._deleteNearbyGood(false, () => response.forEach(good =>
+                tx.executeSql("INSERT INTO nearby_datas(name, expiry, distance, id, is_requested_by_me, latitude, longitude) VALUES(?, ?, ?, ?, ?, ?, ?)", [good.name, good.expiry.toISOString(), good.distance, good.id, DbHelper.fromBoolean(good.isRequestedByMe), latitude, longitude], () => {}, () => true ),
+            ), tx)
+        });
     }
 
     static updateNearbyGood(name: string, expiry: Date, distance: number, id: number, isRequestedByMe: boolean) {
@@ -90,8 +97,12 @@ export default class DbHelper {
         );
     }
 
-    static deleteNearbyGood(asWellTheTable: boolean, callback?: SQLite.SQLiteCallback) {
-        DbHelper.deleteOrDropTable(!asWellTheTable, "nearby_datas", callback);
+    private static _deleteNearbyGood(asWellTheTable: boolean, callback?: () => void, tx?: SQLTransaction) {
+        DbHelper.deleteOrDropTable(!asWellTheTable, "nearby_datas", callback, tx);
+    }
+
+    static deleteNearbyGood(asWellTheTable: boolean, callback?: () => void) {
+        DbHelper._deleteNearbyGood(asWellTheTable, callback);
     }
 
     static fetchNearbyGood(lowerLatitude: number, lowerLongitude: number, upperLatitude: number, upperLongitude: number): Promise<Array<{name: string, expiry: Date, distance: number, id: number, isRequestedByMe: number}>> {
