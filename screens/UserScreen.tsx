@@ -82,7 +82,7 @@ class UserScreen extends React.Component<IProps, IState> {
         HttpClient.login(this.name, this.password)
             .then(response => {
                 if (typeof response === 'string') {
-                    // DbHelper.deleteMyGoods(false);
+                    DbHelper.deleteMyGoods(false);
                     UserManager.setToken(response);
                     let action = this.props.navigation.getParam('stackAction');
                     this.props.navigation.dispatch(action);
