@@ -5,34 +5,51 @@ export default class DbHelper {
 
     static initialize() {
         DbHelper.db.transaction(tx => {
-            tx.executeSql("CREATE TABLE IF NOT EXISTS goods(id INTEGER, name VARCHAR(32), expiry DATE, notifications BLOB, image TEXT)", []);
+            tx.executeSql("CREATE TABLE IF NOT EXISTS goods(id INTEGER, name VARCHAR(32), expiry DATE, notifications BLOB, image TEXT, is_requested_by_other INTEGER)", []);
             tx.executeSql("CREATE TABLE IF NOT EXISTS downloads(id INTEGER PRIMARY KEY AUTOINCREMENT, type VARCHAR(16), uri TEXT, foreign_key INTEGER)");
             tx.executeSql("CREATE TABLE IF NOT EXISTS nearby_datas(name VARCHAR(32), expiry DATE, distance REAL, id INTEGER, is_requested_by_me INTEGER, latitude REAL, longitude REAL)");
         });
     }
 
-    private static fromBoolean(value: boolean): number {
+    private static fromBoolean(value: boolean | undefined): number {
         return value ? 1 : 0;
+    }
+
+    private static deleteOrDropTable(isDeletion: boolean, tableName: string, callback?: SQLite.SQLiteCallback) {
+        DbHelper.db.exec([{sql: (isDeletion ? "DELETE FROM " : "DROP TABLE ") + tableName, args: []}], false, !callback ? () => {} : callback);
     }
 
     static select1FromDual() {
         DbHelper.db.transaction(tx => tx.executeSql("SELECT * FROM sqlite_master WHERE type = 'table'", [], (_tr, { rows }) => console.log(rows)));
     }
 
-    static insertGood(entity: any, callback?: () => void) {
-        DbHelper.db.transaction(tx => tx.executeSql("INSERT INTO goods(name, expiry, notifications, image) VALUES(?, ?, ?, ?)", [entity.name, entity.expiry.toISOString(), entity.notifications, entity.image], () => {}, _error => { return true; }), undefined, callback);
+    static insertGood(entity: any, callback?: () => void, tx?: SQLTransaction) {
+        var consumer = (transaction: SQLTransaction) => transaction.executeSql("INSERT INTO goods(name, expiry, notifications, image, id, is_requested_by_other) VALUES(?, ?, ?, ?, ?, ?)", [entity.name, entity.expiry.toISOString(), entity.notifications, entity.image, entity.id, entity.isRequestedByOther], () => {}, _error => { return true; });
+        if (undefined == tx) {
+            DbHelper.db.transaction(tx => consumer(tx), undefined, callback);
+        } else {
+            consumer(tx);
+        }
     }
 
-    static selectGoods(): Promise<Array<{id: number, name: string, expiry: string, image: string}>> {
+    static insertGoods(entities: Array<{name: string, expiry: Date, notifications: string | null, image: string | null, id: number, isRequestedByOther: boolean}>) {
+        DbHelper.deleteMyGoods(false, () =>
+            DbHelper.db.transaction(tx =>
+                entities.forEach(entity => DbHelper.insertGood(entity, undefined, tx))
+            )
+        );
+    }
+
+    static selectGoods(): Promise<Array<{id: number, name: string, expiry: string, notifications: string | null, image: string | null, isRequestedByOther: number}>> {
         return new Promise(function(resolve, _reject) {
-            DbHelper.db.transaction(tx => tx.executeSql("SELECT id, name, expiry, image FROM goods", [], (_, { rows }) =>
+            DbHelper.db.transaction(tx => tx.executeSql("SELECT id, name, expiry, notifications, image, is_requested_by_other AS isRequestedByOther FROM goods", [], (_, { rows }) =>
                 resolve(rows._array)
             ));
         });
     }
 
-    static deleteMyGoods(asWellTheTable: boolean) {
-        DbHelper.db.exec([{sql: (asWellTheTable ? "DROP TABLE" : "DELETE FROM") + " goods", args: []}], false, () => {});
+    static deleteMyGoods(asWellTheTable: boolean, callback?: SQLite.SQLiteCallback) {
+        DbHelper.deleteOrDropTable(!asWellTheTable, "goods", callback);
     }
 
     static newImage(uri: string, isSmall: boolean) {
@@ -66,10 +83,7 @@ export default class DbHelper {
     }
 
     static deleteNearbyGood(asWellTheTable: boolean, callback?: SQLite.SQLiteCallback) {
-        if (undefined == callback) {
-            callback = () => {};
-        }
-        DbHelper.db.exec([{sql: (asWellTheTable ? "DROP TABLE" : "DELETE FROM") + " nearby_datas", args: []}], false, callback);
+        DbHelper.deleteOrDropTable(!asWellTheTable, "nearby_datas", callback);
     }
 
     static fetchNearbyGood(lowerLatitude: number, lowerLongitude: number, upperLatitude: number, upperLongitude: number): Promise<Array<{name: string, expiry: Date, distance: number, id: number, isRequestedByMe: number}>> {

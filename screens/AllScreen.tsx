@@ -18,31 +18,53 @@ export default class AllScreen extends React.Component {
   static navigationOptions = {
     title: i18n.all
   };
+  private static readonly IMAGE_SOURCE_FUNCTION = (id: number) => Utility.remoteURI('', id, SizeRequest.small);
 
   constructor() {
     super();
     this.state = {
-      dataSource: [ ],
-      loading: true
+      dataSource: [ ]
     };
   }
 
   componentDidMount() {
-    DbHelper.selectGoods()
-    /* UserManager.getToken().then(token => {
-      HttpClient.listAllGood(token) */
-        .then(result => {
-          this.setState({
-            dataSource:
-              result.map(a => {
-                  return { ...a, expiry: new Date(a.expiry) /* image: Utility.remoteURI('', a.id, SizeRequest.small) */ };
-                })
-                .sort((a, b) => a.expiry.getTime() - b.expiry.getTime()),
-            loading: false
-          });
-        })
-        /* .catch(reason => ErrorAlert.alert(reason));
-    }); */
+    UserManager.getToken().then(token => {
+      if (null == token) {
+        this.retrieveFromCache();
+      } else {
+        HttpClient.listAllGood(token)
+          .then(result => {
+            this.saveToCache(result);
+            this.updateState(result.map(a => {
+                return { ...a, image: AllScreen.IMAGE_SOURCE_FUNCTION(a.id) };
+              }));
+          })
+          .catch(reason => ErrorAlert.alert(reason, () =>
+            this.retrieveFromCache()
+          ));
+      }
+    });
+    // empty result exception
+  }
+
+  updateState(result: Array<{expiry: Date}>) {
+    this.setState({
+      dataSource: result.sort((a, b) => a.expiry.getTime() - b.expiry.getTime())
+    })
+  }
+
+  retrieveFromCache() {
+    DbHelper.selectGoods().then(result =>
+      this.updateState(result.map(a => {
+          return { ...a, expiry: new Date(a.expiry), image: (a.id ? AllScreen.IMAGE_SOURCE_FUNCTION(a.id) : a.image) };
+        }))
+    );
+  }
+
+  saveToCache(result: Dtos.GoodAllResponse[]) {
+    DbHelper.insertGoods(result.map(a =>
+      ({name: a.name, expiry: a.expiry, notifications: null, image: null, id: a.id, isRequestedByOther: a.isRequestedByOther})
+    ));
   }
 
   renderIsRequested(id: number, isRequestedByOther: boolean) {
@@ -54,7 +76,7 @@ export default class AllScreen extends React.Component {
 
   render() {
     var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
-    return (this.state.loading ?
+    return ((0 == this.state.dataSource.length) ?
         <PlaceHolder text={i18n.yourGoodsAreNotFound.capitalize()} /> :
         <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />
       );

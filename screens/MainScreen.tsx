@@ -19,7 +19,6 @@ import HttpClient from "../services/HttpClient";
 import DbHelper from "../services/DbHelper";
 import Utility from "../common/Utility";
 import { dateTimePickerHeader, dateTimePickerConfirmButton, dateTimePickerCancelButton } from "../components/DateTimePickerModal";
-import * as ErrorAlert from "../components/ErrorAlert";
 import { StackActions, ThemeContext } from "react-navigation";
 import { styles } from "../constants/styles/MainScreen";
 import Colors from "../constants/Colors";
@@ -155,7 +154,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
             available,
             objectPhoto ? Utility.convertImageToDto(objectPhoto) : null
           )
-          .catch(reason => ErrorAlert.alert(reason))
+          .catch(_reason => {})
           .finally(caching);
         }
       });
