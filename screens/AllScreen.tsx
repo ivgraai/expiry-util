@@ -44,7 +44,6 @@ export default class AllScreen extends React.Component {
           ));
       }
     });
-    // empty result exception
   }
 
   updateState(result: Array<{expiry: Date}>) {

@@ -19,6 +19,14 @@ export default class DbHelper {
         DbHelper.db.exec([{sql: (isDeletion ? "DELETE FROM " : "DROP TABLE ") + tableName, args: []}], false, !callback ? () => {} : callback);
     }
 
+    private static fromRowList(rows: SQLResultSetRowList): Array<any> {
+        var collection = [];
+        for (let i = 0; i < rows.length; ++i) {
+            collection.push(rows.item(i));
+        }
+        return collection;
+    }
+
     static select1FromDual() {
         DbHelper.db.transaction(tx => tx.executeSql("SELECT * FROM sqlite_master WHERE type = 'table'", [], (_tr, { rows }) => console.log(rows)));
     }
@@ -43,7 +51,7 @@ export default class DbHelper {
     static selectGoods(): Promise<Array<{id: number, name: string, expiry: string, notifications: string | null, image: string | null, isRequestedByOther: number}>> {
         return new Promise(function(resolve, _reject) {
             DbHelper.db.transaction(tx => tx.executeSql("SELECT id, name, expiry, notifications, image, is_requested_by_other AS isRequestedByOther FROM goods", [], (_, { rows }) =>
-                resolve(rows._array)
+                resolve(DbHelper.fromRowList(rows))
             ));
         });
     }
@@ -89,7 +97,7 @@ export default class DbHelper {
     static fetchNearbyGood(lowerLatitude: number, lowerLongitude: number, upperLatitude: number, upperLongitude: number): Promise<Array<{name: string, expiry: Date, distance: number, id: number, isRequestedByMe: number}>> {
         return new Promise(resolve => {
             DbHelper.db.transaction(tx => tx.executeSql("SELECT name, expiry, distance, id, is_requested_by_me AS isRequestedByMe FROM nearby_datas WHERE ? <= latitude AND latitude <= ? AND ? <= longitude AND longitude <= ?", [lowerLatitude, upperLatitude, lowerLongitude, upperLongitude], (_, { rows }) =>
-                resolve(rows._array)
+                resolve(DbHelper.fromRowList(rows))
             ));
         });
     }
