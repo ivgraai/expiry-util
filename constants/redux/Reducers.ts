@@ -1,4 +1,5 @@
-import { CHOOSE_IMAGE, CANCEL_CHOSEN_IMAGE, EDIT_GOOD, SET_EXPIRY, CHECK_AVAILABLE, PICK_LOCATION, RESET_ALL } from './Types';
+import * as Types from './Types';
+import CacheHandler from '../../services/CacheHandler';
 
 // In Redux, the state of the whole application is represented by one JavaScript object.
 
@@ -76,25 +77,33 @@ function applyResetAll(_: IState) {
     return defaultState;
 }
 
+function applyRequestGood(state: IState, object: any) {
+    // TODO: Other logic should be here as well.
+    CacheHandler.requestNearbyGood(object);
+    return state;
+}
+
 // The receiver of the action is known as a reducer. Whenever an action is triggered, the state of the application changes. The handling of the application’s state is done by the reducers.
 // A reducer is a pure function that calculates the next state based on the initial or previous state. It always produces the same output if the state is unchanged.
 
 function reducer(state = initialState, action: any) {
     switch (action.type) {
-        case CHOOSE_IMAGE:
+        case Types.CHOOSE_IMAGE:
             return applyChooseImage(state, action.uri);
-        case CANCEL_CHOSEN_IMAGE:
+        case Types.CANCEL_CHOSEN_IMAGE:
             return applyCancelChosenImage(state);
-        case EDIT_GOOD:
+        case Types.EDIT_GOOD:
             return applyEditGood(state, action.parameter);
-        case SET_EXPIRY:
+        case Types.SET_EXPIRY:
             return applySetExpiry(state, action.expiry);
-        case CHECK_AVAILABLE:
+        case Types.CHECK_AVAILABLE:
             return applyCheckAvailable(state);
-        case PICK_LOCATION:
+        case Types.PICK_LOCATION:
             return applyPickLocation(state, action.location);
-        case RESET_ALL:
+        case Types.RESET_ALL:
             return applyResetAll(state);
+        case Types.REQUEST_GOOD:
+            return applyRequestGood(state, action.good);
         default:
             return state;
     }

@@ -32,6 +32,10 @@ export default class CacheHandler {
         AsyncStorage.setItem(this.NEARBY_GOODS_DATE, new Date().toISOString());
     }
 
+    public static requestNearbyGood(good: {name: string, expiry: Date, distance: number, id: number}) {
+        DbHelper.updateNearbyGood(good.name, good.expiry, good.distance, good.id, true);
+    }
+
     public static async isMineGoodsStillValid(): Promise<boolean> {
         let now = new Date();
         const value = await AsyncStorage.getItem(this.MINE_GOODS_DATE);

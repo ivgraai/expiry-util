@@ -17,7 +17,10 @@ import DbHelper from "../services/DbHelper";
 import EmptyResultException from "../common/errors/EmptyResultException";
 import CacheHandler from "../services/CacheHandler";
 
-export default class NearbyScreen extends React.Component {
+import { connect } from "react-redux";
+import * as conn from "../constants/redux/Connection_Nearby";
+
+class NearbyScreen extends React.Component {
     static navigationOptions = {
       title: i18n.nearby
     };
@@ -44,7 +47,7 @@ export default class NearbyScreen extends React.Component {
         HttpClient.requestTheGood(this.tuple.token, this.tuple.goodId, message).then(_emptyResponse => {
             let object: any = this.state.ds.find((item: {id: number}) => (this.tuple.goodId == item.id));
             object!.isRequestedByMe = true;
-            DbHelper.updateNearbyGood(object.name, object.expiry, object.distance, object.id, object.isRequestedByMe);
+            this.props.requestGood(object);
             onComplete();
         })
         .catch(reason => ErrorAlert.alert(reason, onComplete));
@@ -142,3 +145,5 @@ export default class NearbyScreen extends React.Component {
         </View>;
     }
 }
+
+export default connect(conn.mapStateToProps, conn.mapDispatchToProps)(NearbyScreen);
