@@ -56,6 +56,9 @@ export default class AllScreen extends React.Component {
   }
 
   retrieveFromCache() {
+    if (!CacheHandler.enabled()) {
+      return;
+    }
     CacheHandler.isMineGoodsStillValid().then(condition => {
       if (condition) {
         DbHelper.selectGoods().then(result =>

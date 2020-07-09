@@ -31,9 +31,12 @@
       "serverUrl": "http://192.168.8.104:8080/v1/",
       "cache": {
         "imageEvictionFrequency": "monthly",
-        "dataEvictionFrequency": "weekly",
-        "latitudeThreshold": 0.15,
-        "longitudeThreshold": 0.15
+        "data": {
+          "enabled": true,
+          "evictionFrequency": "weekly",
+          "latitudeThreshold": 0.15,
+          "longitudeThreshold": 0.15
+        }
       }
     },
     "userInterfaceStyle": "automatic"

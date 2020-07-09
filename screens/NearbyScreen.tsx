@@ -22,8 +22,8 @@ export default class NearbyScreen extends React.Component {
       title: i18n.nearby
     };
     static contextType = ThemeContext;
-    private static readonly LATITUDE_THRESHOLD: number = Constants.manifest.extra.cache.latitudeThreshold;
-    private static readonly LONGITUDE_THRESHOLD: number = Constants.manifest.extra.cache.longitudeThreshold;
+    private static readonly LATITUDE_THRESHOLD: number = Constants.manifest.extra.cache.data.latitudeThreshold;
+    private static readonly LONGITUDE_THRESHOLD: number = Constants.manifest.extra.cache.data.longitudeThreshold;
     private readonly DEFAULT_TUPLE_VALUE = {
         token: '',
         goodId: 0
@@ -90,7 +90,7 @@ export default class NearbyScreen extends React.Component {
                 result = await HttpClient.listNearbyGood(token, position.latitude, position.longitude);
             } catch(e) {
                 ex = e;
-                if (await CacheHandler.isNearbyGoodsStillValid()) {
+                if (CacheHandler.enabled() && await CacheHandler.isNearbyGoodsStillValid()) {
                     let cache = await DbHelper.fetchNearbyGood(
                         position.latitude - NearbyScreen.LATITUDE_THRESHOLD,
                         position.longitude - NearbyScreen.LONGITUDE_THRESHOLD,

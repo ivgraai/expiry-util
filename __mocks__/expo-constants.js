@@ -3,7 +3,8 @@ _default = {
         extra: {
             serverUrl: "https://ivgraai.ddns.net:443/v1/",
             cache: {
-                imageEvictionFrequency: "yearly"
+                imageEvictionFrequency: "yearly",
+                data: { }
             }
         }
     }
