@@ -24,6 +24,10 @@ export default class CacheHandler {
         AsyncStorage.setItem(this.MINE_GOODS_DATE, new Date().toISOString());
     }
 
+    public static clearMineGoods() {
+        DbHelper.deleteMyGoods(false);
+    }
+
     public static refreshNearbyGoods() {
         AsyncStorage.setItem(this.NEARBY_GOODS_DATE, new Date().toISOString());
     }

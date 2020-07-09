@@ -6,7 +6,7 @@ import StyledButton from '../components/StyledButton';
 import { i18n } from '../constants/Dictionary';
 import HttpClient from '../services/HttpClient';
 import UserManager from '../services/UserManager';
-import DbHelper from '../services/DbHelper';
+import CacheHandler from '../services/CacheHandler';
 import Utility from '../common/Utility';
 import { styles } from '../constants/styles/UserScreen';
 import validate from 'validate.js';
@@ -82,7 +82,7 @@ class UserScreen extends React.Component<IProps, IState> {
         HttpClient.login(this.name, this.password)
             .then(response => {
                 if (typeof response === 'string') {
-                    DbHelper.deleteMyGoods(false);
+                    CacheHandler.clearMineGoods();
                     UserManager.setToken(response);
                     let action = this.props.navigation.getParam('stackAction');
                     this.props.navigation.dispatch(action);
