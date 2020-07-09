@@ -49,11 +49,12 @@ export default class CachedImage extends Component {
     }
   }
   render() {
+    var placeholder = require('../assets/images/icon.png');
     if (this.props.isBackground) {
       return (
         <ImageBackground
           {...this.props}
-          source={this.state.imgURI ? {uri: this.state.imgURI} : null}
+          source={this.state.imgURI ? {uri: this.state.imgURI} : placeholder}
         >
           {this.props.children}
         </ImageBackground>);
@@ -61,7 +62,7 @@ export default class CachedImage extends Component {
       return (
         <Image
           {...this.props}
-          source={this.state.imgURI ? {uri: this.state.imgURI} : null}
+          source={this.state.imgURI ? {uri: this.state.imgURI} : placeholder}
         />
       );
     }

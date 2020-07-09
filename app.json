@@ -29,7 +29,15 @@
     "extra": {
       "init": false,
       "serverUrl": "http://192.168.8.104:8080/v1/",
-      "imageCacheEvictionFrequency": "daily"
+      "cache": {
+        "imageEvictionFrequency": "monthly",
+        "data": {
+          "enabled": true,
+          "evictionFrequency": "weekly",
+          "latitudeThreshold": 0.15,
+          "longitudeThreshold": 0.15
+        }
+      }
     },
     "userInterfaceStyle": "automatic"
   }

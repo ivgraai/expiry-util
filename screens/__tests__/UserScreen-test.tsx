@@ -17,6 +17,7 @@ class MockStorage {
     }));
 };
 jest.mock("react-native/Libraries/Storage/AsyncStorage", () => new MockStorage());
+jest.mock("../../services/DbHelper");
 
 it("signIn", async () => {
     expect.assertions(2);

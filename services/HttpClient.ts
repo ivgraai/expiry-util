@@ -105,7 +105,7 @@ export default class HttpClient {
                 Accept: 'application/json'
             }
         })
-        .then((response: any) => response.map((good: any) => new Dtos.GoodNearbyResponse(good, this.parseDate)));
+        .then((response: any) => response.map((good: any) => new Dtos.GoodNearbyResponse().buildFromObject(good, this.parseDate)));
     }
 
     public static requestTheGood(token: string, goodId: number, message: string): Promise<Response> {

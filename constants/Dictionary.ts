@@ -55,7 +55,8 @@ type TYPE = {
     unsupportedStatus: string,
     unsupportedContent: string,
     yourGoodsAreNotFound: string,
-    noGoodsAreAvailable: string
+    noGoodsAreAvailable: string,
+    resultSetIsEmpty: string
 };
 
 const en = {
@@ -112,7 +113,8 @@ const en = {
         unsupportedStatus:                                  'unsupported status',
         unsupportedContent:                                 'unsupported content',
         yourGoodsAreNotFound:                               'your goods are not found',
-        noGoodsAreAvailable:                                'no goods are available'
+        noGoodsAreAvailable:                                'no goods are available',
+        resultSetIsEmpty:                                   'result set is empty'
 };
 const MESSAGES: any = {
     en: en,
@@ -170,7 +172,8 @@ const MESSAGES: any = {
         unsupportedStatus:                                  'nem támogatott státusz',
         unsupportedContent:                                 'nem támogatott tartalom',
         yourGoodsAreNotFound:                               'az áruid nem találhatóak',
-        noGoodsAreAvailable:                                'nem érhetőek el áruk'
+        noGoodsAreAvailable:                                'nem érhetőek el áruk',
+        resultSetIsEmpty:                                   'üres eredményhalmaz'
     },
     fr: {
         add:                                                'ajouter',
@@ -226,7 +229,8 @@ const MESSAGES: any = {
         unsupportedStatus:                                  'statut non pris en charge',
         unsupportedContent:                                 'contenu non pris en charge',
         yourGoodsAreNotFound:                               'vos biens sont pas trouvés',
-        noGoodsAreAvailable:                                'aucune marchandise n\'est disponible'
+        noGoodsAreAvailable:                                'aucune marchandise n\'est disponible',
+        resultSetIsEmpty:                                   'le résultat est vide'
     },
     es: {
         add:                                                'agregar',
@@ -282,7 +286,8 @@ const MESSAGES: any = {
         unsupportedStatus:                                  'estado no soportado',
         unsupportedContent:                                 'contenido no soportado',
         yourGoodsAreNotFound:                               'sus bienes no se encuentran',
-        noGoodsAreAvailable:                                'no hay bienes disponibles'
+        noGoodsAreAvailable:                                'no hay bienes disponibles',
+        resultSetIsEmpty:                                   'el conjunto de resultados está vacío'
     },
     default: en
 };

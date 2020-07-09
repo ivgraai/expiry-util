@@ -1,7 +1,8 @@
 import React from "react";
 import {
-  Button
+  Button, View
 } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import GoodList from "../components/GoodList";
 import PlaceHolder from "../components/PlaceHolder";
 import * as ErrorAlert from "../components/ErrorAlert";
@@ -11,36 +12,70 @@ import { SizeRequest } from "../constants/Dtos";
 import UserManager from "../services/UserManager";
 import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
+import DbHelper from "../services/DbHelper";
+import { styles } from "../constants/styles/AllScreen";
 import Colors from "../constants/Colors";
+import CacheHandler from "../services/CacheHandler";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
     title: i18n.all
   };
+  private static readonly IMAGE_SOURCE_FUNCTION = (id: number) => Utility.remoteURI('', id, SizeRequest.small);
 
   constructor() {
     super();
     this.state = {
-      dataSource: [ ],
-      loading: true
+      dataSource: [ ]
     };
   }
 
-  componentDidMount() {
+  onWillFocus() {
     UserManager.getToken().then(token => {
-      HttpClient.listAllGood(token)
-        .then(result => {
-          this.setState({
-            dataSource:
-              result.map(a => {
-                  return { ...a, image: Utility.remoteURI('', a.id, SizeRequest.small) };
-                })
-                .sort((a, b) => a.expiry.getTime() - b.expiry.getTime()),
-            loading: false
-          });
-        })
-        .catch(reason => ErrorAlert.alert(reason));
+      if (null == token) {
+        this.retrieveFromCache();
+      } else {
+        HttpClient.listAllGood(token)
+          .then(result => {
+            this.saveToCache(result);
+            this.updateState(result.map(a => {
+                return { ...a, image: AllScreen.IMAGE_SOURCE_FUNCTION(a.id) };
+              }));
+          })
+          .catch(reason => ErrorAlert.alert(reason, () =>
+            this.retrieveFromCache()
+          ));
+      }
     });
+  }
+
+  updateState(result: Array<{expiry: Date}>) {
+    this.setState({
+      dataSource: result.sort((a, b) => a.expiry.getTime() - b.expiry.getTime())
+    })
+  }
+
+  retrieveFromCache() {
+    if (!CacheHandler.enabled()) {
+      return;
+    }
+    CacheHandler.isMineGoodsStillValid().then(condition => {
+      if (condition) {
+        DbHelper.selectGoods().then(result =>
+          this.updateState(result.map(a => {
+              return { ...a, expiry: new Date(a.expiry), image: (a.id ? AllScreen.IMAGE_SOURCE_FUNCTION(a.id) : a.image) };
+            }))
+        );
+      }
+    });
+  }
+
+  saveToCache(result: Dtos.GoodAllResponse[]) {
+    try {
+      DbHelper.insertGoods(result.map(a =>
+        ({name: a.name, expiry: a.expiry, notifications: null, image: null, id: a.id, isRequestedByOther: a.isRequestedByOther})
+      ), () => CacheHandler.refreshMineGoods());
+    } catch { }
   }
 
   renderIsRequested(id: number, isRequestedByOther: boolean) {
@@ -52,9 +87,11 @@ export default class AllScreen extends React.Component {
 
   render() {
     var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
-    return (this.state.loading ?
+    return (<View style={styles.view}>
+      <NavigationEvents onWillFocus={() => this.onWillFocus()} />
+      {(0 == this.state.dataSource.length) ?
         <PlaceHolder text={i18n.yourGoodsAreNotFound.capitalize()} /> :
-        <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />
-      );
+        <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />}
+    </View>);
   }
 }

@@ -2,7 +2,10 @@ _default = {
     manifest: {
         extra: {
             serverUrl: "https://ivgraai.ddns.net:443/v1/",
-            imageCacheEvictionFrequency: "yearly"
+            cache: {
+                imageEvictionFrequency: "yearly",
+                data: { }
+            }
         }
     }
 };
