@@ -16,7 +16,7 @@ import * as Location from "expo-location";
 import { i18n } from "../constants/Dictionary";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
-import DbHelper from "../services/DbHelper";
+import CacheHandler from "../services/CacheHandler";
 import Utility from "../common/Utility";
 import { dateTimePickerHeader, dateTimePickerConfirmButton, dateTimePickerCancelButton } from "../components/DateTimePickerModal";
 import { StackActions, ThemeContext } from "react-navigation";
@@ -136,14 +136,11 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
 
       UserManager.getToken().then(token => {
         let available = this.props.available;
-        var caching = () => DbHelper.insertGood({
-          name: objectGoods,
-          expiry: temp,
-          notifications: localNotificationIds.toString(),
-          image: objectPhoto
-        }, () => this.showDialog());
+        var finalizer = () => CacheHandler.addMineGoods(
+          {name: objectGoods, expiry: temp, notifications: localNotificationIds.toString(), image: objectPhoto},
+          () => this.showDialog());
         if (null == token) {
-          caching();
+          finalizer();
         } else {
           HttpClient.addGood(
             token,
@@ -155,7 +152,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
             objectPhoto ? Utility.convertImageToDto(objectPhoto) : null
           )
           .catch(_reason => {})
-          .finally(caching);
+          .finally(finalizer);
         }
       });
 

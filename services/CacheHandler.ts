@@ -28,6 +28,10 @@ export default class CacheHandler {
         DbHelper.deleteMyGoods(false);
     }
 
+    public static addMineGoods(good: {name: string, expiry: Date, notifications: string, image: string | undefined}, onSuccess: () => void) {
+        DbHelper.insertGood(good, onSuccess);
+    }
+
     public static refreshNearbyGoods() {
         AsyncStorage.setItem(this.NEARBY_GOODS_DATE, new Date().toISOString());
     }
