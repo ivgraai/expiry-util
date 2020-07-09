@@ -1,7 +1,8 @@
 import React from "react";
 import {
-  Button
+  Button, View
 } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import GoodList from "../components/GoodList";
 import PlaceHolder from "../components/PlaceHolder";
 import * as ErrorAlert from "../components/ErrorAlert";
@@ -12,6 +13,7 @@ import UserManager from "../services/UserManager";
 import Utility from "../common/Utility";
 import * as Dtos from "../constants/Dtos";
 import DbHelper from "../services/DbHelper";
+import { styles } from "../constants/styles/AllScreen";
 import Colors from "../constants/Colors";
 import CacheHandler from "../services/CacheHandler";
 
@@ -28,7 +30,7 @@ export default class AllScreen extends React.Component {
     };
   }
 
-  componentDidMount() {
+  onWillFocus() {
     UserManager.getToken().then(token => {
       if (null == token) {
         this.retrieveFromCache();
@@ -82,9 +84,11 @@ export default class AllScreen extends React.Component {
 
   render() {
     var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
-    return ((0 == this.state.dataSource.length) ?
+    return (<View style={styles.view}>
+      <NavigationEvents onWillFocus={() => this.onWillFocus()} />
+      {(0 == this.state.dataSource.length) ?
         <PlaceHolder text={i18n.yourGoodsAreNotFound.capitalize()} /> :
-        <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />
-      );
+        <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />}
+    </View>);
   }
 }
