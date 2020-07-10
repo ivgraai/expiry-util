@@ -16,6 +16,7 @@ import DbHelper from "../services/DbHelper";
 import { styles } from "../constants/styles/AllScreen";
 import Colors from "../constants/Colors";
 import CacheHandler from "../services/CacheHandler";
+import EmptyResultException from "../common/errors/EmptyResultException";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
@@ -33,7 +34,7 @@ export default class AllScreen extends React.Component {
   onWillFocus() {
     UserManager.getToken().then(token => {
       if (null == token) {
-        this.retrieveFromCache();
+        this.retrieveFromCache(null);
       } else {
         HttpClient.listAllGood(token)
           .then(result => {
@@ -42,9 +43,7 @@ export default class AllScreen extends React.Component {
                 return { ...a, image: AllScreen.IMAGE_SOURCE_FUNCTION(a.id) };
               }));
           })
-          .catch(reason => ErrorAlert.alert(reason, () =>
-            this.retrieveFromCache()
-          ));
+          .catch(reason => this.retrieveFromCache(reason));
       }
     });
   }
@@ -55,17 +54,30 @@ export default class AllScreen extends React.Component {
     })
   }
 
-  retrieveFromCache() {
+  retrieveFromCache(reason: Error | null = new EmptyResultException()) {
+    let alert = (result?: Array<any>) => new Promise(resolve => {
+      if (!result || 0 == result.length) {
+        ErrorAlert.alert(reason, () => resolve(false));
+      } else {
+        resolve(true);
+      }
+    });
     if (!CacheHandler.enabled()) {
+      alert();
       return;
     }
     CacheHandler.isMineGoodsStillValid().then(condition => {
       if (condition) {
         DbHelper.selectGoods().then(result =>
-          this.updateState(result.map(a => {
-              return { ...a, expiry: new Date(a.expiry), image: (a.id ? AllScreen.IMAGE_SOURCE_FUNCTION(a.id) : a.image) };
-            }))
-        );
+          alert(result).then(notShown => {
+            if (notShown) {
+              this.updateState(result.map(a => {
+                  return { ...a, expiry: new Date(a.expiry), image: (a.id ? AllScreen.IMAGE_SOURCE_FUNCTION(a.id) : a.image) };
+                }));
+            }
+          }));
+      } else {
+        alert();
       }
     });
   }

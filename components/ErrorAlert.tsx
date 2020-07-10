@@ -13,7 +13,10 @@ const internalAlert = (message: string, onPress?: () => void) => Alert.alert(
     }]
 );
 
-export const alert = (exception: Error, onPress?: () => void) => {
+export const alert = (exception: Error | null, onPress?: () => void) => {
+    if (null == exception) {
+        return;
+    }
     var message: string;
     if (exception instanceof UnsupportedStatusException) {
         message = i18n.unsupportedStatus.capitalize() + " (" + exception.getStatusCode() + ')';
