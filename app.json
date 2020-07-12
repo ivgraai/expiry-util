@@ -8,7 +8,7 @@
       "android",
       "web"
     ],
-    "version": "1.1.3",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "splash": {
@@ -23,7 +23,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "hu.ivgraai.expiry-util",
+      "buildNumber": "1.2.0"
     },
     "description": "This app does help you with keeping track of your perishable foods by notifications, etc. Moreover you can share these goods with others if you think.",
     "extra": {
