@@ -19,14 +19,20 @@ export default class CachedImage extends Component {
     const filesystemURI = await this.getImageFilesystemKey(this.props.source.uri);
     await this.loadImage(filesystemURI, this.props.source.uri);
   }
-  async getImageFilesystemKey(remoteURI: string) {
+  async getImageFilesystemKey(remoteURI: string | null) {
+    if (null == remoteURI) {
+      return undefined;
+    }
     const hashed = await Crypto.digestStringAsync(
       Crypto.CryptoDigestAlgorithm.SHA256,
       remoteURI
     );
     return `${FileSystem.cacheDirectory}${hashed}`;
   }
-  async loadImage(filesystemURI: string, remoteURI: string) {
+  async loadImage(filesystemURI: string | undefined, remoteURI: string) {
+    if (!filesystemURI) {
+      return;
+    }
     try {
       const metadata = await FileSystem.getInfoAsync(filesystemURI);
       if (metadata.exists) {

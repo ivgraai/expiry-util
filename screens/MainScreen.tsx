@@ -73,7 +73,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
       let lng = this.props.navigation.getParam("longitude");
       if (undefined != lat && undefined != lng) {
         Location.reverseGeocodeAsync({latitude: lat, longitude: lng}).then(addresses => {
-          this.setState({label: addresses[0].city});
+          this.setState({label: addresses[0].city || addresses[0].name});
           this.props.checkAvailable();
           this.props.pickLocation({lat, lng});
         });
