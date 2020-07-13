@@ -112,7 +112,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
   buttonAdd(object: IComponentState) {
     var now: Date = new Date();
     var objectExpiry = this.props.expiry;
-    let temp = objectExpiry;
+    let temp = new Date(objectExpiry);
     temp.setHours(0, 0, 0, 0);
     var objectGoods = this.props.goods;
     var objectPhoto = this.props.imageUri;

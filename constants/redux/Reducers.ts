@@ -1,5 +1,6 @@
 import * as Types from './Types';
 import CacheHandler from '../../services/CacheHandler';
+import moment from 'moment';
 
 // In Redux, the state of the whole application is represented by one JavaScript object.
 
@@ -20,7 +21,7 @@ const defaultState: IState = {
     isChosen: false,
     imageUri: undefined,
     good: undefined,
-    expiry: new Date(),
+    expiry: moment().add(1, 'days').toDate(),
     available: false,
     location: {
         lat: null,
