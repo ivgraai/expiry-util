@@ -246,33 +246,33 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
             <Text style={withStyle.dataPerishableGoodsTextInputErrorText}>{this.state.validationResult?.goods}</Text>
           </View>
           <StyledComponent style={withStyle.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>
-            <View style={withStyle.dataExpirationDateView}>
+            <View style={withStyle.dataExpirationDateView} onTouchEnd={() => this.setState({ showDatePicker: true })}>
               <View style={withStyle.dataExpirationDateValue}>
                 <Ionicons
                   name={Platform.OS === 'ios' ? 'ios-calendar' : 'md-calendar'}
                   style={withStyle.dataExpirationDateValueIcon}
                   color={isDark ? Colors.labelDarkColor : Colors.labelLightColor}
                 />
-                <Text style={withStyle.dataExpirationDateValueText} onPress={() => this.setState({ showDatePicker: true })}>
+                <Text style={withStyle.dataExpirationDateValueText}>
                   {this.props.expiry.toLocaleDateString()}
                 </Text>
               </View>
-              <DateTimePickerModal
-                isVisible={this.state.showDatePicker}
-                mode="date"
-                onConfirm={date => { this.props.setExpiry(date); this.setState({ showDatePicker: false }); }}
-                onCancel={() => this.setState({ showDatePicker: false })}
-                isDarkModeEnabled={isDark}
-                date={this.props.expiry}
-                // is24Hour -> locale="en_GB"
-                headerTextIOS={i18n.pickADate.capitalize()}
-                confirmTextIOS={i18n.confirm.capitalize()}
-                cancelTextIOS={i18n.cancel.capitalize()}
-                customHeaderIOS={dateTimePickerHeader}
-                customConfirmButtonIOS={dateTimePickerConfirmButton}
-                customCancelButtonIOS={dateTimePickerCancelButton}
-              />
             </View>
+            <DateTimePickerModal
+              isVisible={this.state.showDatePicker}
+              mode="date"
+              onConfirm={date => { this.props.setExpiry(date); this.setState({ showDatePicker: false }); }}
+              onCancel={() => this.setState({ showDatePicker: false })}
+              isDarkModeEnabled={isDark}
+              date={this.props.expiry}
+              // is24Hour -> locale="en_GB"
+              headerTextIOS={i18n.pickADate.capitalize()}
+              confirmTextIOS={i18n.confirm.capitalize()}
+              cancelTextIOS={i18n.cancel.capitalize()}
+              customHeaderIOS={dateTimePickerHeader}
+              customConfirmButtonIOS={dateTimePickerConfirmButton}
+              customCancelButtonIOS={dateTimePickerCancelButton}
+            />
           </StyledComponent>
           <CheckBox
             containerStyle={withStyle.dataLocationCheckBoxContainer}

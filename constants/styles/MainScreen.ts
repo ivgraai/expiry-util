@@ -2,6 +2,9 @@ import { StyleSheet, PixelRatio, Platform } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
+const outerHeight = "20%";
+const innerHeight = "63%";
+
 export const styles = (isDark: boolean) => StyleSheet.create({
     mainView: {
         flex: 1,
@@ -41,11 +44,12 @@ export const styles = (isDark: boolean) => StyleSheet.create({
     },
     dataPerishableGoodsTextInputWrapper: {
         width: Layout.widthPercentageAsString,
-        height: "15%"
+        height: outerHeight
     },
     dataPerishableGoodsTextInput: {
         textAlign: "center",
-        paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0
+        paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0,
+        height: innerHeight
     },
     dataPerishableGoodsTextInputError: {
         borderColor: Colors.errorBackground,
@@ -57,15 +61,18 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         color: Colors.errorText
     },
     dataExpirationDateWrapper: {
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(15),
-        width: Layout.widthPercentageAsString
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(11),
+        width: Layout.widthPercentageAsString,
+        height: outerHeight
     },
     dataExpirationDateView: {
         flexDirection: "row",
-        justifyContent: "center"
+        justifyContent: "center",
+        height: innerHeight
     },
     dataExpirationDateValue: {
-        flexDirection: "row"
+        flexDirection: "row",
+        alignItems: "center"
     },
     dataExpirationDateValueIcon: {
         marginRight: PixelRatio.getPixelSizeForLayoutSize(1.5)
@@ -74,6 +81,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         color: isDark ? Colors.labelDarkColor : Colors.labelLightColor
     },
     dataLocationCheckBoxContainer: {
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(6.5),
         backgroundColor: "transparent",
         borderWidth: 0
     },
