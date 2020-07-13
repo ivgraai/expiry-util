@@ -41,11 +41,20 @@ export const styles = (isDark: boolean) => StyleSheet.create({
     },
     dataPerishableGoodsTextInputWrapper: {
         width: Layout.widthPercentageAsString,
-        height: "10%"
+        height: "15%"
     },
     dataPerishableGoodsTextInput: {
         textAlign: "center",
         paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0
+    },
+    dataPerishableGoodsTextInputError: {
+        borderColor: Colors.errorBackground,
+        borderWidth: Layout.borderWidth,
+        borderBottomLeftRadius: Layout.borderRadius,
+        borderBottomRightRadius: Layout.borderRadius
+    },
+    dataPerishableGoodsTextInputErrorText: {
+        color: Colors.errorText
     },
     dataExpirationDateWrapper: {
         marginTop: PixelRatio.getPixelSizeForLayoutSize(15),

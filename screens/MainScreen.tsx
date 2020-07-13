@@ -25,6 +25,8 @@ import Colors from "../constants/Colors";
 import StyledTextInput from "../components/StyledTextInput";
 import StyledButton from "../components/StyledButton";
 import StyledComponent from "../components/StyledComponent";
+import validate from "validate.js";
+import constraints from "../constants/validation/MainConstraint";
 
 import { connect } from "react-redux";
 import * as conn from "../constants/redux/Connection_Main";
@@ -48,6 +50,7 @@ interface IComponentProps {
 interface IComponentState {
   label: string;
   showDatePicker: boolean;
+  validationResult: any;
 }
 
 class MainScreen extends React.Component<IComponentProps, IComponentState> {
@@ -63,7 +66,8 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     super(props);
     this.state = {
       label: i18n.setLocation.toUpperCase(),
-      showDatePicker: false
+      showDatePicker: false,
+      validationResult: undefined
     };
   }
 
@@ -90,6 +94,12 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     this.props.navigation.setParams({"latitude": undefined, "longitude": undefined});
   }
 
+  validate() {
+    let validationResult = validate({goods: this.props.goods}, constraints);
+    this.setState({validationResult});
+    return (undefined == validationResult);
+  }
+
   showDialog() {
     let onPress: (value?: string) => void = () => {
       this.props.initializeState();
@@ -109,7 +119,11 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     );
   }
 
-  buttonAdd(object: IComponentState) {
+  buttonAdd(_object: IComponentState) {
+    if (!this.validate()) {
+      return;
+    }
+
     var now: Date = new Date();
     var objectExpiry = this.props.expiry;
     let temp = new Date(objectExpiry);
@@ -221,13 +235,15 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
           <View style={withStyle.dataPerishableGoodsTextInputWrapper}>
             <StyledTextInput
               selectTextOnFocus={true}
-              style={withStyle.dataPerishableGoodsTextInput}
+              style={[withStyle.dataPerishableGoodsTextInput, this.state.validationResult ? withStyle.dataPerishableGoodsTextInputError : null]}
               onChangeText={(goods: string) => this.props.setStateGoods(goods)}
               header={i18n.perishableGoods.toUpperCase()}
               placeholder={i18n.egBreadMilkOrEggs.capitalize()}
               placeholderTextColor={Colors.backgroundColor}
               value={this.props.goods}
+              onBlur={() => this.validate()}
             />
+            <Text style={withStyle.dataPerishableGoodsTextInputErrorText}>{this.state.validationResult?.goods}</Text>
           </View>
           <StyledComponent style={withStyle.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>
             <View style={withStyle.dataExpirationDateView}>

@@ -56,7 +56,8 @@ type TYPE = {
     unsupportedContent: string,
     yourGoodsAreNotFound: string,
     noGoodsAreAvailable: string,
-    resultSetIsEmpty: string
+    resultSetIsEmpty: string,
+    pleaseEnterAnItem: string
 };
 
 const en = {
@@ -114,7 +115,8 @@ const en = {
         unsupportedContent:                                 'unsupported content',
         yourGoodsAreNotFound:                               'your goods are not found',
         noGoodsAreAvailable:                                'no goods are available',
-        resultSetIsEmpty:                                   'result set is empty'
+        resultSetIsEmpty:                                   'result set is empty',
+        pleaseEnterAnItem:                                  'please enter an item'
 };
 const MESSAGES: any = {
     en: en,
@@ -171,9 +173,10 @@ const MESSAGES: any = {
         confirm:                                            'jóváhagy',
         unsupportedStatus:                                  'nem támogatott státusz',
         unsupportedContent:                                 'nem támogatott tartalom',
-        yourGoodsAreNotFound:                               'az áruid nem találhatóak',
+        yourGoodsAreNotFound:                               'az árui nem találhatóak',
         noGoodsAreAvailable:                                'nem érhetőek el áruk',
-        resultSetIsEmpty:                                   'üres eredményhalmaz'
+        resultSetIsEmpty:                                   'üres eredményhalmaz',
+        pleaseEnterAnItem:                                  'kérjük, adjon meg egy árut'
     },
     fr: {
         add:                                                'ajouter',
@@ -230,7 +233,8 @@ const MESSAGES: any = {
         unsupportedContent:                                 'contenu non pris en charge',
         yourGoodsAreNotFound:                               'vos biens sont pas trouvés',
         noGoodsAreAvailable:                                'aucune marchandise n\'est disponible',
-        resultSetIsEmpty:                                   'le résultat est vide'
+        resultSetIsEmpty:                                   'le résultat est vide',
+        pleaseEnterAnItem:                                  'veuillez entrer une item'
     },
     es: {
         add:                                                'agregar',
@@ -287,7 +291,8 @@ const MESSAGES: any = {
         unsupportedContent:                                 'contenido no soportado',
         yourGoodsAreNotFound:                               'sus bienes no se encuentran',
         noGoodsAreAvailable:                                'no hay bienes disponibles',
-        resultSetIsEmpty:                                   'el conjunto de resultados está vacío'
+        resultSetIsEmpty:                                   'el conjunto de resultados está vacío',
+        pleaseEnterAnItem:                                  'por favor ingrese un item'
     },
     default: en
 };
