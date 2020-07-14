@@ -3,13 +3,14 @@ import { FlatList, View, Text } from "react-native";
 import { useTheme } from "react-navigation";
 import CachedImage from "../components/CachedImage";
 import DbHelper from "../services/DbHelper";
+import Utility from "../common/Utility";
 import { styles } from "../constants/styles/GoodList";
 
 function GoodList(props: any) {
   const theme = useTheme();
   const withStyle = styles('dark' === theme);
   let {innerRef, dataSource, customNodesForTheItem} = props;
-  let now = new Date().getTime();
+  let now = Utility.todayMidnigth().getTime();
   return (
     <FlatList ref={innerRef}
       data={dataSource.filter((item: {expiry: Date}) => (now <= item.expiry.getTime()))}

@@ -54,4 +54,8 @@ export default class Utility {
         var result: Location.LocationData = await Location.getCurrentPositionAsync({});
         return {latitude: result.coords.latitude, longitude: result.coords.longitude};
     }
+
+    static todayMidnigth(): Date {
+        return moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toDate();
+    }
 }
