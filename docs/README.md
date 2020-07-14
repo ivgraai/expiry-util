@@ -1,11 +1,14 @@
 ![Test & Publish](https://github.com/ivgraai/expiry-util/workflows/Test%20&%20Publish/badge.svg)
 
-# Run the application
+# Download the application
 
-`npm install`
-`expo start`
+- [from App Store](https://apps.apple.com/us/app/id1523176969),
+- [from TestFlight](https://testflight.apple.com/join/IzfOXqY2),
+- [from Expo](https://expo.io/@ivgraai/expiry-util) or
+- ![scan this QR code](../assets/images/qr.png)
 
-or \
-![scan this QR code](../assets/images/qr.png) \
-or \
-[download from here](https://expo.io/@ivgraai/expiry-util)
+# Build and run the project
+
+1. `npm install`
+2. `expo start`
+
