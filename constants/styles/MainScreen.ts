@@ -51,26 +51,27 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0,
         height: innerHeight
     },
-    dataPerishableGoodsTextInputError: {
+    dataErrorInput: {
         borderColor: Colors.errorBackground,
         borderWidth: Layout.borderWidth,
         borderBottomLeftRadius: Layout.borderRadius,
         borderBottomRightRadius: Layout.borderRadius
     },
-    dataPerishableGoodsTextInputErrorText: {
+    dataErrorText: {
         color: Colors.errorText
     },
     dataExpirationDateWrapper: {
         marginTop: PixelRatio.getPixelSizeForLayoutSize(11),
         width: Layout.widthPercentageAsString,
-        height: outerHeight
+        height: outerHeight,
+        paddingBottom: -1 * Layout.innerBorderRadiusDifference
     },
     dataExpirationDateView: {
-        flexDirection: "row",
-        justifyContent: "center",
         height: innerHeight
     },
     dataExpirationDateValue: {
+        flex: 1,
+        justifyContent: "center",
         flexDirection: "row",
         alignItems: "center"
     },

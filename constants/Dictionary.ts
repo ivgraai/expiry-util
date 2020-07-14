@@ -57,7 +57,8 @@ type TYPE = {
     yourGoodsAreNotFound: string,
     noGoodsAreAvailable: string,
     resultSetIsEmpty: string,
-    pleaseEnterAnItem: string
+    pleaseEnterAnItem: string,
+    expiryMustNotBeAPastDate: string
 };
 
 const en = {
@@ -116,7 +117,8 @@ const en = {
         yourGoodsAreNotFound:                               'your goods are not found',
         noGoodsAreAvailable:                                'no goods are available',
         resultSetIsEmpty:                                   'result set is empty',
-        pleaseEnterAnItem:                                  'please enter an item'
+        pleaseEnterAnItem:                                  'please enter an item',
+        expiryMustNotBeAPastDate:                           'expiry must not be a past date'
 };
 const MESSAGES: any = {
     en: en,
@@ -176,7 +178,8 @@ const MESSAGES: any = {
         yourGoodsAreNotFound:                               'az árui nem találhatóak',
         noGoodsAreAvailable:                                'nem érhetőek el áruk',
         resultSetIsEmpty:                                   'üres eredményhalmaz',
-        pleaseEnterAnItem:                                  'kérjük, adjon meg egy árut'
+        pleaseEnterAnItem:                                  'kérjük, adjon meg egy árut',
+        expiryMustNotBeAPastDate:                           'a lejárat nem lehet múltbeli'
     },
     fr: {
         add:                                                'ajouter',
@@ -234,7 +237,8 @@ const MESSAGES: any = {
         yourGoodsAreNotFound:                               'vos biens sont pas trouvés',
         noGoodsAreAvailable:                                'aucune marchandise n\'est disponible',
         resultSetIsEmpty:                                   'le résultat est vide',
-        pleaseEnterAnItem:                                  'veuillez entrer une item'
+        pleaseEnterAnItem:                                  'veuillez entrer une item',
+        expiryMustNotBeAPastDate:                           'l\'expiration ne doit pas être passé'
     },
     es: {
         add:                                                'agregar',
@@ -292,7 +296,8 @@ const MESSAGES: any = {
         yourGoodsAreNotFound:                               'sus bienes no se encuentran',
         noGoodsAreAvailable:                                'no hay bienes disponibles',
         resultSetIsEmpty:                                   'el conjunto de resultados está vacío',
-        pleaseEnterAnItem:                                  'por favor ingrese un item'
+        pleaseEnterAnItem:                                  'por favor ingrese un item',
+        expiryMustNotBeAPastDate:                           'la expiración no debe ser una fecha pasada'
     },
     default: en
 };

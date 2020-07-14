@@ -94,8 +94,8 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     this.props.navigation.setParams({"latitude": undefined, "longitude": undefined});
   }
 
-  validate() {
-    let validationResult = validate({goods: this.props.goods}, constraints);
+  validate(expiry?: Date) {
+    let validationResult = validate({goods: this.props.goods, expiry: expiry || this.props.expiry}, constraints);
     this.setState({validationResult});
     return (undefined == validationResult);
   }
@@ -235,7 +235,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
           <View style={withStyle.dataPerishableGoodsTextInputWrapper}>
             <StyledTextInput
               selectTextOnFocus={true}
-              style={[withStyle.dataPerishableGoodsTextInput, this.state.validationResult ? withStyle.dataPerishableGoodsTextInputError : null]}
+              style={[withStyle.dataPerishableGoodsTextInput, this.state.validationResult?.goods ? withStyle.dataErrorInput : null]}
               onChangeText={(goods: string) => this.props.setStateGoods(goods)}
               header={i18n.perishableGoods.toUpperCase()}
               placeholder={i18n.egBreadMilkOrEggs.capitalize()}
@@ -243,11 +243,11 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
               value={this.props.goods}
               onBlur={() => this.validate()}
             />
-            <Text style={withStyle.dataPerishableGoodsTextInputErrorText}>{this.state.validationResult?.goods}</Text>
+            <Text style={withStyle.dataErrorText}>{this.state.validationResult?.goods}</Text>
           </View>
           <StyledComponent style={withStyle.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>
             <View style={withStyle.dataExpirationDateView} onTouchEnd={() => this.setState({ showDatePicker: true })}>
-              <View style={withStyle.dataExpirationDateValue}>
+              <View style={[withStyle.dataExpirationDateValue, this.state.validationResult?.expiry ? withStyle.dataErrorInput : {}]}>
                 <Ionicons
                   name={Platform.OS === 'ios' ? 'ios-calendar' : 'md-calendar'}
                   style={withStyle.dataExpirationDateValueIcon}
@@ -258,10 +258,11 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
                 </Text>
               </View>
             </View>
+            <Text style={withStyle.dataErrorText}>{this.state.validationResult?.expiry}</Text>
             <DateTimePickerModal
               isVisible={this.state.showDatePicker}
               mode="date"
-              onConfirm={date => { this.props.setExpiry(date); this.setState({ showDatePicker: false }); }}
+              onConfirm={date => { this.props.setExpiry(date); this.validate(date); this.setState({ showDatePicker: false }); }}
               onCancel={() => this.setState({ showDatePicker: false })}
               isDarkModeEnabled={isDark}
               date={this.props.expiry}
