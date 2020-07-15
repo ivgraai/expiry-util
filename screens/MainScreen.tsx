@@ -245,19 +245,21 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
             />
             <Text style={withStyle.dataErrorText}>{this.state.validationResult?.goods}</Text>
           </View>
-          <StyledComponent style={withStyle.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>
-            <View style={withStyle.dataExpirationDateView} onTouchEnd={() => this.setState({ showDatePicker: true })}>
-              <View style={[withStyle.dataExpirationDateValue, this.state.validationResult?.expiry ? withStyle.dataErrorInput : {}]}>
-                <Ionicons
-                  name={Platform.OS === 'ios' ? 'ios-calendar' : 'md-calendar'}
-                  style={withStyle.dataExpirationDateValueIcon}
-                  color={isDark ? Colors.labelDarkColor : Colors.labelLightColor}
-                />
-                <Text style={withStyle.dataExpirationDateValueText}>
-                  {this.props.expiry.toLocaleDateString()}
-                </Text>
+          <View style={withStyle.dataExpirationDateErrorTextWrapper}>
+            <StyledComponent style={withStyle.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>
+              <View style={withStyle.dataExpirationDateView} onTouchEnd={() => this.setState({ showDatePicker: true })}>
+                <View style={[withStyle.dataExpirationDateValue, this.state.validationResult?.expiry ? withStyle.dataErrorInput : {}]}>
+                  <Ionicons
+                    name={Platform.OS === 'ios' ? 'ios-calendar' : 'md-calendar'}
+                    style={withStyle.dataExpirationDateValueIcon}
+                    color={isDark ? Colors.labelDarkColor : Colors.labelLightColor}
+                  />
+                  <Text style={withStyle.dataExpirationDateValueText}>
+                    {this.props.expiry.toLocaleDateString()}
+                  </Text>
+                </View>
               </View>
-            </View>
+            </StyledComponent>
             <Text style={withStyle.dataErrorText}>{this.state.validationResult?.expiry}</Text>
             <DateTimePickerModal
               isVisible={this.state.showDatePicker}
@@ -274,7 +276,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
               customConfirmButtonIOS={dateTimePickerConfirmButton}
               customCancelButtonIOS={dateTimePickerCancelButton}
             />
-          </StyledComponent>
+          </View>
           <CheckBox
             containerStyle={withStyle.dataLocationCheckBoxContainer}
             textStyle={withStyle.dataLocationCheckBoxText}

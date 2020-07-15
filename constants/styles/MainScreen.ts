@@ -2,9 +2,6 @@ import { StyleSheet, PixelRatio, Platform } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
-const outerHeight = "20%";
-const innerHeight = "63%";
-
 export const styles = (isDark: boolean) => StyleSheet.create({
     mainView: {
         flex: 1,
@@ -43,31 +40,28 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         alignItems: "center"
     },
     dataPerishableGoodsTextInputWrapper: {
-        width: Layout.widthPercentageAsString,
-        height: outerHeight
+        width: Layout.widthPercentageAsString
     },
     dataPerishableGoodsTextInput: {
         textAlign: "center",
         paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0,
-        height: innerHeight
+        minHeight: "13%",
+        marginBottom: -1
     },
     dataErrorInput: {
         borderColor: Colors.errorBackground,
         borderWidth: Layout.borderWidth,
-        borderBottomLeftRadius: Layout.borderRadius,
-        borderBottomRightRadius: Layout.borderRadius
+        borderBottomLeftRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference,
+        borderBottomRightRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference
     },
     dataErrorText: {
         color: Colors.errorText
     },
     dataExpirationDateWrapper: {
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(11),
-        width: Layout.widthPercentageAsString,
-        height: outerHeight,
-        paddingBottom: -1 * Layout.innerBorderRadiusDifference
+        paddingBottom: 2
     },
     dataExpirationDateView: {
-        height: innerHeight
+        minHeight: "44%"
     },
     dataExpirationDateValue: {
         flex: 1,
@@ -81,8 +75,12 @@ export const styles = (isDark: boolean) => StyleSheet.create({
     dataExpirationDateValueText: {
         color: isDark ? Colors.labelDarkColor : Colors.labelLightColor
     },
+    dataExpirationDateErrorTextWrapper: {
+        width: Layout.widthPercentageAsString,
+        maxHeight: "40%"
+    },
     dataLocationCheckBoxContainer: {
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(6.5),
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(-3),
         backgroundColor: "transparent",
         borderWidth: 0
     },
