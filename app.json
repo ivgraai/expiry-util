@@ -25,7 +25,17 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "hu.ivgraai.expiry-util",
-      "buildNumber": "1.2.2"
+      "buildNumber": "1.2.2",
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      }
+    },
+    "locales": {
+      "en": "./constants/languages/english.json",
+      "hu": "./constants/languages/hungarian.json",
+      "fr": "./constants/languages/french.json",
+      "es": "./constants/languages/spanish.json"
+
     },
     "description": "This app does help you with keeping track of your perishable foods by notifications, etc. Moreover you can share these goods with others if you think.",
     "extra": {
