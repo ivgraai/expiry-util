@@ -8,7 +8,7 @@
       "android",
       "web"
     ],
-    "version": "1.2.2",
+    "version": "1.2.3",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "splash": {
@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "hu.ivgraai.expiry-util",
-      "buildNumber": "1.2.2",
+      "buildNumber": "1.2.3",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true
       }
