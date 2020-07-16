@@ -1,5 +1,6 @@
 'use strict';
 
+var uuid = require('uuid');
 
 /**
  * Unregister user
@@ -26,7 +27,7 @@ exports.userDELETE = function(token) {
 exports.userGET = function(name,password) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = "046b6c7f-0b8a-43b9-b35d-6489e6daee91";
+    examples['application/json'] = uuid.v4();
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {

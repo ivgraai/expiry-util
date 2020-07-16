@@ -1,5 +1,6 @@
 'use strict';
 
+const moment = require('moment');
 
 /**
  * Find all by good
@@ -13,19 +14,19 @@ exports.requestAllGET = function(token,goodId) {
   return new Promise(function(resolve, reject) {
     var entities = [];
     entities.push({
-      username: "applicant_1",
-      datetime: "2020-06-08T09:15:30.000Z",
-      message: "Please!?",
+      username: "Peter Smith",
+      datetime: moment().subtract(5, 'hours').add(45, 'seconds').format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
+      message: "Please approve my request!?",
       id: 3000
     });
     entities.push({
-      username: "applicant_2",
-      datetime: "2020-06-08T09:30:15.000Z",
-      message: "I love sweets...",
+      username: "James Jones",
+      datetime: moment().subtract(1, 'days').add(15, 'minutes').format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
+      message: "I love my belly... :-)",
       id: 3001
     });
     resolve({
-      accepted:(1003 == goodId) ? 3001 : null,
+      accepted:(1002 == goodId) ? 3001 : null,
       datas: entities
     });
   });
