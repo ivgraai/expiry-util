@@ -6,6 +6,7 @@ import moment from "moment";
 
 export default class Utility {
     private static readonly EVICTION_FREQUENCY: string = Constants.manifest.extra.cache.imageEvictionFrequency;
+    private static readonly DEFAULT_POSITION: {latitude: number, longitude: number} = Constants.manifest.extra.defaultCurrentPosition;
     public static readonly LINE_SEPARATOR: string = '\n';
 
     static convertImageToDto(uri: string): ImageRequest {
@@ -51,8 +52,12 @@ export default class Utility {
     }
 
     static async currentLocation(): Promise<{latitude: number, longitude: number}> {
-        var result: Location.LocationData = await Location.getCurrentPositionAsync({});
-        return {latitude: result.coords.latitude, longitude: result.coords.longitude};
+        try {
+            var result: Location.LocationData = await Location.getCurrentPositionAsync({});
+            return {latitude: result.coords.latitude, longitude: result.coords.longitude};
+        } catch {
+            return Utility.DEFAULT_POSITION;
+        }
     }
 
     static todayMidnigth(): Date {

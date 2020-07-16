@@ -49,6 +49,10 @@
           "latitudeThreshold": 0.15,
           "longitudeThreshold": 0.15
         }
+      },
+      "defaultCurrentPosition": {
+        "latitude": 51.509865,
+        "longitude": -0.118092
       }
     },
     "userInterfaceStyle": "automatic"

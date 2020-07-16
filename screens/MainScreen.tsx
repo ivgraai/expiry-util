@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { CheckBox } from "react-native-elements";
+import * as Permissions from "expo-permissions";
 import { Notifications } from "expo";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
@@ -131,59 +132,67 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     var objectGoods = this.props.goods;
     var objectPhoto = this.props.imageUri;
 
-    let promises: Array<Promise<String | Number>> = [];
-    for (var i = 0; i < this.multiplier.length; i++) {
-      temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
-      if (temp < now) {
-        continue;
-      }
-      promises.push(Notifications.scheduleLocalNotificationAsync(
-        {
-          title: objectGoods.toUpperCase(),
-          body: i18n.bestBefore.capitalize() + ": " + objectExpiry.toLocaleDateString()
-        },
-        { time: temp.getTime() }
-      ));
-    }
-
-    Promise.all(promises).then(localNotificationIds => {
-
-      UserManager.getToken().then(token => {
-        let available = this.props.available;
-        var finalizer = () => CacheHandler.addMineGoods(
-          {name: objectGoods, expiry: temp, notifications: localNotificationIds.toString(), image: objectPhoto},
-          () => this.showDialog());
-        if (null == token) {
-          finalizer();
-        } else {
-          HttpClient.addGood(
-            token,
-            objectGoods,
-            temp,
-            !available ? null : this.props.location.lat,
-            !available ? null : this.props.location.lng,
-            available,
-            objectPhoto ? Utility.convertImageToDto(objectPhoto) : null
-          )
-          .catch(_reason => {})
-          .finally(finalizer);
+    Permissions.getAsync(Permissions.NOTIFICATIONS).then(resp => {
+      let promises: Array<Promise<String | Number>> = [];
+      if (resp.granted || "granted" == resp.status) {
+        for (var i = 0; i < this.multiplier.length; i++) {
+          temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
+          if (temp < now) {
+            continue;
+          }
+          promises.push(Notifications.scheduleLocalNotificationAsync(
+            {
+              title: objectGoods.toUpperCase(),
+              body: i18n.bestBefore.capitalize() + ": " + objectExpiry.toLocaleDateString()
+            },
+            { time: temp.getTime() }
+          ));
         }
-      });
+      }
 
+      Promise.all(promises).then(localNotificationIds => {
+
+        UserManager.getToken().then(token => {
+          let available = this.props.available;
+          var finalizer = () => CacheHandler.addMineGoods(
+            {name: objectGoods, expiry: temp, notifications: localNotificationIds.toString(), image: objectPhoto},
+            () => this.showDialog());
+          if (null == token) {
+            finalizer();
+          } else {
+            HttpClient.addGood(
+              token,
+              objectGoods,
+              temp,
+              !available ? null : this.props.location.lat,
+              !available ? null : this.props.location.lng,
+              available,
+              objectPhoto ? Utility.convertImageToDto(objectPhoto) : null
+            )
+            .catch(_reason => {})
+            .finally(finalizer);
+          }
+        });
+
+      });
     });
   }
 
   buttonPick = async () => {
-    let image = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3]
-    });
+    try {
+      let image = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3]
+      });
 
-    if (!image.cancelled) {
-      this.props.chooseImage(image.uri);
-    } else {
-      this.props.cancelImage();
+      if (!image.cancelled) {
+        this.props.chooseImage(image.uri);
+      } else {
+        this.props.cancelImage();
+      }
+    } catch {
+      // empty block
     }
   };
 
