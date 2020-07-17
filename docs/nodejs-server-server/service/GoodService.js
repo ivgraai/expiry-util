@@ -105,8 +105,8 @@ exports.goodIdGET = function(id,token) {
   },
   "replyMessage" : "n/a",
   "isAccepted" : false,
-  "name" : "chocolate",
-  "expiry" : moment().add(7, 'days').format("YYYY-MM-DD"),
+  "name" : "ice cream",
+  "expiry" : moment().add(29, 'days').format("YYYY-MM-DD"),
   "myMessage" : "I appreciate it in advance.",
   "username" : "Alen Gualarga"
 };
@@ -188,7 +188,7 @@ exports.goodNearbyGET = function(locationLatitude,locationLongitude,token,radius
       expiry: moment().add(7, 'days').format("YYYY-MM-DD"),
       distance: 687,
       id: 2003,
-      isRequestedByMe: true
+      isRequestedByMe: false
     });
     entities.push({
       name: 'bananas',
@@ -230,7 +230,7 @@ exports.goodNearbyGET = function(locationLatitude,locationLongitude,token,radius
       expiry: moment().add(29, 'days').format("YYYY-MM-DD"),
       distance: 2281,
       id: 2009,
-      isRequestedByMe: false
+      isRequestedByMe: true
     });
     resolve(entities);
   });
