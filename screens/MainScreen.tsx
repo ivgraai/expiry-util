@@ -52,6 +52,7 @@ interface IComponentState {
   label: string;
   showDatePicker: boolean;
   validationResult: any;
+  controlsEnabled: boolean;
 }
 
 class MainScreen extends React.Component<IComponentProps, IComponentState> {
@@ -68,7 +69,8 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     this.state = {
       label: i18n.setLocation.toUpperCase(),
       showDatePicker: false,
-      validationResult: undefined
+      validationResult: undefined,
+      controlsEnabled: true
     };
   }
 
@@ -104,6 +106,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
   showDialog() {
     let onPress: (value?: string) => void = () => {
       this.props.initializeState();
+      this.setState({controlsEnabled: true});
     };
     Alert.alert(
       i18n.successfullyAdded.capitalize(),
@@ -120,11 +123,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     );
   }
 
-  buttonAdd(_object: IComponentState) {
-    if (!this.validate()) {
-      return;
-    }
-
+  add() {
     var now: Date = new Date();
     var objectExpiry = this.props.expiry;
     let temp = new Date(objectExpiry);
@@ -178,6 +177,14 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     });
   }
 
+  buttonAdd(_object: IComponentState) {
+    if (!this.validate()) {
+      return;
+    } else {
+      this.setState({controlsEnabled: false}, () => this.add());
+    }
+  }
+
   buttonPick = async () => {
     try {
       let image = await ImagePicker.launchImageLibraryAsync({
@@ -227,6 +234,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
             activeOpacity={0.5}
             onPress={this.buttonPick}
             style={withStyle.photoTouchableOpacity}
+            disabled={!this.state.controlsEnabled}
           >
             {this.props.isChosen ? (
               <Image
@@ -251,12 +259,13 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
               placeholderTextColor={Colors.backgroundColor}
               value={this.props.goods}
               onBlur={() => this.validate()}
+              editable={this.state.controlsEnabled}
             />
             <Text style={withStyle.dataErrorText}>{this.state.validationResult?.goods}</Text>
           </View>
           <View style={withStyle.dataExpirationDateErrorTextWrapper}>
             <StyledComponent style={withStyle.dataExpirationDateWrapper} header={i18n.expirationDate.toUpperCase()}>
-              <View style={withStyle.dataExpirationDateView} onTouchEnd={() => this.setState({ showDatePicker: true })}>
+              <View style={withStyle.dataExpirationDateView} onTouchEnd={() => this.setState({ showDatePicker: true })} pointerEvents={this.state.controlsEnabled ? "auto" : "none"}>
                 <View style={[withStyle.dataExpirationDateValue, this.state.validationResult?.expiry ? withStyle.dataErrorInput : {}]}>
                   <Ionicons
                     name={Platform.OS === 'ios' ? 'ios-calendar' : 'md-calendar'}
@@ -291,14 +300,15 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
             textStyle={withStyle.dataLocationCheckBoxText}
             checked={this.props.available}
             title={this.state.label}
-            onPress={() => this.props.available ? this.props.checkAvailable() : this.navigate()}
+            onPress={() => !this.state.controlsEnabled ? {} : (this.props.available ? this.props.checkAvailable() : this.navigate())}
             checkedColor={Colors.tintColor}
             uncheckedColor={Colors.tintColor}
+            activeOpacity={this.state.controlsEnabled ? 0.2 : 1}
           />
           <View
             style={withStyle.addView}
           >
-            <StyledButton style={withStyle.addStyledButton} onPress={() => this.buttonAdd(this.state)}>
+            <StyledButton style={withStyle.addStyledButton} onPress={() => this.buttonAdd(this.state)} disabled={!this.state.controlsEnabled}>
               {i18n.add.toUpperCase()}
             </StyledButton>
           </View>
