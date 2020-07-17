@@ -60,11 +60,13 @@
     "react-navigation": "^3.11.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
+    "shortid": "^2.2.15",
     "validate.js": "^0.13.1"
   },
   "devDependencies": {
     "@types/react": "^16.9.35",
     "@types/react-native": "^0.62.9",
+    "@types/shortid": "0.0.29",
     "babel-preset-expo": "^8.1.0",
     "i18n-ts": "^1.0.5",
     "jest-expo": "^37.0.0",

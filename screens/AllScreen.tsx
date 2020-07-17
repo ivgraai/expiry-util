@@ -17,6 +17,7 @@ import { styles } from "../constants/styles/AllScreen";
 import Colors from "../constants/Colors";
 import CacheHandler from "../services/CacheHandler";
 import EmptyResultException from "../common/errors/EmptyResultException";
+import * as shortid from "shortid";
 
 export default class AllScreen extends React.Component {
   static navigationOptions = {
@@ -48,9 +49,9 @@ export default class AllScreen extends React.Component {
     });
   }
 
-  updateState(result: Array<{expiry: Date}>) {
+  updateState(result: Array<{id: number, expiry: Date}>) {
     this.setState({
-      dataSource: result.sort((a, b) => a.expiry.getTime() - b.expiry.getTime())
+      dataSource: result.map(a => ({...a, id: !a.id ? shortid.generate() : a.id})).sort((a, b) => a.expiry.getTime() - b.expiry.getTime())
     })
   }
 
