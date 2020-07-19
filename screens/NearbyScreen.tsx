@@ -46,7 +46,7 @@ class NearbyScreen extends React.Component {
         };
         HttpClient.requestTheGood(this.tuple.token, this.tuple.goodId, message).then(_emptyResponse => {
             let object: any = this.state.ds.find((item: {id: number}) => (this.tuple.goodId == item.id));
-            object!.isRequestedByMe = true;
+            object.isRequestedByMe = true;
             this.props.requestGood(object);
             onComplete();
         })

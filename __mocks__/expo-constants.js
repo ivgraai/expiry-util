@@ -1,4 +1,4 @@
-_default = {
+const _default = {
     manifest: {
         extra: {
             serverUrl: "https://ivgraai.ddns.net:443/v1/",

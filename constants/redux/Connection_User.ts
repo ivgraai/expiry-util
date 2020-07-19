@@ -1,7 +1,6 @@
 import { IState } from './Reducers';
 
-export function mapStateToProps(state: IState) {
-    const { } = state;
+export function mapStateToProps(_state: IState) {
     return {
 
     };

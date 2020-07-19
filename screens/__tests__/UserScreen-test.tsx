@@ -15,7 +15,7 @@ class MockStorage {
     getItem = jest.fn((key) => new Promise((resolve) => {
         return this.cache.hasOwnProperty(key) ? resolve(this.cache[key]) : resolve(null);
     }));
-};
+}
 jest.mock("react-native/Libraries/Storage/AsyncStorage", () => new MockStorage());
 jest.mock("../../services/DbHelper");
 
