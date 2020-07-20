@@ -22,9 +22,9 @@ export default function DetailsScreen(props: IProps) {
 
     useEffect(() => {
         UserManager.getToken().then(token => {
-            HttpClient.checkStatus(token, id).then(response => {
-                if (response) {
-                    setResponse(response);
+            HttpClient.checkStatus(token, id).then(result => {
+                if (result) {
+                    setResponse(result);
                 }
             })
             .catch(reason => ErrorAlert.alert(reason, () => props.navigation.goBack()))

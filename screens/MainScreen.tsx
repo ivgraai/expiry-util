@@ -132,7 +132,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     var objectPhoto = this.props.imageUri;
 
     Permissions.getAsync(Permissions.NOTIFICATIONS).then(resp => {
-      let promises: Array<Promise<String | Number>> = [];
+      let promises: Array<Promise<string | number>> = [];
       if (resp.granted || "granted" == resp.status) {
         for (var i = 0; i < this.multiplier.length; i++) {
           temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);

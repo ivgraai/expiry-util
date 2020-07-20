@@ -39,7 +39,7 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
         UserManager.getToken().then(token => {
             HttpClient.findAllRequest(token!, this.goodId)
                 .then(allRequests => {
-                    allRequests.datas = allRequests.datas.sort((item1, item2) => item1.datetime.getTime() - item2.datetime.getTime());
+                    allRequests.datas.sort((item1, item2) => item1.datetime.getTime() - item2.datetime.getTime());
                     this.updateState({allRequests});
                 })
                 .catch(reason => ErrorAlert.alert(reason, () => this.props.navigation.goBack()));
