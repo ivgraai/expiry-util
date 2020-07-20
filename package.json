@@ -27,6 +27,11 @@
     ],
     "testResultsProcessor": "jest-sonar-reporter"
   },
+  "jestSonar": {
+    "reportPath": "coverage",
+    "reportFile": "test-report.xml",
+    "indent": 4
+  },
   "dependencies": {
     "@expo/samples": "~3.0.0",
     "@expo/vector-icons": "^10.0.0",
