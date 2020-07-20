@@ -16,9 +16,13 @@ jobs:
       run: git fetch origin master
     - name: Install dependencies
       run: npm ci
-    - name: Run Tests
+    - name: Run tests
       run: npm test -- --watchAll=false
-    - name: SonarCloud Scan
+    - name: Fix absolute paths
+      shell: bash
+      run: |
+        sed -i 's+/home/runner/work/expiry-util/expiry-util+/github/workspace+g' coverage/lcov.info
+    - name: SonarCloud scan
       uses: sonarsource/sonarcloud-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
