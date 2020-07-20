@@ -24,7 +24,8 @@
       "!**/node_modules/**",
       "!*.config.{js,ts}",
       "!./docs/**"
-    ]
+    ],
+    "testResultsProcessor": "jest-sonar-reporter"
   },
   "dependencies": {
     "@expo/samples": "~3.0.0",
@@ -70,6 +71,7 @@
     "babel-preset-expo": "^8.1.0",
     "i18n-ts": "^1.0.5",
     "jest-expo": "^37.0.0",
+    "jest-sonar-reporter": "^2.0.0",
     "react-native-testing-library": "^2.1.0",
     "typescript": "^3.9.2"
   },
