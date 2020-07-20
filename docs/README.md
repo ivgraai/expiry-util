@@ -1,5 +1,5 @@
-![Test & Publish](https://github.com/ivgraai/expiry-util/workflows/Test%20&%20Publish/badge.svg)
-[![Analyze Status](https://sonarcloud.io/api/project_badges/measure?project=ivgraai_expiry-util&metric=alert_status)](https://sonarcloud.io/dashboard?id=ivgraai_expiry-util)
+[![publish](https://github.com/ivgraai/expiry-util/workflows/Test%20&%20Publish/badge.svg)](https://github.com/ivgraai/expiry-util/actions?query=workflow%3A%22publish%22)
+[![analyze](https://sonarcloud.io/api/project_badges/measure?project=ivgraai_expiry-util&metric=alert_status)](https://sonarcloud.io/dashboard?id=ivgraai_expiry-util)
 
 # Download the application
 
