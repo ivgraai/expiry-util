@@ -112,14 +112,8 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
       i18n.successfullyAdded.capitalize(),
       i18n.letsContinueWithOtherPerishableGood.capitalize() + "!",
       [
-        {
-          text: i18n.cancel.capitalize(),
-          style: "cancel",
-          onPress
-        },
         { text: i18n.okay, onPress }
-      ],
-      { cancelable: false }
+      ]
     );
   }
 
