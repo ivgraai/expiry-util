@@ -14,17 +14,19 @@ export type IUSerData = {
     confirmPassword?: string,
     emailAddress?: string
 };
-export type IState = {
+export type IGoodData = {
     isChosen: boolean,
     imageUri: string | undefined,
     good: string | undefined,
     expiry: Date,
     available: boolean,
-    location: ILocation,
+    location: ILocation
+};
+export type IState = IGoodData & {
     userData: IUSerData
 };
 
-const defaultState: IState = {
+const defaultState: IGoodData = {
     isChosen: false,
     imageUri: undefined,
     good: undefined,
@@ -33,12 +35,14 @@ const defaultState: IState = {
     location: {
         lat: null,
         lng: null
-    },
+    }
+};
+const initialState = {
+    ...defaultState,
     userData: {}
 };
-const initialState = defaultState;
 
-function applyChooseImage(state: IState, uri: string) {
+function applyChooseImage(state: IState, uri: string): IState {
     return {
         ...state,
         isChosen: true,
@@ -46,7 +50,7 @@ function applyChooseImage(state: IState, uri: string) {
     };
 }
 
-function applyCancelChosenImage(state: IState) {
+function applyCancelChosenImage(state: IState): IState {
     return {
         ...state,
         isChosen: false,
@@ -54,45 +58,48 @@ function applyCancelChosenImage(state: IState) {
     }
 }
 
-function applyEditGood(state: IState, good: string) {
+function applyEditGood(state: IState, good: string): IState {
     return {
         ...state,
         good
     };
 }
 
-function applySetExpiry(state: IState, expiry: Date) {
+function applySetExpiry(state: IState, expiry: Date): IState {
     return {
         ...state,
         expiry
     };
 }
 
-function applyCheckAvailable(state: IState) {
+function applyCheckAvailable(state: IState): IState {
     return {
         ...state,
         available: !state.available
     };
 }
 
-function applyPickLocation(state: IState, location: ILocation) {
+function applyPickLocation(state: IState, location: ILocation): IState {
     return {
         ...state,
         location
     };
 }
 
-function applyResetAll(_: IState) {
-    return defaultState; // TODO
+function applyResetAll(state: IState): IState {
+    return {
+        ...defaultState,
+        userData: state.userData
+    };
 }
 
-function applyRequestGood(state: IState, object: any) {
+function applyRequestGood(state: IState, object: any): IState {
     // TODO: Other logic should be here as well.
     CacheHandler.requestNearbyGood(object);
     return state;
 }
 
-function applyFillUserDataOut(state: IState, userData: IUSerData) {
+function applyFillUserDataOut(state: IState, userData: IUSerData): IState {
     return {
         ...state,
         userData: {
