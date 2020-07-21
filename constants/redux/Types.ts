@@ -8,9 +8,13 @@ const RESET_ALL: string = 'RESET_ALL';
 
 const REQUEST_GOOD: string = 'REQUEST_GOOD';
 
+const FILL_USER_DATA_OUT: string = 'FILL_USER_DATA_OUT';
+const CLEAR_USER_DATA: string = 'CLEAR_USER_DATA';
+
 // To define an action, there is one requirement: each action much have its own type property.
 
 export {
     CHOOSE_IMAGE, CANCEL_CHOSEN_IMAGE, EDIT_GOOD, SET_EXPIRY, CHECK_AVAILABLE, PICK_LOCATION, RESET_ALL,
-    REQUEST_GOOD
+    REQUEST_GOOD,
+    FILL_USER_DATA_OUT, CLEAR_USER_DATA
 };

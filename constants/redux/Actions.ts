@@ -6,7 +6,9 @@ import {
     CHECK_AVAILABLE,
     PICK_LOCATION,
     RESET_ALL,
-    REQUEST_GOOD
+    REQUEST_GOOD,
+    FILL_USER_DATA_OUT,
+    CLEAR_USER_DATA
 } from './Types';
 
 // Think of the state as read-only, since we cannot make changes to this object (which is represented in the form of a tree) directly. We need actions to do so.
@@ -65,6 +67,19 @@ function requestGood(object: any) {
     };
 }
 
+function fillUserDataOut(data: any) {
+    return {
+        type: FILL_USER_DATA_OUT,
+        userData: data
+    };
+}
+
+function clearUserData() {
+    return {
+        type: CLEAR_USER_DATA
+    };
+}
+
 // Action Creators are functions that create actions.
 
 const actionCreators = {
@@ -75,7 +90,9 @@ const actionCreators = {
     checkAvailable,
     pickLocation,
     resetAll,
-    requestGood
+    requestGood,
+    fillUserDataOut,
+    clearUserData
 };
 
 export { actionCreators };

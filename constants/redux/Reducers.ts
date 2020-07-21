@@ -8,13 +8,20 @@ export type ILocation = {
     lat: number | null,
     lng: number | null
 };
+export type IUSerData = {
+    name?: string,
+    password?: string,
+    confirmPassword?: string,
+    emailAddress?: string
+};
 export type IState = {
     isChosen: boolean,
     imageUri: string | undefined,
     good: string | undefined,
     expiry: Date,
     available: boolean,
-    location: ILocation
+    location: ILocation,
+    userData: IUSerData
 };
 
 const defaultState: IState = {
@@ -26,7 +33,8 @@ const defaultState: IState = {
     location: {
         lat: null,
         lng: null
-    }
+    },
+    userData: {}
 };
 const initialState = defaultState;
 
@@ -75,13 +83,32 @@ function applyPickLocation(state: IState, location: ILocation) {
 }
 
 function applyResetAll(_: IState) {
-    return defaultState;
+    return defaultState; // TODO
 }
 
 function applyRequestGood(state: IState, object: any) {
     // TODO: Other logic should be here as well.
     CacheHandler.requestNearbyGood(object);
     return state;
+}
+
+function applyFillUserDataOut(state: IState, userData: IUSerData) {
+    return {
+        ...state,
+        userData: {
+            name: userData.name || state.userData.name,
+            password: userData.password || state.userData.password,
+            confirmPassword: userData.confirmPassword || state.userData.confirmPassword,
+            emailAddress: userData.emailAddress || state.userData.emailAddress
+        }
+    };
+}
+
+function applyClearUserData(state: IState) {
+    return {
+        ...state,
+        userData: {}
+    }
 }
 
 // The receiver of the action is known as a reducer. Whenever an action is triggered, the state of the application changes. The handling of the application’s state is done by the reducers.
@@ -105,6 +132,10 @@ function reducer(state = initialState, action: any) {
             return applyResetAll(state);
         case Types.REQUEST_GOOD:
             return applyRequestGood(state, action.good);
+        case Types.FILL_USER_DATA_OUT:
+            return applyFillUserDataOut(state, action.userData);
+        case Types.CLEAR_USER_DATA:
+            return applyClearUserData(state);
         default:
             return state;
     }
