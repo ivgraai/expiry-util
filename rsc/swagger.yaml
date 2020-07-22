@@ -94,7 +94,7 @@ paths:
         in: "formData"
         required: true
         type: "string"
-        format: "date"
+        format: "date-time"
       - name: "location.latitude"
         in: "formData"
         required: false
@@ -298,7 +298,7 @@ definitions:
           type: "string"
         expiry:
           type: "string"
-          format: "date"
+          format: "date-time"
         isRequestedByOther: # counter
           type: "boolean"
         id:
@@ -312,7 +312,7 @@ definitions:
           type: "string"
         expiry:
           type: "string"
-          format: "date"
+          format: "date-time"
         distance:
           type: "number"
           format: "float"
@@ -336,7 +336,7 @@ definitions:
         type: "string"
       expiry:
         type: "string"
-        format: "date"
+        format: "date-time"
       address:
         $ref: "#/definitions/Address"
       username:

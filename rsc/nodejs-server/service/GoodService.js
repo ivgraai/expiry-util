@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const moment = require('moment');
+const pattern = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 
 /**
  * Share a new good
@@ -9,7 +10,7 @@ const moment = require('moment');
  *
  * token String 
  * name String 
- * expiry date 
+ * expiry Date 
  * available Boolean 
  * image File  (optional)
  * location.latitude Float  (optional)
@@ -36,31 +37,31 @@ exports.goodAllGET = function(token) {
     var entities = [];
     entities.push({
       name: 'bread',
-      expiry: moment().add(1, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(1, 'days').format(pattern),
       isRequestedByOther: false,
       id: 1000
     });
     entities.push({
       name: 'milk',
-      expiry: moment().add(1, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(1, 'days').format(pattern),
       isRequestedByOther: false,
       id: 1001
     });
     entities.push({
       name: 'butter',
-      expiry: moment().add(2, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(2, 'days').format(pattern),
       isRequestedByOther: true,
       id: 1002
     });
     entities.push({
       name: 'apples',
-      expiry: moment().add(3, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(3, 'days').format(pattern),
       isRequestedByOther: true,
       id: 1003
     });
     entities.push({
       name: 'honey',
-      expiry: moment().add(5, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(5, 'days').format(pattern),
       isRequestedByOther: false,
       id: 1004
     });
@@ -91,7 +92,7 @@ exports.goodIdGET = function(id,token) {
   "replyMessage" : "I am waiting you between 5-7pm, thanks!",
   "isAccepted" : true,
   "name" : "tomatoes",
-  "expiry" : moment().add(2, 'days').format("YYYY-MM-DD"),
+  "expiry" : moment().add(2, 'days').set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).format(pattern),
   "myMessage" : "I can offer some peppers in return!",
   "username" : "Aimée Voubrahms"
 } : {
@@ -106,7 +107,7 @@ exports.goodIdGET = function(id,token) {
   "replyMessage" : "n/a",
   "isAccepted" : false,
   "name" : "ice cream",
-  "expiry" : moment().add(29, 'days').format("YYYY-MM-DD"),
+  "expiry" : moment().add(29, 'days').set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).format(pattern),
   "myMessage" : "I appreciate it in advance.",
   "username" : "Alen Gualarga"
 };
@@ -164,70 +165,70 @@ exports.goodNearbyGET = function(locationLatitude,locationLongitude,token,radius
     var entities = [];
     entities.push({
       name: 'tomatoes',
-      expiry: moment().add(2, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(2, 'days').set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).format(pattern),
       distance: 1543,
       id: 2000,
       isRequestedByMe: true
     });
     entities.push({
       name: 'minced meat',
-      expiry: moment().add(3, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(3, 'days').format(pattern),
       distance: 952,
       id: 2001,
       isRequestedByMe: false
     });
     entities.push({
       name: 'orange juice',
-      expiry: moment().add(5, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(5, 'days').format(pattern),
       distance: 1812,
       id: 2002,
       isRequestedByMe: false
     });
     entities.push({
       name: 'chocolate',
-      expiry: moment().add(7, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(7, 'days').format(pattern),
       distance: 687,
       id: 2003,
       isRequestedByMe: false
     });
     entities.push({
       name: 'bananas',
-      expiry: moment().add(11, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(11, 'days').format(pattern),
       distance: 406,
       id: 2004,
       isRequestedByMe: false
     });
     entities.push({
       name: 'sausage',
-      expiry: moment().add(13, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(13, 'days').format(pattern),
       distance: 2052,
       id: 2005,
       isRequestedByMe: false
     });
     entities.push({
       name: 'biscuits',
-      expiry: moment().add(17, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(17, 'days').format(pattern),
       distance: 570,
       id: 2006,
       isRequestedByMe: false
     });
     entities.push({
       name: 'wine',
-      expiry: moment().add(19, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(19, 'days').format(pattern),
       distance: 3288,
       id: 2007,
       isRequestedByMe: false
     });
     entities.push({
       name: 'washing powder',
-      expiry: moment().add(23, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(23, 'days').format(pattern),
       distance: 3700,
       id: 2008,
       isRequestedByMe: false
     });
     entities.push({
       name: 'ice cream',
-      expiry: moment().add(29, 'days').format("YYYY-MM-DD"),
+      expiry: moment().add(29, 'days').set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).format(pattern),
       distance: 2281,
       id: 2009,
       isRequestedByMe: true
