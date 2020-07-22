@@ -1,5 +1,5 @@
 {
-    "CFBundleDisplayName": "Utilidad de expiración",
+    "CFBundleDisplayName": "Manejador de expiración",
     "NSLocationWhenInUseUsageDescription": "Su ubicación se utiliza para enumerar productos cercanos.",
     "NSPhotoLibraryUsageDescription": "Esto nos permite permitirle adjuntar una foto al producto."
 }
