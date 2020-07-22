@@ -195,7 +195,7 @@ export default class HttpClient {
     }
 
     private static convertDate(value: Date): string {
-        return value.toISOString().split('T')[0];
+        return value.toISOString();
     }
 
     private static parseDate(value: string): Date {

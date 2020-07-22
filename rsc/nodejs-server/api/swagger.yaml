@@ -102,7 +102,7 @@ paths:
         in: "formData"
         required: true
         type: "string"
-        format: "date"
+        format: "date-time"
       - name: "location.latitude"
         in: "formData"
         required: false
@@ -343,7 +343,7 @@ definitions:
         type: "string"
       expiry:
         type: "string"
-        format: "date"
+        format: "date-time"
       address:
         $ref: "#/definitions/Address"
       username:
@@ -365,7 +365,7 @@ definitions:
       replyMessage: "replyMessage"
       isAccepted: true
       name: "name"
-      expiry: "2000-01-23"
+      expiry: "2000-01-23T04:56:07.000+00:00"
       myMessage: "myMessage"
       username: "username"
   RequestAllResponse:
@@ -379,7 +379,6 @@ definitions:
         items:
           $ref: "#/definitions/RequestAllResponse_datas"
     example:
-      accepted: 0
       datas:
       - datetime: "2000-01-23T04:56:07.000+00:00"
         id: 6
@@ -389,6 +388,7 @@ definitions:
         id: 6
         message: "message"
         username: "username"
+      accepted: 0
   Address:
     type: "object"
     properties:
@@ -420,7 +420,7 @@ definitions:
         type: "string"
       expiry:
         type: "string"
-        format: "date"
+        format: "date-time"
       isRequestedByOther:
         type: "boolean"
       id:
@@ -433,7 +433,7 @@ definitions:
         type: "string"
       expiry:
         type: "string"
-        format: "date"
+        format: "date-time"
       distance:
         type: "number"
         format: "float"
