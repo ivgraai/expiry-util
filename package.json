@@ -23,7 +23,8 @@
       "!./coverage/**",
       "!**/node_modules/**",
       "!*.config.{js,ts}",
-      "!./docs/**"
+      "!./docs/**",
+      "!./rsc/**"
     ],
     "testResultsProcessor": "jest-sonar-reporter"
   },
