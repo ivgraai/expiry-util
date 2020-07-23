@@ -1,24 +1,42 @@
 #### Overview
 
-
+(placeholder)
 
 ##### Parameters
 
 |               Key                |          Default value          | Description |
 |:---------------------------------|:-------------------------------:|-------------|
-| init                             | false                           | |
-| serverUrl                        | "https://ivgraai.ddns.net/v1/"" | |
-| cache.imageEvictionFrequency     | "monthly"                       | |
-| cache.data.enabled               | true                            | |
-| cache.data.evictionFrequency     | "weekly"                        | |
-| cache.data.latitudeThreshold     | 0.15                            | |
-| cache.data.longitudeThreshold    | 0.15                            | |
-| defaultCurrentPosition.latitude  | 51.509865                       | |
-| defaultCurrentPosition.longitude | -0.118092                       | |
+| init                             | false                           | Reset the application included cancelling all notifications, deleting each downloaded images, eviction of the cache and logging the user out. |
+| serverUrl                        | "https://ivgraai.ddns.net/v1/"" | The backend's base uniform resource locator. |
+| cache.imageEvictionFrequency     | "monthly"                       | Photos will not be downloaded again if their creation times are within this interval. |
+| cache.data.enabled               | true                            | Determine whether mine and nearby goods has to be cached or not. (Note: it does handle only the reading operation so if this property is false it will still be writing the cache.) |
+| cache.data.evictionFrequency     | "weekly"                        | How long these datas remain valid. |
+| cache.data.latitudeThreshold     | 0.15                            | Nearby items have positions but the device's location is not always the same thus we allow a slight deviation to stay able to get goods. |
+| cache.data.longitudeThreshold    | 0.15                            | This is the longitude delta of the previously defined region. |
+| defaultCurrentPosition.latitude  | 51.509865                       | If the current position is not available then this is going to be the fallback value of it. |
+| defaultCurrentPosition.longitude | -0.118092                       | Degree of longitude of London. |
 
 #### Software components
 
+##### NPM / NODEJS
 
+(placeholder)
+
+##### Expo
+
+(placeholder)
+
+##### React-Native
+
+(placeholder)
+
+###### React
+
+(placeholder)
+
+##### Redux
+
+(placeholder)
 
 #### File system
 
@@ -44,5 +62,5 @@
 
 
 ---
-npm test
-sonarqube
+Testing
+GitHub Actions
