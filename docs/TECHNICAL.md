@@ -2,7 +2,8 @@
 
 #### Overview
 
-(placeholder)
+Manage more, be notified, waste less, be conscious.
+This app does help you with keeping track of your perishable foods by notifications, etc. Moreover you can share these goods with others if you think.
 
 ##### Parameters
 
@@ -69,26 +70,26 @@ Used version: [24.7.1](https://www.npmjs.com/package/jest/v/24.7.1)
 |:-------------------------------:|:--------|
 | package.json, package-lock.json | These do list the packages our project depends on. |
 | app.json                        | This file is our go-to place for configuring parts of our app that don't belong in code. It configures many things, from our app name to icon to splash screen and even deep linking scheme and API keys to use for some services. |
-| App.tsx                         | |
-| services/                       | |
-| screens/                        | |
-| rsc/                            | |
-| navigation/                     | |
-| docs/                           | |
-| coverage/                       | |
-| constants/languages/            | |
-| constants/redux/                | |
-| constants/styles/               | |
-| constants/validations/          | |
-| components/                     | |
-| common/                         | |
-| assets/images/                  | |
-| \_\_tests__/, \_\_mocks__/      | |
+| App.tsx                         | Entry point of the application. It contains other logics as well as requesting permissions and the initialization. |
+| services/                       | Classes to support the view layer can be found here. Such as caching goods, database manipulation, HTTP client and storing the user's authorization token. |
+| screens/                        | The React components are under this folder. |
+| rsc/                            | Resources folder mainly with the Node.js mock server which is generated from Swagger. |
+| navigation/                     | Navigation related definitions including eg. bottom tab navigator. |
+| docs/                           | Readme, privacy policy and other documents are here. |
+| coverage/                       | Collected and reported test coverage information. Open with `lcov-report/index.html` file. |
+| constants/languages/            | See: [internationalization](#internationalization) |
+| constants/redux/                | Location of redux integration. It consists of: types, actions, reducers and dispatchers/bindings. |
+| constants/styles/               | Stylesheet for the views. |
+| constants/validations/          | The validation constraints are declared in this folder. |
+| constants/                      | Color and layout constants related to the user interface and the data transfer objects are here too. |
+| components/                     | Reusable UI elements. For instance some of them are the `CachedImage` (download images only once) and `GoodList` (flat-listing goods), or there are the styled components (using the common theme). |
+| common/                         | Domain independent useful codes. |
+| assets/                         | Required fonts and images. |
 
 
 ---
 
-#### TODO
+#### Remaining topics
 
 TypeScript,
 Testing,
