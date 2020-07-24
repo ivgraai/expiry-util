@@ -1,4 +1,4 @@
-*Last update: 23 July 2020*
+*Last update: 24 July 2020*
 
 #### Overview
 
@@ -35,27 +35,33 @@ add, perishableGoods, setLocation, bestBefore, successfullyAdded, letsContinueWi
 
 ##### NPM
 
-(placeholder)
+Node Package Manager is an online repository for the publishing of open-source Node.js projects and it is a command-line utility for interacting with said repository that aids in package installation, version management, and dependency management.
+Used version: [6.10.1](https://www.npmjs.com/package/npm/v/6.10.1)
 
 ##### Expo
 
-(placeholder)
+This is a framework and a platform for universal React applications. It is a set of tools and services built around React Native and native platforms that help us develop, build, deploy, and quickly iterate on iOS, Android, and web apps from the same JavaScript/TypeScript codebase.
+Used version: [37.0.0](https://blog.expo.io/expo-sdk-37-is-now-available-dd5770f066a6)
 
 ##### React-Native
 
-(placeholder)
+A framework for building native apps using React.
+Used version: [0.61.4](https://github.com/expo/react-native/releases/tag/sdk-37.0.1)
 
 ###### React
 
-(placeholder)
+Makes it painless to create interactive UIs. Design simple views for each state in our application, and React will efficiently update and render just the right components when our data changes.
+Used version: [16.9.0](https://github.com/facebook/react/releases/tag/v16.9.0)
 
 ##### Redux
 
-(placeholder)
+A predictable state container for JavaScript apps. It helps us write applications that behave consistently, run in different environments (client, server, and native), and are easy to test.
+Used version: [4.0.5](https://github.com/reduxjs/redux/releases/tag/v4.0.5)
 
 ##### Jest
 
-(placeholder)
+This is a JavaScript testing framework designed to ensure correctness of any JavaScript codebase. It allows you to write tests with an approachable, familiar and feature-rich API that gives you results quickly. Jest makes testing delightful.
+Used version: [24.7.1](https://www.npmjs.com/package/jest/v/24.7.1)
 
 #### File system
 
@@ -81,6 +87,9 @@ add, perishableGoods, setLocation, bestBefore, successfullyAdded, letsContinueWi
 
 
 ---
+
+#### TODO
+
 TypeScript,
 Testing,
 GitHub Actions,
