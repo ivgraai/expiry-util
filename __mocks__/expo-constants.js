@@ -5,6 +5,10 @@ const _default = {
             cache: {
                 imageEvictionFrequency: "yearly",
                 data: { }
+            },
+            defaultCurrentPosition: {
+                latitude: 47.497913,
+                longitude: 19.040236
             }
         }
     }

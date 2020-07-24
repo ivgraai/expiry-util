@@ -1,5 +1,5 @@
 import Utility from "../Utility";
-import { SizeRequest, ImageRequest } from "../../constants/Dtos";
+import { SizeRequest, ImageRequest, Address } from "../../constants/Dtos";
 
 describe("Utility", () => {
 
@@ -24,6 +24,25 @@ describe("Utility", () => {
                 blue: 255
             }
         });
+    });
+    test("formatAddress", () => {
+        let address = new Address({
+            country: "England",
+            city: "London",
+            street: "Houses of Parliament, Westminster",
+            postalCode: "SW1A 0AA",
+            name: "House of Commons",
+            region: "Greater London"
+        });
+        expect(Utility.formatAddress(address)).toEqual("SW1A 0AA England\nGreater London, London\nHouses of Parliament, Westminster\nHouse of Commons");
+    });
+    test("currentLocation", async () => {
+        expect(await Utility.currentLocation()).toEqual({latitude: 47.497913, longitude: 19.040236});
+    });
+    test("todayMidnigth", () => {
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+        expect(Utility.todayMidnigth()).toEqual(today);
     });
 
 });
