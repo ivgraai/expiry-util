@@ -3,6 +3,7 @@
 #### Overview
 
 Manage more, be notified, waste less, be conscious.
+
 This app does help you with keeping track of your perishable foods by notifications, etc. Moreover you can share these goods with others if you think.
 
 ##### Parameters
