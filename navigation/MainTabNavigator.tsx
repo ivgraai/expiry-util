@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, View, PixelRatio } from 'react-native';
+import { Platform, View, PixelRatio, StyleSheet } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -14,6 +14,15 @@ import UserScreen from '../screens/UserScreen';
 import NearbyScreen from '../screens/NearbyScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import ApprovalScreen from '../screens/ApprovalScreen';
+
+const styles = StyleSheet.create({
+  tabBarLabel: {
+    marginTop: PixelRatio.getPixelSizeForLayoutSize(-7.5)
+  },
+  tabBarIcon: {
+    marginTop: PixelRatio.getPixelSizeForLayoutSize(-5)
+  }
+});
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -41,8 +50,8 @@ const MainStack = createStackNavigator(
 );
 
 MainStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (<View style={{ marginTop: PixelRatio.getPixelSizeForLayoutSize(-7.5) }}><TabBarLabel focused={focused} style={{}}>{i18n.new}</TabBarLabel></View>),
-  tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'} size={26} style={{ marginTop: PixelRatio.getPixelSizeForLayoutSize(-5) }} color={Colors.tintColor} />
+  tabBarLabel: ({ focused }) => (<View style={ styles.tabBarLabel }><TabBarLabel focused={focused} style={{}}>{i18n.new}</TabBarLabel></View>),
+  tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'} size={26} style={ styles.tabBarIcon } color={Colors.tintColor} />
 };
 
 MainStack.path = '';
@@ -56,8 +65,8 @@ const AllStack = createStackNavigator(
 );
 
 AllStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (<View style={{ marginTop: PixelRatio.getPixelSizeForLayoutSize(-7.5) }}><TabBarLabel focused={focused} style={{}}>{i18n.all}</TabBarLabel></View>),
-  tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'} size={26} style={{ marginTop: PixelRatio.getPixelSizeForLayoutSize(-5) }} color={Colors.tintColor} />
+  tabBarLabel: ({ focused }) => (<View style={ styles.tabBarLabel }><TabBarLabel focused={focused} style={{}}>{i18n.all}</TabBarLabel></View>),
+  tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-list' : 'md-list'} size={26} style={ styles.tabBarIcon } color={Colors.tintColor} />
 };
 
 AllStack.path = '';
@@ -72,8 +81,8 @@ const NearbyStack = createStackNavigator(
 );
 
 NearbyStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (<View style={{ marginTop: PixelRatio.getPixelSizeForLayoutSize(-7.5) }}><TabBarLabel focused={focused} style={{}}>{i18n.nearby}</TabBarLabel></View>),
-  tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-globe' : 'md-globe'} size={26} style={{ marginTop: PixelRatio.getPixelSizeForLayoutSize(-5) }} color={Colors.tintColor} />
+  tabBarLabel: ({ focused }) => (<View style={ styles.tabBarLabel }><TabBarLabel focused={focused} style={{}}>{i18n.nearby}</TabBarLabel></View>),
+  tabBarIcon: <Ionicons name={Platform.OS === 'ios' ? 'ios-globe' : 'md-globe'} size={26} style={ styles.tabBarIcon } color={Colors.tintColor} />
 };
 
 NearbyStack.path = '';

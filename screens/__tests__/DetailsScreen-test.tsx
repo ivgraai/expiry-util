@@ -23,11 +23,11 @@ test(`trigger status of an approved request, all detail is on the screen`, async
               replyMessage: "Test reply message...",
               isAccepted: true,
               name: "test goods",
-              expiry: new Date().toISOString(),
+              expiry: new Date(0).toISOString(),
               myMessage: "Test my message...",
               username: "Test Username",
             },
-            (_value: string) => new Date("2020-07-28T12:00:00.000Z")
+            (_value: string) => new Date(_value)
           )
         )
       )
@@ -126,7 +126,7 @@ test(`trigger status of an approved request, all detail is on the screen`, async
                 }
               }
             >
-              7/28/2020
+              1/1/1970
             </Text>
             <View
               style={
