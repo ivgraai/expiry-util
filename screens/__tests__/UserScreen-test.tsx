@@ -37,7 +37,7 @@ jest.mock("react-navigation", () => ({
 afterAll(() => jest.restoreAllMocks());
 
 it("signIn", async () => {
-    expect.assertions(2);
+    expect.assertions(1);
     const props = {
         navigation: {
             getParam: jest.fn(() => "message")
@@ -52,7 +52,6 @@ it("signIn", async () => {
     fireEvent.changeText(getByTestId("signInPassword"), "password");
     fireEvent.press(getByTestId("signInButton"));
     let promise = waitFor(() => UserManager.getToken());
-    await expect(promise).resolves.not.toBeNull();
     await expect(promise).resolves.toEqual("14aad09f-08f6-45cc-9109-b417856d2ff5a");
     // spy.mockRestore();
 });
