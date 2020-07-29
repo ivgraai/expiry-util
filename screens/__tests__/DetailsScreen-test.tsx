@@ -27,7 +27,7 @@ test(`trigger status of an approved request, all detail is on the screen`, async
               myMessage: "Test my message...",
               username: "Test Username",
             },
-            (_value: string) => new Date(_value)
+            (_value) => new Date(_value)
           )
         )
       )

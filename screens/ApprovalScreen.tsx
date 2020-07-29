@@ -86,7 +86,7 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
             <FlatList
                 data={this.state.allRequests?.datas}
                 keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => <View style={withStyle.itemView}>
+                renderItem={({ item, index }) => <View style={withStyle.itemView}>
                     <View style={withStyle.requestDataSection}>
                         <Text style={withStyle.usernameText}>{item.username}</Text>
                         <Text style={withStyle.datetimeAndMessageTexts}>{item.datetime.toLocaleString()}</Text>
@@ -95,6 +95,7 @@ export default class ApprovalScreen extends React.Component<IProps, IState> {
                     </View>
                     {(!this.state.allRequests!.accepted || item.id == this.state.beneficiary) &&
                         <StyledButton
+                            testID={"approveButton" + index}
                             onPress={() => onPress(item)}
                             style={withStyle.approveButton}
                             disabled={null != this.state.allRequests!.accepted}
