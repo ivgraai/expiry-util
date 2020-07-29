@@ -1,5 +1,6 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "react-native-testing-library";
+import "@testing-library/jest-native/extend-expect";
 import ApprovalScreen from "../ApprovalScreen";
 import "../../common/String.extension";
 import HttpClient from "../../services/HttpClient";
@@ -47,12 +48,14 @@ test(`approve`, async () => {
   const { getByTestId } = render(
     <ApprovalScreen navigation={{ getParam: jest.fn(() => 1) }}></ApprovalScreen>
   );
-  await waitFor(() => getByTestId("approveButton1"));
-  fireEvent.press(getByTestId("approveButton1"));
+  const id: string = "approveButton1";
+  await waitFor(() => getByTestId(id));
+  fireEvent.press(getByTestId(id));
   const message: string = "Test reply message!";
   fireEvent.changeText(getByTestId("textInput"), message);
   fireEvent.press(getByTestId("button"));
   await waitFor(() => expect(HttpClient.approveRequest).toHaveBeenCalled());
   expect(HttpClient.approveRequest).toHaveBeenCalledTimes(1);
   expect(HttpClient.approveRequest).toHaveBeenCalledWith(TOKEN, REQUEST_ID, message);
+  expect(getByTestId(id)).toBeDisabled();
 });
