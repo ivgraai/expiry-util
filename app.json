@@ -41,6 +41,7 @@
     "extra": {
       "init": false,
       "serverUrl": "http://192.168.8.104:8080/v1/",
+      "httpTimeout": 3500,
       "cache": {
         "imageEvictionFrequency": "monthly",
         "data": {

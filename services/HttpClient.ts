@@ -6,6 +6,7 @@ import UnsupportedStatusException from '../common/errors/UnsupportedStatusExcept
 import UnsupportedContentException from '../common/errors/UnsupportedContentException';
 
 const BASE_URL: string = Constants.manifest.extra.serverUrl;
+const TIMEOUT: number = Constants.manifest.extra.httpTimeout;
 
 export default class HttpClient {
 
@@ -157,7 +158,7 @@ export default class HttpClient {
 
     private static request(urlSuffix: string, needToParse: boolean, options?: RequestInit | undefined) {
         return new Promise((resolve, reject) => {
-            fetch(BASE_URL + urlSuffix, options)
+            HttpClient.withTimeout(TIMEOUT, (signal: AbortSignal) => fetch(BASE_URL + urlSuffix, Object.assign(options, { signal })))
                 .then(response => HttpClient.parse(response, needToParse))
                 .then(response => {
                     const statusCode = response.status;
@@ -180,6 +181,16 @@ export default class HttpClient {
             token: !value ? undefined : value
         };
         return retval;
+    }
+
+    private static async withTimeout(milliseconds: number, f: { (signal: AbortSignal): Promise<Response>; (arg0: AbortSignal): any; }) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), milliseconds);
+        try {
+            return await f(controller.signal);
+        } finally {
+            clearTimeout(timeoutId);
+        }
     }
 
     private static parse(response: Response, needToParse: boolean): Promise<{ok: boolean, status: number, contentType: string | null, body: any}> {
