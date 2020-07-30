@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function useFetch(url: RequestInfo, opts?: RequestInit | undefined) {
+export function useFetch(url: RequestInfo, opts?: RequestInit | undefined) {
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
@@ -16,5 +16,5 @@ function useFetch(url: RequestInfo, opts?: RequestInit | undefined) {
                 setLoading(false);
             });
     }, [url]);
-    return [response, loading, hasError];
+    return {response, loading, hasError};
 }

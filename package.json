@@ -27,7 +27,9 @@
       "!./rsc/**"
     ],
     "testResultsProcessor": "jest-sonar-reporter",
-    "setupFiles": ["./jest.setup.js"]
+    "setupFiles": [
+      "./jest.setup.js"
+    ]
   },
   "jestSonar": {
     "reportPath": "coverage",
