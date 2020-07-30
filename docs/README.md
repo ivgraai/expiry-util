@@ -11,3 +11,7 @@
 
 1. `npm install`
 2. `expo start`
+
+# Documentations
+
+[technical](./TECHNICAL.md) and [user scenarios](./SCENARIOS.md)
