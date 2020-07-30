@@ -43,8 +43,7 @@ it("signIn", async () => {
             getParam: jest.fn(() => "message")
         }
     };
-    const spy = jest.spyOn(HttpClient, "login");
-    spy.mockReturnValue(new Promise(resolve =>
+    jest.spyOn(HttpClient, "login").mockReturnValue(new Promise(resolve =>
         resolve("14aad09f-08f6-45cc-9109-b417856d2ff5a")
     ));
     const { getByTestId } = renderWithRedux(<UserScreen {...props} />, {initialState: { userData: { } }});
@@ -53,5 +52,4 @@ it("signIn", async () => {
     fireEvent.press(getByTestId("signInButton"));
     let promise = waitFor(() => UserManager.getToken());
     await expect(promise).resolves.toEqual("14aad09f-08f6-45cc-9109-b417856d2ff5a");
-    // spy.mockRestore();
 });

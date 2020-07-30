@@ -183,11 +183,11 @@ export default class HttpClient {
         return retval;
     }
 
-    private static async withTimeout(milliseconds: number, f: { (signal: AbortSignal): Promise<Response>; (arg0: AbortSignal): any; }) {
+    private static async withTimeout(milliseconds: number, signalableProducer: { (signal: AbortSignal): Promise<Response>; (arg0: AbortSignal): any; }) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), milliseconds);
         try {
-            return await f(controller.signal);
+            return await signalableProducer(controller.signal);
         } finally {
             clearTimeout(timeoutId);
         }

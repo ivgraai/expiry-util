@@ -55,7 +55,6 @@ test(`approve`, async () => {
   fireEvent.changeText(getByTestId("textInput"), message);
   fireEvent.press(getByTestId("button"));
   await waitFor(() => expect(HttpClient.approveRequest).toHaveBeenCalled());
-  expect(HttpClient.approveRequest).toHaveBeenCalledTimes(1);
   expect(HttpClient.approveRequest).toHaveBeenCalledWith(TOKEN, REQUEST_ID, message);
   expect(getByTestId(id)).toBeDisabled();
 });
