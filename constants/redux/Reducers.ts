@@ -100,13 +100,14 @@ function applyRequestGood(state: IState, object: any): IState {
 }
 
 function applyFillUserDataOut(state: IState, userData: IUSerData): IState {
+    let predicate = (data: string | undefined) => ("" == data);
     return {
         ...state,
         userData: {
-            name: userData.name || state.userData.name,
-            password: userData.password || state.userData.password,
-            confirmPassword: userData.confirmPassword || state.userData.confirmPassword,
-            emailAddress: userData.emailAddress || state.userData.emailAddress
+            ...(!predicate(userData.name) && {name: userData.name || state.userData.name}),
+            ...(!predicate(userData.password) && {password: userData.password || state.userData.password}),
+            ...(!predicate(userData.confirmPassword) && {confirmPassword: userData.confirmPassword || state.userData.confirmPassword}),
+            ...(!predicate(userData.emailAddress) && {emailAddress: userData.emailAddress || state.userData.emailAddress})
         }
     };
 }
