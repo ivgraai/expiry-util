@@ -1,3 +1,6 @@
+require("jest-fetch-mock").enableMocks();
+fetchMock.doMock();
+
 if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
   process.on("unhandledRejection", (reason) => {
     console.log("REJECTION", reason);
