@@ -79,6 +79,12 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         width: Layout.widthPercentageAsString,
         maxHeight: "40%"
     },
+    dataExpirationDateModal: {
+        borderLeftColor: Layout.borderColor,
+        borderLeftWidth: Layout.borderWidth,
+        borderRightColor: Layout.borderColor,
+        borderRightWidth: Layout.borderWidth
+    },
     dataLocationCheckBoxContainer: {
         marginTop: PixelRatio.getPixelSizeForLayoutSize(-3),
         backgroundColor: "transparent",

@@ -38,6 +38,7 @@
 
     },
     "description": "This app does help you with keeping track of your perishable foods by notifications, etc. Moreover you can share these goods with others if you think.",
+    "primaryColor": "#556b2f",
     "extra": {
       "init": false,
       "serverUrl": "http://192.168.8.104:8080/v1/",

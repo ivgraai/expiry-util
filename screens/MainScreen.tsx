@@ -287,6 +287,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
               customHeaderIOS={dateTimePickerHeader}
               customConfirmButtonIOS={dateTimePickerConfirmButton}
               customCancelButtonIOS={dateTimePickerCancelButton}
+              style={withStyle.dataExpirationDateModal}
             />
           </View>
           <CheckBox
