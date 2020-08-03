@@ -82,7 +82,7 @@ const en = {
     confirmPassword:                                        'confirm password',
     submit:                                                 'submit',
     youHaveSuccessfullysignedUp:                            'you have successfully signed up',
-    aProblemOccurredWhileCommunicatingWithTheServer:        'a problem occurred while communicating wit h the server',
+    aProblemOccurredWhileCommunicatingWithTheServer:        'a problem occurred while communicating with the server',
     inOrderToMarkAsAvailableYouNeedToSignIn:                'in order to mark as available you need to sign in',
     signIn:                                                 'sign in',
     or:                                                     'or',
