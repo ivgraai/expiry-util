@@ -1,62 +1,56 @@
 {
-  "expo": {
-    "name": "Expiry Utility",
-    "slug": "expiry-util",
-    "privacy": "public",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "1.3.2",
-    "orientation": "portrait",
-    "icon": "./assets/images/logo.png",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#aed59e"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "hu.ivgraai.expiry-util",
-      "buildNumber": "1.3.2",
-      "infoPlist": {
-        "CFBundleAllowMixedLocalizations": true
-      }
-    },
-    "locales": {
-      "en": "./constants/languages/english.json",
-      "hu": "./constants/languages/hungarian.json",
-      "fr": "./constants/languages/french.json",
-      "es": "./constants/languages/spanish.json"
-
-    },
-    "description": "This app does help you with keeping track of your perishable foods by notifications, etc. Moreover you can share these goods with others if you think.",
-    "primaryColor": "#556b2f",
-    "extra": {
-      "init": false,
-      "serverUrl": "http://192.168.8.104:8080/v1/",
-      "httpTimeout": 3500,
-      "cache": {
-        "imageEvictionFrequency": "monthly",
-        "data": {
-          "enabled": true,
-          "evictionFrequency": "weekly",
-          "latitudeThreshold": 0.15,
-          "longitudeThreshold": 0.15
-        }
-      },
-      "defaultCurrentPosition": {
-        "latitude": 51.509865,
-        "longitude": -0.118092
-      }
-    },
-    "userInterfaceStyle": "automatic"
-  }
+    "expo": {
+        "name": "Expiry Utility",
+        "slug": "expiry-util",
+        "privacy": "public",
+        "platforms": ["ios", "android", "web"],
+        "version": "1.3.2",
+        "orientation": "portrait",
+        "icon": "./assets/images/logo.png",
+        "splash": {
+            "image": "./assets/images/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#aed59e"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "hu.ivgraai.expiry-util",
+            "buildNumber": "1.3.2",
+            "infoPlist": {
+                "CFBundleAllowMixedLocalizations": true
+            }
+        },
+        "locales": {
+            "en": "./constants/languages/english.json",
+            "hu": "./constants/languages/hungarian.json",
+            "fr": "./constants/languages/french.json",
+            "es": "./constants/languages/spanish.json",
+            "hi": "./constants/languages/hindi.json"
+        },
+        "description": "This app does help you with keeping track of your perishable foods by notifications, etc. Moreover you can share these goods with others if you think.",
+        "primaryColor": "#556b2f",
+        "extra": {
+            "init": false,
+            "serverUrl": "http://192.168.8.104:8080/v1/",
+            "httpTimeout": 3500,
+            "cache": {
+                "imageEvictionFrequency": "monthly",
+                "data": {
+                    "enabled": true,
+                    "evictionFrequency": "weekly",
+                    "latitudeThreshold": 0.15,
+                    "longitudeThreshold": 0.15
+                }
+            },
+            "defaultCurrentPosition": {
+                "latitude": 51.509865,
+                "longitude": -0.118092
+            }
+        },
+        "userInterfaceStyle": "automatic"
+    }
 }
