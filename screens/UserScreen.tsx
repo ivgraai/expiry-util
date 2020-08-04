@@ -60,7 +60,7 @@ class UserScreen extends React.Component<IProps, IState> {
     }
 
     validateAll(): boolean {
-        return this.validate({name: this.props.name, password: this.props.password, confirmPassword: this.props.confirmPassword, emailAddress: this.props.email});
+        return this.validate({name: this.props.name, password: this.props.password, confirmPassword: { value: this.props.confirmPassword }, emailAddress: this.props.email});
     }
 
     validateNameAndPassword(): boolean {
