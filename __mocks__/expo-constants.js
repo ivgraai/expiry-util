@@ -2,6 +2,7 @@ const _default = {
     manifest: {
         extra: {
             serverUrl: "https://ivgraai.ddns.net:443/v1/",
+            httpTimeout: 1500,
             cache: {
                 imageEvictionFrequency: "yearly",
                 data: { }

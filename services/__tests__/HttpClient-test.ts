@@ -1,12 +1,17 @@
 import fetch from "jest-fetch-mock";
 import HttpClient from "../HttpClient";
 import * as Dtos from "../../constants/Dtos";
+import Constants from "expo-constants";
 
-const BASE_URL: string = "https://ivgraai.ddns.net:443/v1/";
-function mockOnce(body?: string) {
+const BASE_URL: string = Constants.manifest.extra.serverUrl;
+const TIME_TO_RUN: number = Constants.manifest.extra.httpTimeout;
+function mockOnce(body?: string, milliseconds: number = 0) {
   return fetchMock.once(
-    () =>
-      new Promise((resolve) =>
+    () => {
+      if (0 != milliseconds) {
+        jest.advanceTimersByTime(milliseconds);
+      }
+      return new Promise((resolve) =>
         resolve({
           status: 200,
           statusText: "OK",
@@ -18,7 +23,8 @@ function mockOnce(body?: string) {
             },
           },
         })
-      )
+      );
+    }
   );
 }
 function testToken(
@@ -29,7 +35,6 @@ function testToken(
 }
 
 describe(`HttpClient`, () => {
-  // abort
   test(`login`, async () => {
     const counter = 0;
     var token = "test token";
@@ -253,6 +258,10 @@ describe(`HttpClient`, () => {
     testToken(fetch.mock.calls[counter][1]!.headers, token);
     expect(fetch.mock.calls[counter][1]!.body).toEqual(message);
   });
-  // wrong status (reject)
-  // wrong content
+  test(`aborting`, async () => {
+    jest.useFakeTimers();
+    mockOnce("", TIME_TO_RUN + 500);
+    await expect(HttpClient.login("dummy", "dummy")).rejects.toThrow("Aborted");
+    jest.useRealTimers();
+  });
 });
