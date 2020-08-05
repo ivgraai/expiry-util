@@ -5,6 +5,8 @@ import moment from 'moment';
 import UnsupportedStatusException from '../common/errors/UnsupportedStatusException';
 import UnsupportedContentException from '../common/errors/UnsupportedContentException';
 
+import 'abortcontroller-polyfill';
+
 const BASE_URL: string = Constants.manifest.extra.serverUrl;
 const TIMEOUT: number = Constants.manifest.extra.httpTimeout;
 
