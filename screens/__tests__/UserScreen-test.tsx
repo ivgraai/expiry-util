@@ -36,7 +36,7 @@ it("signIn", async () => {
     jest.spyOn(HttpClient, "login").mockReturnValue(new Promise(resolve =>
         resolve("14aad09f-08f6-45cc-9109-b417856d2ff5a")
     ));
-    const { getByTestId } = renderWithRedux(<UserScreen {...props} />, {initialState: { userData: { } }});
+    const { getByTestId } = renderWithRedux(<UserScreen {...props} />);
     fireEvent.changeText(getByTestId("signInUsername"), "username");
     fireEvent.changeText(getByTestId("signInPassword"), "password");
     fireEvent.press(getByTestId("signInButton"));
