@@ -1,4 +1,4 @@
-import { StyleSheet, PixelRatio, Platform } from "react-native";
+import { StyleSheet, PixelRatio, Platform, PlatformIOSStatic } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
@@ -46,7 +46,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         textAlign: "center",
         paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0,
         minHeight: "13%",
-        marginBottom: -1
+        marginBottom: -1 + ('ios' === Platform.OS && (<PlatformIOSStatic> Platform).isPad ? 1 : 0)
     },
     dataErrorInput: {
         borderColor: Colors.errorBackground,
@@ -58,7 +58,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         color: Colors.errorText
     },
     dataExpirationDateWrapper: {
-        paddingBottom: 2
+        paddingBottom: 3
     },
     dataExpirationDateView: {
         minHeight: "44%"
