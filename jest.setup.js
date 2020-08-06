@@ -1,3 +1,6 @@
+import MockStorage from "AsyncStorage";
+jest.mock("react-native/Libraries/Storage/AsyncStorage", () => new MockStorage());
+
 require("jest-fetch-mock").enableMocks();
 fetchMock.doMock();
 

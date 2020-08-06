@@ -5,7 +5,9 @@ const _default = {
             httpTimeout: 1500,
             cache: {
                 imageEvictionFrequency: "yearly",
-                data: { }
+                data: {
+                    evictionFrequency: "daily"
+                }
             },
             defaultCurrentPosition: {
                 latitude: 47.497913,

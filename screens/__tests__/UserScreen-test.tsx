@@ -6,18 +6,8 @@ import UserScreen from "../UserScreen";
 import HttpClient from "../../services/HttpClient";
 import UserManager from "../../services/UserManager";
 
-/* const ReactNative = jest.requireActual("react-native");
-ReactNative.AsyncStorage = { }; */
-class MockStorage {
-    cache: any = {};
-    setItem = jest.fn((key, value) => new Promise((resolve, reject) => {
-        return (typeof key !== 'string' || typeof value !== 'string') ? reject(new Error()) : resolve(this.cache[key] = value);
-    }));
-    getItem = jest.fn((key) => new Promise((resolve) => {
-        return this.cache.hasOwnProperty(key) ? resolve(this.cache[key]) : resolve(null);
-    }));
-}
-jest.mock("react-native/Libraries/Storage/AsyncStorage", () => new MockStorage());
+/* const ReactNative = jest.requireActual("react-native"); */
+
 jest.mock("../../services/DbHelper");
 jest.mock("react-navigation", () => ({
     NavigationEvents: "mockNavigationEvents",
