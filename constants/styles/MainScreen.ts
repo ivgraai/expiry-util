@@ -1,4 +1,4 @@
-import { StyleSheet, PixelRatio, Platform, PlatformIOSStatic } from "react-native";
+import { StyleSheet, PixelRatio, Platform } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
