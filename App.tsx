@@ -54,7 +54,6 @@ if (!__DEV__) {
 }
 
 Permissions.askAsync(Permissions.NOTIFICATIONS);
-Permissions.askAsync(Permissions.CAMERA_ROLL);
 Permissions.askAsync(Permissions.LOCATION);
 
 if (Constants.manifest.extra.init) {

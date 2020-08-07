@@ -180,6 +180,10 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
   }
 
   buttonPick = async () => {
+    let value = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+    if (!value.granted && "granted" != value.status) {
+      await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    }
     try {
       let image = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
