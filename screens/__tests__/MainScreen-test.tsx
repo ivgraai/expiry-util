@@ -8,8 +8,6 @@ import { Notifications } from "expo";
 import DbHelper from "../../services/DbHelper";
 import moment from "moment";
 
-jest.mock("react-native/Libraries/Animated/src/NativeAnimatedHelper");
-
 test(`Notifications::scheduleLocalNotificationAsync`, async () => {
     jest.spyOn(Alert, "alert").mockImplementationOnce(() => {
         return {
