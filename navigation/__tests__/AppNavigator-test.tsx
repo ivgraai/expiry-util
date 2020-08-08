@@ -20,7 +20,7 @@ jest.mock("react-native-maps", () => {
 });
 
 test(`MainTabNavigator and MapScreen`, async () => {
-  jest.spyOn(UserManager, "isSignedIn").mockResolvedValueOnce(true);
+  jest.spyOn(UserManager, "getToken").mockResolvedValueOnce("uuid");
   const component = <AppNavigator />;
   const { findByText, findByTestId } = renderWithRedux(component);
   const toClick = await findByText("SET LOCATION");

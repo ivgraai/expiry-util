@@ -1,5 +1,4 @@
 import React from "react";
-import { SafeAreaViewProps } from "react-navigation";
 import { fireEvent, waitFor } from "react-native-testing-library";
 import { renderWithRedux } from "../../services/TestHelper";
 import UserScreen from "../UserScreen";
@@ -9,21 +8,6 @@ import UserManager from "../../services/UserManager";
 /* const ReactNative = jest.requireActual("react-native"); */
 
 jest.mock("../../services/DbHelper");
-jest.mock("react-navigation", () => ({
-    NavigationEvents: "mockNavigationEvents",
-    withNavigation: (Component: React.ComponentClass) => (props: any) => (
-        <Component navigation={{ navigate: jest.fn() }} {...props} />
-    ),
-    SafeAreaView: ({ children }: SafeAreaViewProps) => <>{children}</>,
-    ThemeColors: {
-        light: {
-            bodyContent: ""
-        },
-        dark: {
-            bodyContent: ""
-        }
-    }
-}));
 afterAll(() => jest.restoreAllMocks());
 
 it("signIn", async () => {
