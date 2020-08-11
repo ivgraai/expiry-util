@@ -4,6 +4,7 @@ import Layout from "../Layout";
 
 export const styles = (isDark: boolean) => StyleSheet.create({
     mainView: {
+        flexGrow:1,
         flex: 1,
         flexDirection: "column",
         justifyContent: "space-around"
@@ -44,7 +45,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
     },
     dataPerishableGoodsTextInput: {
         textAlign: "center",
-        paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0,
+        // paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0,
         minHeight: "13%",
         marginBottom: -1
     },
@@ -102,7 +103,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         justifyContent: "center"
     },
     addStyledButton: {
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5) * -1,
+        marginVertical: PixelRatio.getPixelSizeForLayoutSize(7.5) * -1,
         marginRight: PixelRatio.getPixelSizeForLayoutSize(20),
         marginLeft: PixelRatio.getPixelSizeForLayoutSize(20)
     }

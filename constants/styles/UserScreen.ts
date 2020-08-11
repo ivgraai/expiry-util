@@ -18,7 +18,8 @@ export const styles = StyleSheet.create({
     },
     textInput: {
         textAlign: "center",
-        minHeight: "13%"
+        minHeight: "13%",
+        height: 30,
     },
     buttonWrapper: {
         alignSelf: "center"

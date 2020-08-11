@@ -12,7 +12,7 @@ import Utility from '../common/Utility';
 import { styles } from '../constants/styles/UserScreen';
 import validate from 'validate.js';
 import constraints from '../constants/validation/UserConstraint';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from "react-redux";
 import * as conn from "../constants/redux/Connection_User";
 
@@ -105,6 +105,11 @@ class UserScreen extends React.Component<IProps, IState> {
     render() {
         const { navigation } = this.props;
         let form = this.state.switched ? <>
+         <KeyboardAwareScrollView 
+            style={{height:'85%'}}
+             resetScrollToCoords={{ x: 0, y: 0 }} 
+             scrollEnabled={true} 
+         > 
                 <View style={styles.inputsAndValidationResultView}>
                     <View style={styles.inputsView}>
                         <StyledTextInput header={i18n.name.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('name')]} onChangeText={(value: string) => this.props.fillDataOut({name: value})} onBlur={() => this.validateAll()} value={this.props.name}/>
@@ -119,7 +124,13 @@ class UserScreen extends React.Component<IProps, IState> {
                     <Text style={styles.orText}>{i18n.or.toUpperCase()}</Text>
                     <View style={styles.buttonWrapper}><StyledButton onPress={() => {this.internalComponentWillUnmount(false);}} inverted={true}>{i18n.goToSignIn.toUpperCase()}</StyledButton></View>
                 </View>
+    </KeyboardAwareScrollView>
             </> : <>
+            <KeyboardAwareScrollView 
+            style={{height:'75%'}}
+             resetScrollToCoords={{ x: 0, y: 0 }} 
+             scrollEnabled={true} 
+         > 
                 <View style={styles.inputsAndValidationResultView}>
                     <View style={styles.inputsView}>
                         <StyledTextInput header={i18n.name.toUpperCase()} style = {[styles.textInput, this.getErrorStyle('name')]} onChangeText={(value: string) => this.props.fillDataOut({name: value})} onBlur={() => this.validateNameAndPassword()} testID="signInUsername" value={this.props.name}/>
@@ -132,6 +143,7 @@ class UserScreen extends React.Component<IProps, IState> {
                     <Text style={styles.orText}>{i18n.or.toUpperCase()}</Text>
                     <View style={styles.buttonWrapper}><StyledButton onPress={() => {this.internalComponentWillUnmount(true);}} inverted={true}>{i18n.goToSignUp.toUpperCase()}</StyledButton></View>
                 </View>
+         </KeyboardAwareScrollView>
             </>;
         return (
             <View style={styles.container}>

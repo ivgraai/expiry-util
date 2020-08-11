@@ -17,7 +17,10 @@ import ApprovalScreen from '../screens/ApprovalScreen';
 
 const styles = StyleSheet.create({
   tabBarLabel: {
-    marginTop: PixelRatio.getPixelSizeForLayoutSize(-7.5)
+    width:'100%',
+    flex:1,
+    alignItems:'center',
+    marginVertical: PixelRatio.getPixelSizeForLayoutSize(-7.5),
   },
   tabBarIcon: {
     marginTop: PixelRatio.getPixelSizeForLayoutSize(-5)

@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
         borderWidth: Layout.borderWidth,
         borderColor: Layout.borderColor,
         borderRadius: Layout.borderRadius,
-        paddingBottom: PixelRatio.getPixelSizeForLayoutSize(0.5)
+        paddingBottom: PixelRatio.getPixelSizeForLayoutSize(0.5),
+        marginVertical: 10
     },
     textView: {
         backgroundColor: Colors.tintColor,

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   View,
+  ScrollView,
   Text,
   Image,
   TouchableOpacity,
@@ -221,6 +222,9 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
       <View
         style={withStyle.mainView}
       >
+      <ScrollView
+        contentContainerStyle={withStyle.mainView}
+        >
         <View
           style={withStyle.photoView}
         >
@@ -308,6 +312,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
             </StyledButton>
           </View>
         </View>
+      </ScrollView>
       </View>
     );
   }
