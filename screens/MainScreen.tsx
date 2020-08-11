@@ -258,6 +258,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
               value={this.props.goods}
               onBlur={() => this.validate()}
               editable={this.state.controlsEnabled}
+              testID="goodsInput"
             />
             <Text style={withStyle.dataErrorText}>{this.state.validationResult?.goods}</Text>
           </View>
@@ -307,7 +308,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
           <View
             style={withStyle.addView}
           >
-            <StyledButton style={withStyle.addStyledButton} onPress={() => this.buttonAdd(this.state)} disabled={!this.state.controlsEnabled}>
+            <StyledButton style={withStyle.addStyledButton} onPress={() => this.buttonAdd(this.state)} disabled={!this.state.controlsEnabled} testID="addButton">
               {i18n.add.toUpperCase()}
             </StyledButton>
           </View>

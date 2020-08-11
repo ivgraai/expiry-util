@@ -19,7 +19,8 @@ const constraints = {
     confirmPassword: {
         equality: {
             attribute: "password",
-            message: '^' + i18n.confirmPasswordMustBeEqualToPassword.capitalize() + '.'
+            message: '^' + i18n.confirmPasswordMustBeEqualToPassword.capitalize() + '.',
+            comparator: (arg1: {value: string}, arg2: string) => (arg2 === arg1.value)
         }
     },
     emailAddress: {

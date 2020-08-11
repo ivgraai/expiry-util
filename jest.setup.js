@@ -1,3 +1,9 @@
+import MockStorage from "AsyncStorage";
+import "react-native-gesture-handler/jestSetup";
+
+jest.mock("react-native/Libraries/Storage/AsyncStorage", () => new MockStorage());
+jest.mock("react-native/Libraries/Animated/src/NativeAnimatedHelper");
+
 require("jest-fetch-mock").enableMocks();
 fetchMock.doMock();
 

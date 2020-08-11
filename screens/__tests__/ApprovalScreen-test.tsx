@@ -7,7 +7,6 @@ import HttpClient from "../../services/HttpClient";
 import * as Dtos from "../../constants/Dtos";
 import UserManager from "../../services/UserManager";
 
-jest.mock("react-native/Libraries/Animated/src/NativeAnimatedHelper");
 let originalGetToken: any, originalFindAllRequest: any, originalApproveRequest: any;
 const TOKEN: string = "token", REQUEST_ID: number = 2;
 

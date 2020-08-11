@@ -3,8 +3,7 @@
 
 # Download the application
 
-- [from App Store](https://apps.apple.com/us/app/id1523176969),
-- [from TestFlight](https://testflight.apple.com/join/IzfOXqY2) or
+- [from App Store](https://apps.apple.com/us/app/id1523176969) or
 - [from Expo](https://expo.io/@ivgraai/expiry-util)
 
 # Build and run the project

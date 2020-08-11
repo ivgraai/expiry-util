@@ -41,20 +41,20 @@ export default class CacheHandler {
     }
 
     public static async isMineGoodsStillValid(): Promise<boolean> {
-        let now = new Date();
+        let now = Date.now();
         const value = await AsyncStorage.getItem(this.MINE_GOODS_DATE);
         return this.validate(now, value);
     }
 
     public static async isNearbyGoodsStillValid(): Promise<boolean> {
-        let now = new Date();
+        let now = Date.now();
         const value = await AsyncStorage.getItem(this.NEARBY_GOODS_DATE);
         return this.validate(now, value);
     }
 
-    private static validate(now: Date, value: string | null): boolean {
+    private static validate(now: number, value: string | null): boolean {
         return !value ? true :
-            (Utility.calculateURLCacheValue(this.EVICTION_FREQUENCY, now) ==
+            (Utility.calculateURLCacheValue(this.EVICTION_FREQUENCY, new Date(now)) ==
             Utility.calculateURLCacheValue(this.EVICTION_FREQUENCY, new Date(value)));
     }
 }
