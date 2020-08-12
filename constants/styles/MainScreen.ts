@@ -1,4 +1,4 @@
-import { StyleSheet, PixelRatio, Platform } from "react-native";
+import { StyleSheet, PixelRatio, Platform, Dimensions } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
@@ -18,9 +18,10 @@ export const styles = (isDark: boolean) => StyleSheet.create({
     photoTouchableOpacity: {
         borderColor: Layout.borderColor,
         borderWidth: Layout.borderWidth,
-        height: "85%",
+        height: Dimensions.get('window').height>=650?"85%":"40%",
         width: Layout.widthPercentageAsString,
-        borderRadius: Layout.borderRadius
+        borderRadius: Layout.borderRadius,
+        marginTop: Dimensions.get('window').height<650?"-50%" : 0
     },
     photoImage: {
         width: "100%",
@@ -38,14 +39,15 @@ export const styles = (isDark: boolean) => StyleSheet.create({
     },
     dataView: {
         flex: 5,
-        alignItems: "center"
+        alignItems: "center",
+        marginTop: Dimensions.get('window').height<650?"-55%" : 0
     },
     dataPerishableGoodsTextInputWrapper: {
         width: Layout.widthPercentageAsString
     },
     dataPerishableGoodsTextInput: {
         textAlign: "center",
-        // paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0,
+        paddingBottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(6.5) : 0,
         minHeight: "13%",
         marginBottom: -1 + ('ios' === Platform.OS && Platform.isPad ? 1 : 0)
     },
@@ -56,7 +58,14 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         borderBottomRightRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference
     },
     dataErrorText: {
+        marginTop: Dimensions.get('window').height<650?"-5%" : 0,
         color: Colors.errorText
+    },
+    dateErrorView: {
+        marginTop: Dimensions.get('window').height<650? 2 : 0
+    },
+    dateErrorText:{
+        color:Colors.errorText
     },
     dataExpirationDateWrapper: {
         paddingBottom: 3
@@ -78,18 +87,20 @@ export const styles = (isDark: boolean) => StyleSheet.create({
     },
     dataExpirationDateErrorTextWrapper: {
         width: Layout.widthPercentageAsString,
-        maxHeight: "40%"
+        maxHeight: "40%",
     },
     dataExpirationDateModal: {
         borderLeftColor: Layout.borderColor,
         borderLeftWidth: Layout.borderWidth,
         borderRightColor: Layout.borderColor,
-        borderRightWidth: Layout.borderWidth
+        borderRightWidth: Layout.borderWidth,
     },
     dataLocationCheckBoxContainer: {
-        marginTop: PixelRatio.getPixelSizeForLayoutSize(-3),
         backgroundColor: "transparent",
-        borderWidth: 0
+        borderWidth: 0,
+        marginTop: Dimensions.get('window').height<650?"-7%" : PixelRatio.getPixelSizeForLayoutSize(-3),
+        marginBottom: Dimensions.get('window').height<650?"-15%" : 0
+
     },
     dataLocationCheckBoxText: {
         fontWeight: "normal",
@@ -103,7 +114,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         justifyContent: "center"
     },
     addStyledButton: {
-        marginVertical: PixelRatio.getPixelSizeForLayoutSize(7.5) * -1,
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(7.5) * -1,
         marginRight: PixelRatio.getPixelSizeForLayoutSize(20),
         marginLeft: PixelRatio.getPixelSizeForLayoutSize(20)
     }
