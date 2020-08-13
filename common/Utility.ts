@@ -1,5 +1,8 @@
 import Constants from "expo-constants";
 import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
+import * as Linking from "expo-linking";
+import { Platform } from "react-native";
 import { ImageRequest, SizeRequest, Address } from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
 import moment from "moment";
@@ -62,5 +65,24 @@ export default class Utility {
 
     static todayMidnigth(): Date {
         return moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toDate();
+    }
+
+    static async askPermission(types: Permissions.PermissionType[], doLinking: boolean, onGranted: () => Promise<void>, onDenied: () => void) {
+        var shouldRequestAgain = (value: Permissions.PermissionResponse) => (!value.granted && "granted" != value.status);
+        let response = await Permissions.getAsync(...types);
+        if (shouldRequestAgain(response)) {
+            if ("ios" === Platform.OS && doLinking) {
+                await Linking.openURL("app-settings://notification/hu.ivgraai.expiry-util");
+            }
+            response = await Permissions.askAsync(...types);
+        } else {
+            await onGranted();
+            return;
+        }
+        if (shouldRequestAgain(response)) {
+            onDenied();
+        } else {
+            await onGranted();
+        }
     }
 }

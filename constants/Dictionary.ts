@@ -59,6 +59,8 @@ type TYPE = {
     resultSetIsEmpty:                                       string;
     pleaseEnterAnItem:                                      string;
     expiryMustNotBeAPastDate:                               string;
+    permissionIsNotGranted:                                 string;
+    pleaseAllowTheNextPermissionInTheSettings:              string;
 };
 
 const en = {
@@ -119,6 +121,8 @@ const en = {
     resultSetIsEmpty:                                       'result set is empty',
     pleaseEnterAnItem:                                      'please enter an item',
     expiryMustNotBeAPastDate:                               'expiry must not be a past date',
+    permissionIsNotGranted:                                 'permission is not granted',
+    pleaseAllowTheNextPermissionInTheSettings:              'please allow the next permission in the settings'
 };
 
 const MESSAGES: any = {
@@ -181,6 +185,8 @@ const MESSAGES: any = {
         resultSetIsEmpty:                                   'üres eredményhalmaz',
         pleaseEnterAnItem:                                  'kérjük, adjon meg egy árut',
         expiryMustNotBeAPastDate:                           'a lejárat nem lehet múltbeli',
+        permissionIsNotGranted:                             'jogosultság nem engedélyezett',
+        pleaseAllowTheNextPermissionInTheSettings:          'kérjük, engedélyezze a következő jogosultságot a beállításokban'
     },
     fr: {
         add:                                                'ajouter',
@@ -240,6 +246,8 @@ const MESSAGES: any = {
         resultSetIsEmpty:                                   'le résultat est vide',
         pleaseEnterAnItem:                                  'veuillez entrer une item',
         expiryMustNotBeAPastDate:                           "l'expiration ne doit pas être passé",
+        permissionIsNotGranted:                             "la permission n'est pas accordée",
+        pleaseAllowTheNextPermissionInTheSettings:          'veuillez autoriser la prochaine permission dans les paramètres'
     },
     es: {
         add:                                                'agregar',
@@ -299,6 +307,8 @@ const MESSAGES: any = {
         resultSetIsEmpty:                                   'el conjunto de resultados está vacío',
         pleaseEnterAnItem:                                  'por favor ingrese un item',
         expiryMustNotBeAPastDate:                           'la expiración no debe ser una fecha pasada',
+        permissionIsNotGranted:                             'no se concede permiso',
+        pleaseAllowTheNextPermissionInTheSettings:          'por favor permita el siguiente permiso en la configuración'
     },
     hi: {
         add:                                                'डालें',
@@ -358,6 +368,8 @@ const MESSAGES: any = {
         resultSetIsEmpty:                                   'परिणाम सेट खाली है',
         pleaseEnterAnItem:                                  'कृपया वास्तु डालें',
         expiryMustNotBeAPastDate:                           'खराब होने की तिथि भूतकाल की नहीं होनी चाहिए',
+        permissionIsNotGranted:                             'अनुमति नहीं दी गई है',
+        pleaseAllowTheNextPermissionInTheSettings:          'कृपया सेटिंग्स में अगली अनुमति दें'
     },
     default: en,
 };

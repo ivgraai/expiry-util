@@ -179,26 +179,28 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     }
   }
 
-  buttonPick = async () => {
-    let value = await Permissions.getAsync(Permissions.CAMERA_ROLL);
-    if (!value.granted && "granted" != value.status) {
-      await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    }
-    try {
-      let image = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3]
-      });
+  buttonPick = () => {
+    Utility.askPermission([Permissions.CAMERA_ROLL], false, async () => {
+      try {
+        let image = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3]
+        });
 
-      if (!image.cancelled) {
-        this.props.chooseImage(image.uri);
-      } else {
-        this.props.cancelImage();
+        if (!image.cancelled) {
+          this.props.chooseImage(image.uri);
+        } else {
+          this.props.cancelImage();
+        }
+      } catch {
+        // empty block
       }
-    } catch {
-      // empty block
-    }
+    }, () => Alert.alert(
+      i18n.permissionIsNotGranted.capitalize(),
+      i18n.pleaseAllowTheNextPermissionInTheSettings.capitalize() + ": CAMERA_ROLL.",
+      [{ text: i18n.okay }]
+    ));
   };
 
   navigate() {
