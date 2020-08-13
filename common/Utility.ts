@@ -54,13 +54,18 @@ export default class Utility {
         return address.postalCode + ' ' + address.country + Utility.LINE_SEPARATOR + address.region + ", " + address.city + Utility.LINE_SEPARATOR + address.street + Utility.LINE_SEPARATOR + address.name;
     }
 
-    static async currentLocation(): Promise<{latitude: number, longitude: number}> {
-        try {
-            var result: Location.LocationData = await Location.getCurrentPositionAsync({});
-            return {latitude: result.coords.latitude, longitude: result.coords.longitude};
-        } catch {
-            return Utility.DEFAULT_POSITION;
-        }
+    static async currentLocation(callback?: () => Promise<boolean>): Promise<{latitude: number, longitude: number}> {
+        const extreme = Utility.DEFAULT_POSITION;
+        return new Promise(resolve => {
+            Utility.obtainPermission([Permissions.LOCATION], false, async () => {
+                // try {
+                    var result: Location.LocationData = await Location.getCurrentPositionAsync({});
+                    resolve({latitude: result.coords.latitude, longitude: result.coords.longitude});
+                /* } catch {
+                    resolve(extreme);
+                } */
+            }, () => resolve(extreme), callback);
+        });
     }
 
     static todayMidnigth(): Date {
@@ -71,7 +76,7 @@ export default class Utility {
         var shouldRequestAgain = (value: Permissions.PermissionResponse) => (!value.granted && "granted" != value.status);
         let response = await Permissions.getAsync(...types);
         if (shouldRequestAgain(response)) {
-            if (await beforeProcessStep().then(confirmed => !confirmed)) {
+            if (await beforeProcessStep().then(acknowledged => !acknowledged)) {
                 onDenied();
                 return;
             }

@@ -52,8 +52,6 @@ if (!__DEV__) {
   console.disableYellowBox = true;
 }
 
-// Permissions.askAsync(Permissions.LOCATION);
-
 if (Constants.manifest.extra.init) {
   Notifications.cancelAllScheduledNotificationsAsync();
   DbHelper.selectImages().then(list => {
