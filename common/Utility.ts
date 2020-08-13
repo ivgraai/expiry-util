@@ -67,10 +67,14 @@ export default class Utility {
         return moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toDate();
     }
 
-    static async askPermission(types: Permissions.PermissionType[], doLinking: boolean, onGranted: () => Promise<void>, onDenied: () => void) {
+    static async obtainPermission(types: Permissions.PermissionType[], doLinking: boolean, onGranted: () => Promise<void>, onDenied: () => void, beforeProcessStep: () => Promise<boolean> = () => new Promise(resolve => resolve(true))) {
         var shouldRequestAgain = (value: Permissions.PermissionResponse) => (!value.granted && "granted" != value.status);
         let response = await Permissions.getAsync(...types);
         if (shouldRequestAgain(response)) {
+            if (await beforeProcessStep().then(confirmed => !confirmed)) {
+                onDenied();
+                return;
+            }
             if ("ios" === Platform.OS && doLinking) {
                 await Linking.openURL("app-settings://notification/hu.ivgraai.expiry-util");
             }

@@ -61,6 +61,9 @@ type TYPE = {
     expiryMustNotBeAPastDate:                               string;
     permissionIsNotGranted:                                 string;
     pleaseAllowTheNextPermissionInTheSettings:              string;
+    wouldYouLikeToReceiveNotifications:                     string;
+    yes:                                                    string;
+    no:                                                     string;
 };
 
 const en = {
@@ -122,7 +125,10 @@ const en = {
     pleaseEnterAnItem:                                      'please enter an item',
     expiryMustNotBeAPastDate:                               'expiry must not be a past date',
     permissionIsNotGranted:                                 'permission is not granted',
-    pleaseAllowTheNextPermissionInTheSettings:              'please allow the next permission in the settings'
+    pleaseAllowTheNextPermissionInTheSettings:              'please allow the next permission in the settings',
+    wouldYouLikeToReceiveNotifications:                     'would you like to receive notifications',
+    yes:                                                    'yes',
+    no:                                                     'no'
 };
 
 const MESSAGES: any = {
@@ -186,7 +192,10 @@ const MESSAGES: any = {
         pleaseEnterAnItem:                                  'kérjük, adjon meg egy árut',
         expiryMustNotBeAPastDate:                           'a lejárat nem lehet múltbeli',
         permissionIsNotGranted:                             'jogosultság nem engedélyezett',
-        pleaseAllowTheNextPermissionInTheSettings:          'kérjük, engedélyezze a következő jogosultságot a beállításokban'
+        pleaseAllowTheNextPermissionInTheSettings:          'kérjük, engedélyezze a következő jogosultságot a beállításokban',
+        wouldYouLikeToReceiveNotifications:                 'szeretne értesítéseket kapni',
+        yes:                                                'igen',
+        no:                                                 'nem'
     },
     fr: {
         add:                                                'ajouter',
@@ -247,7 +256,10 @@ const MESSAGES: any = {
         pleaseEnterAnItem:                                  'veuillez entrer une item',
         expiryMustNotBeAPastDate:                           "l'expiration ne doit pas être passé",
         permissionIsNotGranted:                             "la permission n'est pas accordée",
-        pleaseAllowTheNextPermissionInTheSettings:          'veuillez autoriser la prochaine permission dans les paramètres'
+        pleaseAllowTheNextPermissionInTheSettings:          'veuillez autoriser la prochaine permission dans les paramètres',
+        wouldYouLikeToReceiveNotifications:                 'souhaitez-vous recevoir des notifications',
+        yes:                                                'oui',
+        no:                                                 'non'
     },
     es: {
         add:                                                'agregar',
@@ -308,7 +320,10 @@ const MESSAGES: any = {
         pleaseEnterAnItem:                                  'por favor ingrese un item',
         expiryMustNotBeAPastDate:                           'la expiración no debe ser una fecha pasada',
         permissionIsNotGranted:                             'no se concede permiso',
-        pleaseAllowTheNextPermissionInTheSettings:          'por favor permita el siguiente permiso en la configuración'
+        pleaseAllowTheNextPermissionInTheSettings:          'por favor permita el siguiente permiso en la configuración',
+        wouldYouLikeToReceiveNotifications:                 'le gustaría recibir notificaciones',
+        yes:                                                'sí',
+        no:                                                 'no'
     },
     hi: {
         add:                                                'डालें',
@@ -369,7 +384,10 @@ const MESSAGES: any = {
         pleaseEnterAnItem:                                  'कृपया वास्तु डालें',
         expiryMustNotBeAPastDate:                           'खराब होने की तिथि भूतकाल की नहीं होनी चाहिए',
         permissionIsNotGranted:                             'अनुमति नहीं दी गई है',
-        pleaseAllowTheNextPermissionInTheSettings:          'कृपया सेटिंग्स में अगली अनुमति दें'
+        pleaseAllowTheNextPermissionInTheSettings:          'कृपया सेटिंग्स में अगली अनुमति दें',
+        wouldYouLikeToReceiveNotifications:                 'क्या आप सूचनाएं प्राप्त करना चाहेंगे',
+        yes:                                                'हां',
+        no:                                                 'नहीं'
     },
     default: en,
 };

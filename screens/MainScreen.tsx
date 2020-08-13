@@ -125,24 +125,25 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
     var objectGoods = this.props.goods;
     var objectPhoto = this.props.imageUri;
 
-    Permissions.getAsync(Permissions.NOTIFICATIONS).then(resp => {
-      let promises: Array<Promise<string | number>> = [];
-      if (resp.granted || "granted" == resp.status) {
-        for (var i = 0; i < this.multiplier.length; i++) {
-          temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
-          if (temp < now) {
-            continue;
-          }
-          promises.push(Notifications.scheduleLocalNotificationAsync(
-            {
-              title: objectGoods.toUpperCase(),
-              body: i18n.bestBefore.capitalize() + ": " + objectExpiry.toLocaleDateString()
-            },
-            { time: temp.getTime() }
-          ));
+    let promises: Array<Promise<string | number>> = [];
+    Utility.obtainPermission([Permissions.NOTIFICATIONS], false, async () => {
+      for (var i = 0; i < this.multiplier.length; i++) {
+        temp.setTime(temp.getTime() + this.multiplier[i] * this.dayOffset);
+        if (temp < now) {
+          continue;
         }
+        promises.push(Notifications.scheduleLocalNotificationAsync(
+          {
+            title: objectGoods.toUpperCase(),
+            body: i18n.bestBefore.capitalize() + ": " + objectExpiry.toLocaleDateString()
+          },
+          { time: temp.getTime() }
+        ));
       }
-
+    }, () => {}, () => new Promise(resolve => {
+      Alert.alert(i18n.wouldYouLikeToReceiveNotifications.capitalize() + '?', "",
+      [{text: i18n.no.capitalize(), onPress: () => resolve(false)}, {text: i18n.yes.capitalize(), onPress: () => resolve(true)}]);
+    })).then(() => {
       Promise.all(promises).then(localNotificationIds => {
 
         UserManager.getToken().then(token => {
@@ -180,7 +181,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
   }
 
   buttonPick = () => {
-    Utility.askPermission([Permissions.CAMERA_ROLL], false, async () => {
+    Utility.obtainPermission([Permissions.CAMERA_ROLL], false, async () => {
       try {
         let image = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.All,
