@@ -1,6 +1,6 @@
 import React from "react";
 import { fireEvent, waitFor, act } from "react-native-testing-library";
-import { renderWithRedux } from "../../services/TestHelper";
+import { renderWithRedux, resolvedPermissionValue } from "../../services/TestHelper";
 import MainScreen from "../MainScreen";
 import { Alert } from "react-native";
 import * as Permissions from "expo-permissions";
@@ -14,15 +14,7 @@ test(`Notifications::scheduleLocalNotificationAsync`, async () => {
             alert: jest.fn()
         };
     });
-    jest.spyOn(Permissions, "getAsync").mockResolvedValueOnce({
-        "status": Permissions.PermissionStatus.GRANTED,
-        "expires": "never",
-        "canAskAgain": true,
-        "granted": true,
-        "permissions": {
-
-        }
-    });
+    jest.spyOn(Permissions, "getAsync").mockResolvedValueOnce(resolvedPermissionValue(Permissions.PermissionStatus.GRANTED, true));
     jest.spyOn(Notifications, "scheduleLocalNotificationAsync")
         .mockResolvedValueOnce("b57040b8-6a4f-4f46-a6e0-0994739ffa6e")
         .mockResolvedValueOnce("4b9057f4-4820-4847-adcd-630d9bec9cfb")

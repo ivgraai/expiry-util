@@ -1,5 +1,7 @@
 import Utility from "../Utility";
 import { SizeRequest, ImageRequest, Address } from "../../constants/Dtos";
+import * as Permissions from "expo-permissions";
+import { resolvedPermissionValue } from "../../services/TestHelper";
 
 describe("Utility", () => {
 
@@ -37,6 +39,9 @@ describe("Utility", () => {
         expect(Utility.formatAddress(address)).toEqual("SW1A 0AA England\nGreater London, London\nHouses of Parliament, Westminster\nHouse of Commons");
     });
     test("currentLocation", async () => {
+        let mockOnce = resolvedPermissionValue(Permissions.PermissionStatus.DENIED, false);
+        jest.spyOn(Permissions, "getAsync").mockResolvedValueOnce(mockOnce);
+        jest.spyOn(Permissions, "askAsync").mockResolvedValueOnce(mockOnce);
         expect(await Utility.currentLocation()).toEqual({latitude: 47.497913, longitude: 19.040236});
     });
     test("todayMidnigth", () => {
