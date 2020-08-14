@@ -1,12 +1,11 @@
 import React from "react";
 import {
   View,
-  ScrollView,
   Text,
   Image,
   TouchableOpacity,
   Alert,
-  Platform
+  Platform,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { CheckBox } from "react-native-elements";

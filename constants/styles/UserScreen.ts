@@ -1,4 +1,4 @@
-import { StyleSheet, PixelRatio } from "react-native";
+import { StyleSheet, PixelRatio, Dimensions } from "react-native";
 import Colors from "../Colors";
 import Layout from "../Layout";
 
@@ -19,7 +19,6 @@ export const styles = StyleSheet.create({
     textInput: {
         textAlign: "center",
         minHeight: "13%",
-        height: 30,
     },
     buttonWrapper: {
         alignSelf: "center"
@@ -32,10 +31,10 @@ export const styles = StyleSheet.create({
         letterSpacing: Layout.letterSpacing
     },
     messageText: {
-        fontSize: PixelRatio.getFontScale() * Layout.largerFontSize,
+        fontSize:Dimensions.get('window').height<650?  PixelRatio.getFontScale() *Layout.smallerFontSize: PixelRatio.getFontScale() * Layout.largerFontSize,
         color: Colors.errorText,
         textAlign: "center",
-        flex: 9
+        height:Dimensions.get('window').height<650?30:60,
     },
     signUpInText: {
         fontStyle: "italic"
@@ -56,10 +55,19 @@ export const styles = StyleSheet.create({
     },
     buttonsView: {
         flex: 18,
-        justifyContent: "center"
+        justifyContent: "flex-start",
     },
     inputsView: {
         justifyContent: "space-around",
-        flex: 3
+        flex: 3,
+    },
+    keyboardView:{
+        flex:1,
+        padding: Dimensions.get('window').height<650?"5%" : 0,
+        minHeight:2*Dimensions.get('window').height/3,
+    },
+    keyboardViewSignUp:{
+        flex:1,
+        minHeight:4*Dimensions.get('window').height/5,
     }
   });

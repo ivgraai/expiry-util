@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     width:'100%',
     flex:1,
     alignItems:'center',
-    marginVertical: PixelRatio.getPixelSizeForLayoutSize(-7.5),
+    marginVertical: PixelRatio.getPixelSizeForLayoutSize(-5.2),
   },
   tabBarIcon: {
     marginTop: PixelRatio.getPixelSizeForLayoutSize(-5)

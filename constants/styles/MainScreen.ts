@@ -4,10 +4,10 @@ import Layout from "../Layout";
 
 export const styles = (isDark: boolean) => StyleSheet.create({
     mainView: {
-        flexGrow:1,
         flex: 1,
         flexDirection: "column",
-        justifyContent: "space-around"
+        justifyContent: "space-around",
+        minHeight:3*Dimensions.get('window').height/4,
     },
     photoView: {
         flex: 6,
@@ -58,7 +58,7 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         borderBottomRightRadius: Layout.borderRadius + Layout.innerBorderRadiusDifference
     },
     dataErrorText: {
-        marginTop: Dimensions.get('window').height<650?"-5%" : 0,
+        marginTop: Dimensions.get('window').height<650?"-1%" : 0,
         color: Colors.errorText
     },
     dateErrorView: {

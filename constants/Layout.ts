@@ -12,5 +12,6 @@ export default {
     widthPercentageAsString: width + '%',
     widthPercentageAsNumber: width,
     margin: PixelRatio.getPixelSizeForLayoutSize(2.5),
-    largerFontSize: 18
+    largerFontSize: 18,
+    smallerFontSize:11.5
 };

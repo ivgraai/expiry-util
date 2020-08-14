@@ -106,9 +106,9 @@ class UserScreen extends React.Component<IProps, IState> {
         const { navigation } = this.props;
         let form = this.state.switched ? <>
          <KeyboardAwareScrollView 
-            style={{height:'85%'}}
-             resetScrollToCoords={{ x: 0, y: 0 }} 
-             scrollEnabled={true} 
+            contentContainerStyle = {styles.keyboardViewSignUp}
+            resetScrollToCoords={{ x: 0, y: 0 }} 
+            scrollEnabled={true} 
          > 
                 <View style={styles.inputsAndValidationResultView}>
                     <View style={styles.inputsView}>
@@ -124,12 +124,12 @@ class UserScreen extends React.Component<IProps, IState> {
                     <Text style={styles.orText}>{i18n.or.toUpperCase()}</Text>
                     <View style={styles.buttonWrapper}><StyledButton onPress={() => {this.internalComponentWillUnmount(false);}} inverted={true}>{i18n.goToSignIn.toUpperCase()}</StyledButton></View>
                 </View>
-    </KeyboardAwareScrollView>
+        </KeyboardAwareScrollView>
             </> : <>
             <KeyboardAwareScrollView 
-            style={{height:'75%'}}
-             resetScrollToCoords={{ x: 0, y: 0 }} 
-             scrollEnabled={true} 
+            contentContainerStyle = {styles.keyboardView}
+            resetScrollToCoords={{ x: 0, y: 0 }} 
+            scrollEnabled={true} 
          > 
                 <View style={styles.inputsAndValidationResultView}>
                     <View style={styles.inputsView}>
