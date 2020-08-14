@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, Alert } from "react-native";
 import { i18n } from "../constants/Dictionary";
 import GoodList from "../components/GoodList";
 import PlaceHolder from "../components/PlaceHolder";
@@ -83,8 +83,13 @@ class NearbyScreen extends React.Component {
     }
 
     getNearbyGood(): Promise<Dtos.GoodNearbyResponse[]> {
-        return new Promise(async (resolve, reject) => {
-            let position = await Utility.currentLocation();
+        return new Promise(async (resolveResp, rejectResp) => {
+            let position = await Utility.currentLocation(() => new Promise(resolveBool => {
+                Alert.alert(i18n.youMustAllowTheLocationPermissionForAMoreAccurateResult.capitalize() + '!', "", [
+                    {text: i18n.later.capitalize(), onPress: () => resolveBool(false)},
+                    {text: i18n.okay, onPress: () => resolveBool(true)}
+                ]);
+            }));
             let token: string | null = await UserManager.getToken();
             var result: Dtos.GoodNearbyResponse[] = [];
             var ex: Error = new EmptyResultException();
@@ -108,9 +113,9 @@ class NearbyScreen extends React.Component {
                 DbHelper.newNearbyGood(result, position.latitude, position.longitude, () => CacheHandler.refreshNearbyGoods());
             }
             if (0 == result.length) {
-                reject(ex);
+                rejectResp(ex);
             }
-            resolve(result);
+            resolveResp(result);
         });
     }
 

@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 import Constants from 'expo-constants';
-import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
 
 import AppNavigator from './navigation/AppNavigator';
@@ -52,10 +51,6 @@ export default function App(props: any) {
 if (!__DEV__) {
   console.disableYellowBox = true;
 }
-
-Permissions.askAsync(Permissions.NOTIFICATIONS);
-Permissions.askAsync(Permissions.CAMERA_ROLL);
-Permissions.askAsync(Permissions.LOCATION);
 
 if (Constants.manifest.extra.init) {
   Notifications.cancelAllScheduledNotificationsAsync();
