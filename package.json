@@ -73,7 +73,8 @@
     "redux": "^4.0.5",
     "shortid": "^2.2.15",
     "validate.js": "^0.13.1",
-    "expo-linking": "~1.0.1"
+    "expo-linking": "~1.0.1",
+    "expo-intent-launcher": "~8.1.0"
   },
   "devDependencies": {
     "@testing-library/jest-native": "^3.2.0",

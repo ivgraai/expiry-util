@@ -2,6 +2,7 @@ import Constants from "expo-constants";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import * as Linking from "expo-linking";
+import * as IntentLauncher from "expo-intent-launcher";
 import { Platform } from "react-native";
 import { ImageRequest, SizeRequest, Address } from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
@@ -76,8 +77,13 @@ export default class Utility {
                 onDenied();
                 return;
             }
-            if ("ios" === Platform.OS && doLinking) {
-                await Linking.openURL("app-settings://notification/hu.ivgraai.expiry-util");
+            if (doLinking) {
+                if ("ios" === Platform.OS) {
+                    await Linking.openURL("app-settings:");
+                } else if ("android" === Platform.OS) {
+                    const pkg = Constants.manifest.releaseChannel ? Constants.manifest.android.package : "host.exp.exponent";
+                    await IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS, { data: 'package:' + pkg });
+                }
             }
             response = await Permissions.askAsync(...types);
         } else {

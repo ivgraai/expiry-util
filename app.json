@@ -24,6 +24,9 @@
                 "CFBundleAllowMixedLocalizations": true
             }
         },
+        "android": {
+            "package": "hu.ivgraai.expiry-util"
+        },
         "locales": {
             "en": "./constants/languages/english.json",
             "hu": "./constants/languages/hungarian.json",
