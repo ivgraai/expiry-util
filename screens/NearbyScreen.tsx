@@ -83,9 +83,12 @@ class NearbyScreen extends React.Component {
     }
 
     getNearbyGood(): Promise<Dtos.GoodNearbyResponse[]> {
-        return new Promise(async (resolve, reject) => {
-            let position = await Utility.currentLocation(() => new Promise(resolve => {
-                Alert.alert(i18n.youMustAllowTheLocationPermissionForAMoreAccurateResult.capitalize() + '?', "", [{text: i18n.later.capitalize(), onPress: () => resolve(false)}, {text: i18n.okay, onPress: () => resolve(true)}]);
+        return new Promise(async (resolveResp, rejectResp) => {
+            let position = await Utility.currentLocation(() => new Promise(resolveBool => {
+                Alert.alert(i18n.youMustAllowTheLocationPermissionForAMoreAccurateResult.capitalize() + '!', "", [
+                    {text: i18n.later.capitalize(), onPress: () => resolveBool(false)},
+                    {text: i18n.okay, onPress: () => resolveBool(true)}
+                ]);
             }));
             let token: string | null = await UserManager.getToken();
             var result: Dtos.GoodNearbyResponse[] = [];
@@ -110,9 +113,9 @@ class NearbyScreen extends React.Component {
                 DbHelper.newNearbyGood(result, position.latitude, position.longitude, () => CacheHandler.refreshNearbyGoods());
             }
             if (0 == result.length) {
-                reject(ex);
+                rejectResp(ex);
             }
-            resolve(result);
+            resolveResp(result);
         });
     }
 

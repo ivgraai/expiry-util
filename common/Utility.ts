@@ -58,12 +58,8 @@ export default class Utility {
         const extreme = Utility.DEFAULT_POSITION;
         return new Promise(resolve => {
             Utility.obtainPermission([Permissions.LOCATION], false, async () => {
-                // try {
-                    var result: Location.LocationData = await Location.getCurrentPositionAsync({});
-                    resolve({latitude: result.coords.latitude, longitude: result.coords.longitude});
-                /* } catch {
-                    resolve(extreme);
-                } */
+                var result: Location.LocationData = await Location.getCurrentPositionAsync({});
+                resolve({latitude: result.coords.latitude, longitude: result.coords.longitude});
             }, () => resolve(extreme), callback);
         });
     }

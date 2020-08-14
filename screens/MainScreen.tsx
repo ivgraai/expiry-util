@@ -142,7 +142,7 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
       }
     }, () => {}, () => new Promise(resolve => {
       Alert.alert(i18n.wouldYouLikeToReceiveNotifications.capitalize() + '?', "",
-      [{text: i18n.no.capitalize(), onPress: () => resolve(false)}, {text: i18n.yes.capitalize(), onPress: () => resolve(true)}]);
+        [{text: i18n.no.capitalize(), onPress: () => resolve(false)}, {text: i18n.yes.capitalize(), onPress: () => resolve(true)}]);
     })).then(() => {
       Promise.all(promises).then(localNotificationIds => {
 
@@ -198,8 +198,8 @@ class MainScreen extends React.Component<IComponentProps, IComponentState> {
         // empty block
       }
     }, () => Alert.alert(
-      i18n.permissionIsNotGranted.capitalize(),
-      i18n.pleaseAllowTheNextPermissionInTheSettings.capitalize() + ": CAMERA_ROLL.",
+      i18n.permissionIsNotGranted.capitalize() + '!',
+      i18n.pleaseAllowTheNextPermissionInTheSettings.capitalize() + ": CAMERA_ROLL",
       [{ text: i18n.okay }]
     ));
   };
