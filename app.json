@@ -4,7 +4,7 @@
         "slug": "expiry-util",
         "privacy": "public",
         "platforms": ["ios", "android", "web"],
-        "version": "1.3.3",
+        "version": "1.4.0",
         "orientation": "portrait",
         "icon": "./assets/images/logo.png",
         "splash": {
@@ -19,10 +19,13 @@
         "ios": {
             "supportsTablet": true,
             "bundleIdentifier": "hu.ivgraai.expiry-util",
-            "buildNumber": "1.3.3",
+            "buildNumber": "1.4.0",
             "infoPlist": {
                 "CFBundleAllowMixedLocalizations": true
             }
+        },
+        "android": {
+            "package": "hu.ivgraai.expiry-util"
         },
         "locales": {
             "en": "./constants/languages/english.json",

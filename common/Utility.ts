@@ -1,5 +1,9 @@
 import Constants from "expo-constants";
 import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
+import * as Linking from "expo-linking";
+import * as IntentLauncher from "expo-intent-launcher";
+import { Platform } from "react-native";
 import { ImageRequest, SizeRequest, Address } from "../constants/Dtos";
 import HttpClient from "../services/HttpClient";
 import moment from "moment";
@@ -51,16 +55,45 @@ export default class Utility {
         return address.postalCode + ' ' + address.country + Utility.LINE_SEPARATOR + address.region + ", " + address.city + Utility.LINE_SEPARATOR + address.street + Utility.LINE_SEPARATOR + address.name;
     }
 
-    static async currentLocation(): Promise<{latitude: number, longitude: number}> {
-        try {
-            var result: Location.LocationData = await Location.getCurrentPositionAsync({});
-            return {latitude: result.coords.latitude, longitude: result.coords.longitude};
-        } catch {
-            return Utility.DEFAULT_POSITION;
-        }
+    static async currentLocation(callback?: () => Promise<boolean>): Promise<{latitude: number, longitude: number}> {
+        const extreme = Utility.DEFAULT_POSITION;
+        return new Promise(resolve => {
+            Utility.obtainPermission([Permissions.LOCATION], false, async () => {
+                var result: Location.LocationData = await Location.getCurrentPositionAsync({});
+                resolve({latitude: result.coords.latitude, longitude: result.coords.longitude});
+            }, () => resolve(extreme), callback);
+        });
     }
 
     static todayMidnigth(): Date {
         return moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toDate();
+    }
+
+    static async obtainPermission(types: Permissions.PermissionType[], doLinking: boolean, onGranted: () => Promise<void>, onDenied: () => void, beforeProcessStep: () => Promise<boolean> = () => new Promise(resolve => resolve(true))) {
+        var shouldRequestAgain = (value: Permissions.PermissionResponse) => (!value.granted && "granted" != value.status);
+        let response = await Permissions.getAsync(...types);
+        if (shouldRequestAgain(response)) {
+            if (await beforeProcessStep().then(acknowledged => !acknowledged)) {
+                onDenied();
+                return;
+            }
+            if (doLinking) {
+                if ("ios" === Platform.OS) {
+                    await Linking.openURL("app-settings:");
+                } else if ("android" === Platform.OS) {
+                    const pkg = Constants.manifest.releaseChannel ? Constants.manifest.android.package : "host.exp.exponent";
+                    await IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS, { data: 'package:' + pkg });
+                }
+            }
+            response = await Permissions.askAsync(...types);
+        } else {
+            await onGranted();
+            return;
+        }
+        if (shouldRequestAgain(response)) {
+            onDenied();
+        } else {
+            await onGranted();
+        }
     }
 }
