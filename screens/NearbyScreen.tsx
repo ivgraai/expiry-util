@@ -2,7 +2,6 @@ import React from "react";
 import { Text, View, Button, Alert } from "react-native";
 import { i18n } from "../constants/Dictionary";
 import GoodList from "../components/GoodList";
-import PlaceHolder from "../components/PlaceHolder";
 import * as Dtos from "../constants/Dtos";
 import UserManager from "../services/UserManager";
 import HttpClient from "../services/HttpClient";
@@ -33,7 +32,6 @@ class NearbyScreen extends React.Component {
     };
 
     state = {
-        loading: true,
         ds: [],
         dialogVisible: false
     };
@@ -129,22 +127,21 @@ class NearbyScreen extends React.Component {
 
                 this.getNearbyGood()
                     .then(result => {
-                        this.setState({loading: false,
-                            ds: result.map(item => ({
+                        this.setState({ds:
+                            result.map(item => ({
                                 ...item,
                                 image: Utility.remoteURI('', item.id, Dtos.SizeRequest.small)
                             }))
                             .sort((item1, item2) => item1.distance - item2.distance)});
                     })
-                    .catch(reason => ErrorAlert.alert(reason, () => this.setState({loading: true, ds: []})));
+                    .catch(reason => ErrorAlert.alert(reason, () => this.setState({ds: []})));
                 if (undefined != this.refs._scrollView) {
                     this.refs._scrollView.scrollToOffset({ offset: 0 });
                 }
 
                 }}
             />
-            {this.state.loading ?
-                <PlaceHolder text={i18n.noGoodsAreAvailable.capitalize()} /> :
+            {
                 <GoodList ref="_scrollView" dataSource={this.state.ds} customNodesForTheItem={temporary}></GoodList>
             }
         </View>;

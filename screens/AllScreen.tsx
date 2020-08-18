@@ -4,7 +4,6 @@ import {
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import GoodList from "../components/GoodList";
-import PlaceHolder from "../components/PlaceHolder";
 import * as ErrorAlert from "../components/ErrorAlert";
 import { i18n } from "../constants/Dictionary";
 import HttpClient from "../services/HttpClient";
@@ -102,9 +101,7 @@ export default class AllScreen extends React.Component {
     var temporary = (item: Dtos.GoodAllResponse) => this.renderIsRequested(item.id, item.isRequestedByOther);
     return (<View style={styles.view}>
       <NavigationEvents onWillFocus={() => this.onWillFocus()} />
-      {(0 == this.state.dataSource.length) ?
-        <PlaceHolder text={i18n.yourGoodsAreNotFound.capitalize()} /> :
-        <GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />}
+      {<GoodList dataSource={this.state.dataSource} customNodesForTheItem={temporary} />}
     </View>);
   }
 }
