@@ -1,5 +1,5 @@
 {
-    "CFBundleDisplayName": "son kullanma tarihi",
-    "NSLocationWhenInUseUsageDescription": "lokasyonuza yakın eşyalar belirlenir",
-    "NSPhotoLibraryUsageDescription": "bu özellik bize ürününüze fotoğraf eklememize izin verir."
+    "CFBundleDisplayName": "Son kullanma tarihi",
+    "NSLocationWhenInUseUsageDescription": "Lokasyonuza yakın eşyalar belirlenir.",
+    "NSPhotoLibraryUsageDescription": "Bu özellik bize ürününüze fotoğraf eklememize izin verir."
 }
