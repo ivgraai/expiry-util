@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Image, ImageBackground } from 'react-native';
+import { Image, ImageBackground, Modal, TouchableHighlight } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import * as Crypto from 'expo-crypto';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 // https://www.npmjs.com/package/react-native-expo-cached-image
 export default class CachedImage extends Component {
   state = {
-    imgURI: ''
+    imgURI: '',
+    zooming: false
   }
   async componentDidMount() {
     const filesystemURI = await this.getImageFilesystemKey(this.props.source.uri);
@@ -65,12 +67,17 @@ export default class CachedImage extends Component {
           {this.props.children}
         </ImageBackground>);
     } else {
-      return (
-        <Image
-          {...this.props}
-          source={this.state.imgURI ? {uri: this.state.imgURI} : placeholder}
-        />
-      );
+      return (<>
+        <Modal visible={this.state.zooming} transparent={true}>
+          <ImageViewer imageUrls={[{url: this.state.imgURI}]} onCancel={() => this.setState({zooming: false})} enableSwipeDown={true}/>
+        </Modal>
+        <TouchableHighlight onPress={() => this.setState({zooming: true})}>
+          <Image
+            {...this.props}
+            source={this.state.imgURI ? {uri: this.state.imgURI} : placeholder}
+          />
+        </TouchableHighlight>
+      </>);
     }
   }
 }

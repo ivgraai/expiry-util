@@ -52,6 +52,8 @@
     "expo-crypto": "~8.1.0",
     "expo-font": "~8.1.0",
     "expo-image-picker": "~8.1.0",
+    "expo-intent-launcher": "~8.1.0",
+    "expo-linking": "~1.0.1",
     "expo-localization": "~8.1.0",
     "expo-location": "~8.1.0",
     "expo-permissions": "~8.1.0",
@@ -65,6 +67,7 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-elements": "^2.0.0",
     "react-native-gesture-handler": "~1.6.0",
+    "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-maps": "0.26.1",
     "react-native-modal-datetime-picker": "^8.7.1",
     "react-native-screens": "~2.2.0",
@@ -73,9 +76,7 @@
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "shortid": "^2.2.15",
-    "validate.js": "^0.13.1",
-    "expo-linking": "~1.0.1",
-    "expo-intent-launcher": "~8.1.0"
+    "validate.js": "^0.13.1"
   },
   "devDependencies": {
     "@testing-library/jest-native": "^3.2.0",
