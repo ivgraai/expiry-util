@@ -7,5 +7,9 @@ export const styles = StyleSheet.create({
     zoomHeaderIonicons: {
         textAlign: "right",
         paddingRight: 10
+    },
+    touchableOpacity: {
+        flex: 1,
+        justifyContent: "center"
     }
 });

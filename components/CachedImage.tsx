@@ -98,7 +98,7 @@ export default class CachedImage extends Component {
             backgroundColor='black'
           />
         </Modal>
-        <TouchableOpacity onPress={() => this.setState({zooming: true})}>
+        <TouchableOpacity onPress={() => this.setState({zooming: true})} style={styles.touchableOpacity}>
           <Image
             {...this.props}
             source={this.state.imgURI ? {uri: this.state.imgURI} : placeholder}
