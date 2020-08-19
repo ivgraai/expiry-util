@@ -1,9 +1,9 @@
-import React from "react";
-import renderer, { ReactTestRenderer, act } from "react-test-renderer";
-import "../../common/String.extension";
-import * as Dtos from "../../constants/Dtos";
-import HttpClient from "../../services/HttpClient";
-import DetailsScreen from "../DetailsScreen";
+import React from 'react';
+import renderer, { ReactTestRenderer, act } from 'react-test-renderer';
+import '../../common/String.extension';
+import * as Dtos from '../../constants/Dtos';
+import HttpClient from '../../services/HttpClient';
+import DetailsScreen from '../DetailsScreen';
 
 test(`trigger status of an approved request, all detail is on the screen`, async () => {
   HttpClient.checkStatus = jest.fn(
@@ -13,19 +13,19 @@ test(`trigger status of an approved request, all detail is on the screen`, async
           new Dtos.GoodResponse(
             {
               address: {
-                country: "England",
-                city: "London",
-                street: "Houses of Parliament, Westminster",
-                postalCode: "SW1A 0AA",
-                name: "House of Commons",
-                region: "Greater London",
+                country: 'England',
+                city: 'London',
+                street: 'Houses of Parliament, Westminster',
+                postalCode: 'SW1A 0AA',
+                name: 'House of Commons',
+                region: 'Greater London',
               },
-              replyMessage: "Test reply message...",
+              replyMessage: 'Test reply message...',
               isAccepted: true,
-              name: "test goods",
+              name: 'test goods',
               expiry: new Date(0).toISOString(),
-              myMessage: "Test my message...",
-              username: "Test Username",
+              myMessage: 'Test my message...',
+              username: 'Test Username',
             },
             (_value) => new Date(_value)
           )
@@ -34,9 +34,7 @@ test(`trigger status of an approved request, all detail is on the screen`, async
   );
   var tree!: ReactTestRenderer;
   await act(async () => {
-    tree = renderer.create(
-      <DetailsScreen navigation={{ getParam: jest.fn((_: string) => 1) }} />
-    );
+    tree = renderer.create(<DetailsScreen navigation={{ getParam: jest.fn((_: string) => 1) }} />);
   });
   expect(tree.toJSON()).toMatchInlineSnapshot(`
     <RCTScrollView
@@ -50,26 +48,224 @@ test(`trigger status of an approved request, all detail is on the screen`, async
               "flex": 2,
               "justifyContent": "space-around",
               "marginTop": 5,
+              "width": "85%",
             }
           }
         >
-          <Image
-            onDownloaded={[Function]}
-            source={
-              Object {
-                "uri": "undefinedundefined",
+          <Modal
+            hardwareAccelerated={false}
+            onRequestClose={[Function]}
+            transparent={true}
+            visible={false}
+          >
+            <View
+              onLayout={[Function]}
+              style={
+                Object {
+                  "flex": 1,
+                  "overflow": "hidden",
+                }
               }
-            }
+            >
+              <View>
+                <View
+                  style={
+                    Object {
+                      "zIndex": 9,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "backgroundColor": "transparent",
+                        "opacity": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "justifyContent": "center",
+                          "left": 0,
+                          "position": "absolute",
+                          "top": 0,
+                          "zIndex": 13,
+                        }
+                      }
+                    >
+                      <View
+                        accessible={true}
+                        focusable={true}
+                        onClick={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      />
+                    </View>
+                    <View
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "justifyContent": "center",
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                          "zIndex": 13,
+                        }
+                      }
+                    >
+                      <View
+                        accessible={true}
+                        focusable={true}
+                        onClick={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      />
+                    </View>
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "transform": Array [
+                            Object {
+                              "translateX": 0,
+                            },
+                          ],
+                          "width": 0,
+                        }
+                      }
+                    >
+                      <View
+                        onMoveShouldSetResponder={[Function]}
+                        onMoveShouldSetResponderCapture={[Function]}
+                        onResponderEnd={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderReject={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderStart={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        onStartShouldSetResponderCapture={[Function]}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "backgroundColor": "transparent",
+                            "height": 0,
+                            "justifyContent": "center",
+                            "overflow": "hidden",
+                            "width": 0,
+                          }
+                        }
+                      >
+                        <View
+                          renderToHardwareTextureAndroid={true}
+                          style={
+                            Object {
+                              "transform": Array [
+                                Object {
+                                  "scale": 1,
+                                },
+                                Object {
+                                  "translateX": 0,
+                                },
+                                Object {
+                                  "translateY": 0,
+                                },
+                              ],
+                            }
+                          }
+                        >
+                          <View
+                            onLayout={[Function]}
+                            style={
+                              Object {
+                                "height": 0,
+                                "width": 0,
+                              }
+                            }
+                          >
+                            <Image
+                              source={
+                                Object {
+                                  "uri": "undefinedundefined",
+                                }
+                              }
+                              style={
+                                Object {
+                                  "height": 0,
+                                  "width": 0,
+                                }
+                              }
+                            />
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "bottom": 0,
+                            "position": "absolute",
+                            "zIndex": 9,
+                          },
+                          Object {},
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Modal>
+          <View
+            accessible={true}
+            focusable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "aspectRatio": 1,
-                "borderColor": "#AED59E",
-                "borderRadius": 20,
-                "borderWidth": 2,
-                "width": "85%",
+                "flex": 1,
+                "justifyContent": "center",
+                "opacity": 1,
               }
             }
-          />
+          >
+            <Image
+              onDownloaded={[Function]}
+              source={
+                Object {
+                  "uri": "undefinedundefined",
+                }
+              }
+              style={
+                Object {
+                  "aspectRatio": 1,
+                  "borderColor": "#AED59E",
+                  "borderRadius": 20,
+                  "borderWidth": 2,
+                }
+              }
+            />
+          </View>
         </View>
         <View
           style={
