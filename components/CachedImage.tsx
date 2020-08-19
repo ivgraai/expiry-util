@@ -1,8 +1,25 @@
 import React, { Component } from 'react';
-import { Image, ImageBackground, Modal, TouchableHighlight } from 'react-native';
+import { Image, ImageBackground, Modal, TouchableOpacity, Platform, GestureResponderEvent } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import * as Crypto from 'expo-crypto';
+import { Ionicons } from '@expo/vector-icons';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import { styles } from '../constants/styles/CachedImage';
+
+var renderHeader = (onPress?: (event: GestureResponderEvent) => void) => (
+  <TouchableOpacity
+    onPress={onPress}
+    style={styles.zoomHeaderTouchableOpacity}
+  >
+    <Ionicons
+      right
+      name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
+      color='white'
+      size={30}
+      style={styles.zoomHeaderIonicons}
+    />
+  </TouchableOpacity>
+);
 
 // https://www.npmjs.com/package/react-native-expo-cached-image
 export default class CachedImage extends Component {
@@ -57,7 +74,8 @@ export default class CachedImage extends Component {
     }
   }
   render() {
-    var placeholder = require('../assets/images/icon.png');
+    const placeholder = require('../assets/images/icon.png');
+    let zoomOut = () => this.setState({zooming: false});
     if (this.props.isBackground) {
       return (
         <ImageBackground
@@ -68,15 +86,24 @@ export default class CachedImage extends Component {
         </ImageBackground>);
     } else {
       return (<>
-        <Modal visible={this.state.zooming} transparent={true}>
-          <ImageViewer imageUrls={[{url: this.state.imgURI}]} onCancel={() => this.setState({zooming: false})} enableSwipeDown={true}/>
+        <Modal visible={this.state.zooming} transparent={true} onRequestClose={zoomOut}>
+          <ImageViewer
+            imageUrls={[{url: this.state.imgURI}]}
+            onCancel={zoomOut}
+            enableSwipeDown={true}
+            swipeDownThreshold={125}
+            saveToLocalByLongPress={false}
+            maxOverflow={0}
+            renderIndicator={() => null}
+            backgroundColor='black'
+          />
         </Modal>
-        <TouchableHighlight onPress={() => this.setState({zooming: true})}>
+        <TouchableOpacity onPress={() => this.setState({zooming: true})}>
           <Image
             {...this.props}
             source={this.state.imgURI ? {uri: this.state.imgURI} : placeholder}
           />
-        </TouchableHighlight>
+        </TouchableOpacity>
       </>);
     }
   }
