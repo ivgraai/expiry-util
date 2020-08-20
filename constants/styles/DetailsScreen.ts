@@ -12,11 +12,11 @@ export const styles = (isDark: boolean) => StyleSheet.create({
         flex: 2,
         alignSelf: "center",
         justifyContent: "space-around",
-        marginTop: margin
+        marginTop: margin,
+        width: Layout.widthPercentageAsString
     },
     image: {
         aspectRatio: 1,
-        width: Layout.widthPercentageAsString,
         borderColor: Layout.borderColor,
         borderWidth: Layout.borderWidth,
         borderRadius: Layout.borderRadius

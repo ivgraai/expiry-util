@@ -37,7 +37,7 @@ export default function DetailsScreen(props: IProps) {
         <ScrollView scrollEnabled={response?.isAccepted}>
             <View style={withStyle.imageView}>
                 <CachedImage
-                    source={{ uri: Utility.remoteURI("", id, Dtos.SizeRequest.large) }}
+                    source={{ uri: Utility.remoteURI("", id, Dtos.SizeRequest.small), largeUri: Utility.remoteURI("", id, Dtos.SizeRequest.large) }}
                     style={withStyle.image}
                     onDownloaded={(uri: string) => DbHelper.newImage(uri, false)}
                 />

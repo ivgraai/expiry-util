@@ -130,7 +130,8 @@ class NearbyScreen extends React.Component {
                         this.setState({ds:
                             result.map(item => ({
                                 ...item,
-                                image: Utility.remoteURI('', item.id, Dtos.SizeRequest.small)
+                                smallImage: Utility.remoteURI('', item.id, Dtos.SizeRequest.small),
+                                largeImage: Utility.remoteURI('', item.id, Dtos.SizeRequest.large)
                             }))
                             .sort((item1, item2) => item1.distance - item2.distance)});
                     })
