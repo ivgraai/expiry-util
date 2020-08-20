@@ -25,7 +25,7 @@ function GoodList(props: any) {
           <View style={withStyle.parent}>
             <View style={withStyle.leftChild}>
               <CachedImage
-                source={{ uri: item.image }}
+                source={{ uri: item.smallImage, largeUri: item.largeImage }}
                 style={withStyle.leftChildImage}
                 onDownloaded={(uri: string) => DbHelper.newImage(uri, true)}
               />

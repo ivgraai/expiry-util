@@ -22,7 +22,7 @@ export default class AllScreen extends React.Component {
   static navigationOptions = {
     title: i18n.all
   };
-  private static readonly IMAGE_SOURCE_FUNCTION = (id: number) => Utility.remoteURI('', id, SizeRequest.small);
+  private static readonly IMAGE_SOURCE_FUNCTION = (id: number, size: SizeRequest) => Utility.remoteURI('', id, size);
 
   constructor() {
     super();
@@ -40,7 +40,7 @@ export default class AllScreen extends React.Component {
           .then(result => {
             this.saveToCache(result);
             this.updateState(result.map(a => {
-                return { ...a, image: AllScreen.IMAGE_SOURCE_FUNCTION(a.id) };
+                return { ...a, smallImage: AllScreen.IMAGE_SOURCE_FUNCTION(a.id, SizeRequest.small), largeImage: AllScreen.IMAGE_SOURCE_FUNCTION(a.id, SizeRequest.large) };
               }));
           })
           .catch(reason => this.retrieveFromCache(reason));
@@ -66,13 +66,14 @@ export default class AllScreen extends React.Component {
       alert();
       return;
     }
+    let imgMap = (a: any, size: SizeRequest) => (a.id ? AllScreen.IMAGE_SOURCE_FUNCTION(a.id, size) : a.image);
     CacheHandler.isMineGoodsStillValid().then(condition => {
       if (condition) {
         DbHelper.selectGoods().then(result =>
           alert(result).then(notShown => {
             if (notShown) {
               this.updateState(result.map(a => {
-                  return { ...a, expiry: new Date(a.expiry), image: (a.id ? AllScreen.IMAGE_SOURCE_FUNCTION(a.id) : a.image) };
+                  return { ...a, expiry: new Date(a.expiry), smallImage: imgMap(a, SizeRequest.small), largeImage : imgMap(a, SizeRequest.large) };
                 }));
             }
           }));
