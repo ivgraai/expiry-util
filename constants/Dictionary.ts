@@ -445,7 +445,7 @@ const MESSAGES: any = {
         leaveAMessage:                                              'mesaj bırakın',
         egBreadMilkOrEggs:                                          'ekmek, süt ya da yumurta',
         yourRequestHasNotYetBeenApproved:                           'isteğiniz henüz onaylanmadı',
-        yourRequestHasAlreadyBeenApproved:                          'İsteğiniz onaylandı',
+        yourRequestHasAlreadyBeenApproved:                          'isteğiniz onaylandı',
         username:                                                   'kullanıcı adı',
         address:                                                    'adres',
         reply:                                                      'cevap',

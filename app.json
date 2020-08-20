@@ -4,7 +4,7 @@
         "slug": "expiry-util",
         "privacy": "public",
         "platforms": ["ios", "android", "web"],
-        "version": "1.4.0",
+        "version": "1.4.1",
         "orientation": "portrait",
         "icon": "./assets/images/logo.png",
         "splash": {
@@ -19,7 +19,7 @@
         "ios": {
             "supportsTablet": true,
             "bundleIdentifier": "hu.ivgraai.expiry-util",
-            "buildNumber": "1.4.0",
+            "buildNumber": "1.4.1",
             "infoPlist": {
                 "CFBundleAllowMixedLocalizations": true
             }
