@@ -4,6 +4,7 @@ import * as Permissions from "expo-permissions";
 import { resolvedPermissionValue } from "../../services/TestHelper";
 
 describe("Utility", () => {
+    let deniedPermission = resolvedPermissionValue(Permissions.PermissionStatus.DENIED, false);
 
     it("convertImageToDto", () => {
         let uri = "file:///var/mobile/Containers/Data/Application/CB2EDF3E-81AA-4E30-9272-BF039B11AA32/Library/Caches/ExponentExperienceData/%2540ivgraai%252Fexpiry-util/ImagePicker/7106AD16-2332-4A07-AB69-1DFF7DE2F145.jpg";
@@ -38,16 +39,27 @@ describe("Utility", () => {
         });
         expect(Utility.formatAddress(address)).toEqual("SW1A 0AA England\nGreater London, London\nHouses of Parliament, Westminster\nHouse of Commons");
     });
-    test("currentLocation", async () => {
-        let mockOnce = resolvedPermissionValue(Permissions.PermissionStatus.DENIED, false);
-        jest.spyOn(Permissions, "getAsync").mockResolvedValueOnce(mockOnce);
-        jest.spyOn(Permissions, "askAsync").mockResolvedValueOnce(mockOnce);
-        expect(await Utility.currentLocation()).toEqual({latitude: 47.497913, longitude: 19.040236});
+    test("currentLocation", () => {
+        jest.spyOn(Permissions, "getAsync").mockResolvedValueOnce(deniedPermission);
+        jest.spyOn(Permissions, "askAsync").mockResolvedValueOnce(deniedPermission);
+        return Utility.currentLocation().then(position => expect(position).toEqual({latitude: 47.497913, longitude: 19.040236}));
     });
     test("todayMidnigth", () => {
         let today = new Date();
         today.setHours(0, 0, 0, 0);
         expect(Utility.todayMidnigth()).toEqual(today);
     });
-
+    test("obtainPermission", async () => {
+        jest.spyOn(Permissions, "getAsync").mockResolvedValueOnce(deniedPermission);
+        let onDeniedCallback = jest.fn(() => {});
+        let onGrantedCallback = jest.fn(() => new Promise<void>(resolve => resolve()));
+        await Utility.obtainPermission([], false, onGrantedCallback, onDeniedCallback, () => new Promise(resolve => resolve(false)));
+        expect(onDeniedCallback.mock.calls.length).toBe(1);
+        expect(onGrantedCallback.mock.calls.length).toBe(0);
+        jest.spyOn(Permissions, "getAsync").mockResolvedValueOnce(deniedPermission);
+        jest.spyOn(Permissions, "askAsync").mockResolvedValueOnce(resolvedPermissionValue(Permissions.PermissionStatus.GRANTED, true));
+        await Utility.obtainPermission([], false, onGrantedCallback, onDeniedCallback);
+        expect(onGrantedCallback.mock.calls.length).toBe(1);
+        expect(onDeniedCallback.mock.calls.length).toBe(1);
+    });
 });

@@ -1,11 +1,34 @@
-import CacheHandler from "../CacheHandler";
-
-test(`isMineGoodsStillValid`, async () => {
-  expect(await CacheHandler.isMineGoodsStillValid()).toEqual(true);
-  CacheHandler.refreshMineGoods();
-  expect(await CacheHandler.isMineGoodsStillValid()).toEqual(true);
-  jest
-    .spyOn(Date, "now")
-    .mockReturnValueOnce(new Date().getTime() + 24 * 60 * 60 * 1000 + 1);
-  expect(await CacheHandler.isMineGoodsStillValid()).toEqual(false);
+describe('CacheHandler', () => {
+  test(`enabled`, () => {
+    var CacheHandler = require('../CacheHandler');
+    expect(CacheHandler.default.enabled()).toBe(false);
+  });
+  test(`isMineGoodsStillValid`, async () => {
+    var CacheHandler = require('../CacheHandler');
+    expect(await CacheHandler.default.isMineGoodsStillValid()).toEqual(true);
+    CacheHandler.default.refreshMineGoods();
+    expect(await CacheHandler.default.isMineGoodsStillValid()).toEqual(true);
+    jest.spyOn(Date, 'now').mockReturnValueOnce(new Date().getTime() + 24 * 60 * 60 * 1000 + 1);
+    expect(await CacheHandler.default.isMineGoodsStillValid()).toEqual(false);
+  });
+  test(`isNearbyGoodsStillValid`, async () => {
+    jest.resetModules();
+    jest.mock('expo-constants', () => ({
+      manifest: {
+        extra: {
+          cache: {
+            data: {
+              evictionFrequency: 'weekly',
+            },
+          },
+        },
+      },
+    }));
+    var CacheHandler = require('../CacheHandler');
+    CacheHandler.default.refreshNearbyGoods();
+    jest
+      .spyOn(Date, 'now')
+      .mockReturnValueOnce(new Date().getTime() + (1 + 1) * 24 * 60 * 60 * 1000);
+    expect(await CacheHandler.default.isNearbyGoodsStillValid()).toEqual(true);
+  });
 });

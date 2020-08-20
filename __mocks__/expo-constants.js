@@ -6,6 +6,7 @@ const _default = {
             cache: {
                 imageEvictionFrequency: "yearly",
                 data: {
+                    enabled: false,
                     evictionFrequency: "daily"
                 }
             },
