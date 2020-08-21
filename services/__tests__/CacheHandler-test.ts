@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 describe('CacheHandler', () => {
   test(`enabled`, () => {
     var CacheHandler = require('../CacheHandler');
@@ -18,7 +20,7 @@ describe('CacheHandler', () => {
         extra: {
           cache: {
             data: {
-              evictionFrequency: 'weekly',
+              evictionFrequency: 'monthly',
             },
           },
         },
@@ -28,7 +30,7 @@ describe('CacheHandler', () => {
     CacheHandler.default.refreshNearbyGoods();
     jest
       .spyOn(Date, 'now')
-      .mockReturnValueOnce(new Date().getTime() + (1 + 1) * 24 * 60 * 60 * 1000);
+      .mockReturnValueOnce(moment().endOf('month').valueOf());
     expect(await CacheHandler.default.isNearbyGoodsStillValid()).toEqual(true);
   });
 });
